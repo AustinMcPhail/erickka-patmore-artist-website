@@ -2,6 +2,7 @@
 require('dotenv').config({
   path: `.env.${process.env.NODE_ENV || 'development'}`
 })
+const path = require('path')
 
 const clientConfig = require('./client-config')
 
@@ -9,6 +10,15 @@ const isProd = process.env.NODE_ENV === 'production'
 
 module.exports = {
   plugins: [
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        name: 'images',
+        path: path.join(__dirname, 'src', 'images')
+      }
+    },
+    'gatsby-plugin-sharp',
+    'gatsby-transformer-sharp',
     'gatsby-plugin-postcss',
     'gatsby-plugin-react-helmet',
     {

@@ -1,15 +1,15 @@
 import {format} from 'date-fns'
 
 export default {
-  name: 'post',
+  name: 'portfolioEntry',
   type: 'document',
-  title: 'Blog Post',
+  title: 'Portfolio Entries',
   fields: [
     {
       name: 'title',
       type: 'string',
       title: 'Title',
-      description: 'Put whatever you want, this is your public journal'
+      description: 'The title of your art piece / portfolio entry'
     },
     {
       name: 'slug',
@@ -28,9 +28,9 @@ export default {
       description: 'This can be used to schedule post for publishing'
     },
     {
-      name: 'mainImage',
-      type: 'mainImage',
-      title: 'Main image'
+      name: 'portfolioImage',
+      type: 'portfolioImage',
+      title: 'Entry Image'
     },
     {
       name: 'excerpt',
@@ -61,11 +61,6 @@ export default {
           }
         }
       ]
-    },
-    {
-      name: 'body',
-      type: 'bodyPortableText',
-      title: 'Body'
     }
   ],
   orderings: [
@@ -103,7 +98,7 @@ export default {
       title: 'title',
       publishedAt: 'publishedAt',
       slug: 'slug',
-      media: 'mainImage'
+      media: 'portfolioImage'
     },
     prepare ({title = 'No title', publishedAt, slug = {}, media}) {
       const dateSegment = format(publishedAt, 'YYYY/MM')
