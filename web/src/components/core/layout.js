@@ -5,7 +5,7 @@ import styled from 'styled-components'
 const LayoutWrapper = styled.div`
   margin-left: 2rem;
   margin-right: 2rem;
-  
+
   @media (min-width: 768px) {
     margin-left: 5rem;
     margin-right: 5rem;

@@ -6,7 +6,7 @@ const {isFuture} = require('date-fns')
  */
 
 const {format} = require('date-fns')
-
+// TODO: Create the pages for each art piece
 async function createBlogPostPages (graphql, actions) {
   const {createPage} = actions
   const result = await graphql(`
@@ -26,7 +26,6 @@ async function createBlogPostPages (graphql, actions) {
       }
     }
   `)
-
   if (result.errors) throw result.errors
 
   const postEdges = (result.data.allSanityPost || {}).edges || []

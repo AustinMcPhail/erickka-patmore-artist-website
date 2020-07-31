@@ -6,34 +6,44 @@ import TwitterIcon from '../icon/twitterIcon'
 import InstagramIcon from '../icon/instagramIcon'
 
 const HeaderWrapper = styled.header`
-  display: flex;
-  justify-content: space-between;
+  top: 0;
+  /* position: sticky; */
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  z-index: 1;
 `
 
-const Brand = styled.div`
-  margin-top: 50px;
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-`
-const Navigation = styled.nav`
-  width: 100%;
-`
+const Navigation = styled.nav``
 
 const NavList = styled.ul`
   display: flex;
-  justify-content: space-evenly;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding-left: 2em;
+  background-color: ${(props) => props.theme.backgroundColor};
+  box-shadow: 0 0px 5px 10px ${(props) => props.theme.backgroundColor};
 `
 const NavListItem = styled.li`
-  padding: 1rem;
+  padding: 1em;
+  margin-left: 4em;
   text-align: center;
+`
+
+const Brand = styled.div`
+  padding-top: 5em;
+  padding-bottom: 1.5em;
+  text-align: center;
+  background-color: ${(props) => props.theme.backgroundColor};
+  box-shadow: 0 0px 5px 10px ${(props) => props.theme.backgroundColor};
+  border-bottom-right-radius: 100px;
 `
 
 const BrandLinks = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 1rem;
+  margin-top: 1em;
 
   * {
     margin-left: 10px;
@@ -46,7 +56,11 @@ const Header = ({onHideNav, onShowNav, showNav, siteTitle}) => {
     <HeaderWrapper>
       <Brand>
         <Link to='/'>
-          {siteTitle.split(' ').map((substr, i) => <h1 key={'h1.' + i} style={{margin: 0}}>{substr}</h1>)}
+          {siteTitle.split(' ').map((substr, i) => (
+            <h1 key={'h1.' + i} style={{margin: 0}}>
+              {substr}
+            </h1>
+          ))}
         </Link>
         <BrandLinks>
           {/* TODO: Add links to social media */}
@@ -58,29 +72,19 @@ const Header = ({onHideNav, onShowNav, showNav, siteTitle}) => {
       <Navigation>
         <NavList>
           <Link to='/art'>
-            <NavListItem>
-              Art
-            </NavListItem>
+            <NavListItem>Art</NavListItem>
           </Link>
           <Link to='/reach-out'>
-            <NavListItem>
-              Reach Out
-            </NavListItem>
+            <NavListItem>Reach Out</NavListItem>
           </Link>
           <Link to='/journal'>
-            <NavListItem>
-              Journal
-            </NavListItem>
+            <NavListItem>Journal</NavListItem>
           </Link>
           <Link to='/statement'>
-            <NavListItem>
-              Statement
-            </NavListItem>
+            <NavListItem>Statement</NavListItem>
           </Link>
           <Link to='/cv'>
-            <NavListItem>
-              CV
-            </NavListItem>
+            <NavListItem>CV</NavListItem>
           </Link>
         </NavList>
       </Navigation>

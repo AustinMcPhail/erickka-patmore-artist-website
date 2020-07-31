@@ -2,15 +2,12 @@ import React from 'react'
 import {graphql} from 'gatsby'
 import styled, {createGlobalStyle, ThemeProvider} from 'styled-components'
 import normalize from 'styled-normalize'
-import {
-  mapEdgesToNodes,
-  filterOutDocsWithoutSlugs,
-  filterOutDocsPublishedInTheFuture
-} from '../lib/helpers'
+import {toPlainText} from '../lib/helpers'
 import GraphQLErrorList from '../components/graphql-error-list'
 import SEO from '../components/core/seo'
 import Layout from '../components/core/layout'
 import Img from 'gatsby-image'
+import PortableText from '../components/portableText'
 
 const GlobalStyle = createGlobalStyle`
   a{text-decoration:none; color:inherit; cursor:pointer;}
@@ -28,67 +25,35 @@ const GlobalStyle = createGlobalStyle`
 
   body {
     background-color: ${(props) => props.theme.backgroundColor};
-    font-family: 'Roboto', sans-serif; 
+    font-family: 'Roboto', sans-serif;
   }
 `
 
 export const query = graphql`
-  fragment SanityImage on SanityMainImage {
-    crop {
-      _key
-      _type
-      top
-      bottom
-      left
-      right
-    }
-    hotspot {
-      _key
-      _type
-      x
-      y
-      height
-      width
-    }
-    asset {
-      _id
-    }
-  }
-
   query IndexPageQuery {
-    site: sanitySiteSettings(_id: { regex: "/(drafts.|)siteSettings/" }) {
+    site: sanitySiteSettings(_id: {regex: "/(drafts.|)siteSettings/"}) {
       title
       description
       keywords
     }
-    # posts: allSanityPortfolioEntry(
-    #   limit: 6
-    #   sort: { fields: [publishedAt], order: DESC }
-    #   filter: { slug: { current: { ne: null } }, publishedAt: { ne: null } }
-    # ) {
-    #   edges {
-    #     node {
-    #       id
-    #       publishedAt
-    #       portfolioImage {
-    #         asset {
-    #           _ref
-    #         }
-    #         medium {
-    #           _ref
-    #         }
-    #         dimensions
-    #         alt
-    #       }
-    #       title
-    #       slug {
-    #         current
-    #       }
-    #     }
-    #   }
-    # }
-    entries: *[_type == 'portfolioEntery']{
-      _id, title
+    posts: allSanityPortfolioEntry(
+      limit: 2
+      sort: {fields: [publishedAt], order: DESC}
+      filter: {slug: {current: {ne: null}}, publishedAt: {ne: null}}
+    ) {
+      edges {
+        node {
+          title
+          portfolioImage {
+            asset {
+              fluid {
+                ...GatsbySanityImageFluid
+              }
+            }
+          }
+          _rawExcerpt(resolveReferences: {maxDepth: 5})
+        }
+      }
     }
   }
 `
@@ -96,25 +61,46 @@ export const query = graphql`
 const HomePage = styled.section`
   display: flex;
   flex-direction: column;
-  margin-left: 10em;
-  margin-right: 10em;
 `
 
 const ImagePost = styled.article`
   display: grid;
   grid-template-columns: 1fr 2fr;
-  gap: 1rem;
+  gap: 2em;
 `
 
+const ImagePostRight = styled(ImagePost)`
+  grid-template-columns: 1fr 2fr;
+`
+
+const ImagePostLeft = styled(ImagePost)`
+  grid-template-columns: 2fr 1fr;
+`
 const ImagePostInfo = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 1em;
 `
 
-const IndexPage = props => {
+const ImagePostImageWrapper = styled.div`
+  padding: 5em;
+  padding-bottom: 2.5em;
+  padding-top: 2.5em;
+  object-fit: 'contain';
+
+  Img {
+    &:hover {
+      cursor: pointer;
+      filter: blur(2.5px);
+    }
+  }
+`
+
+const IndexPage = (props) => {
   const {data, errors} = props
+
   if (errors) {
     return (
       <Layout>
@@ -122,43 +108,59 @@ const IndexPage = props => {
       </Layout>
     )
   }
+
   const site = (data || {}).site
-  const postNodes = (data || {}).posts
-    ? mapEdgesToNodes(data.posts)
-      .filter(filterOutDocsWithoutSlugs)
-      .filter(filterOutDocsPublishedInTheFuture)
-    : []
+  const posts = data.posts.edges.map((e) => e.node) || []
+
   if (!site) {
     throw new Error(
       'Missing "Site settings". Open the studio at http://localhost:3333 and add some content to "Site settings" and restart the development server.'
     )
   }
 
+  console.log('posts', posts)
+
   return (
-    <ThemeProvider theme={{
-      backgroundColor: '#F1EEF4'
-    }}>
+    <ThemeProvider
+      theme={{
+        backgroundColor: '#F1EEF4'
+      }}
+    >
       <GlobalStyle />
       <Layout siteTitle={site.title}>
-        <SEO
-          title={site.title}
-          description={site.description}
-          keywords={site.keywords}
-        />
+        <SEO title={site.title} description={site.description} keywords={site.keywords} />
         {/* TODO: Display posts that have "showOnHome" set to true */}
         <HomePage>
-          {postNodes.map(p => {
-            console.log(p)
-            return <h1>Hello</h1>
-          })}
-          <ImagePost>
-            <ImagePostInfo>
-              <p>
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Natus odio facilis corrupti amet provident obcaecati a cum ea expedita autem. Ad dignissimos vero exercitationem, maiores eum, provident tenetur voluptas voluptatibus quisquam quibusdam voluptatum quod dolorum veniam! Voluptatem quasi illo, quo, laudantium ducimus, amet necessitatibus labore blanditiis hic quibusdam totam eos?
-              </p>
-            </ImagePostInfo>
-            {/* <Img fluid={data.file.childImageSharp.fluid} /> */}
-          </ImagePost>
+          {posts &&
+            posts.map((e, i) => {
+              if (i % 2 === 0) {
+                return (
+                  <ImagePostRight key={e._id}>
+                    <ImagePostInfo>
+                      <h1>{e.title}</h1>
+                      <small>
+                        <PortableText blocks={e._rawExcerpt} />
+                      </small>
+                    </ImagePostInfo>
+                    <ImagePostImageWrapper>
+                      <Img fluid={e.portfolioImage.asset.fluid} />
+                    </ImagePostImageWrapper>
+                  </ImagePostRight>
+                )
+              } else {
+                return (
+                  <ImagePostLeft key={e._id}>
+                    <ImagePostImageWrapper>
+                      <Img fluid={e.portfolioImage.asset.fluid} />
+                    </ImagePostImageWrapper>
+                    <ImagePostInfo>
+                      <h1>{e.title}</h1>
+                      <small>{toPlainText(e._rawExcerpt)}</small>
+                    </ImagePostInfo>
+                  </ImagePostLeft>
+                )
+              }
+            })}
         </HomePage>
       </Layout>
     </ThemeProvider>
