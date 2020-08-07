@@ -9,35 +9,55 @@ export default {
       name: 'title',
       type: 'string',
       title: 'Title',
-      description: 'The title of your art piece / portfolio entry'
+      description: 'The title of this portfolio entry.'
     },
     {
       name: 'slug',
       type: 'slug',
       title: 'Slug',
-      description: 'This is used to create a human-readable link. Hit generate unless you have one in mind',
+      description:
+        'This is used to create a human-readable link. Hit generate unless you have one in mind.',
       options: {
         source: 'title',
         maxLength: 96
       }
     },
     {
-      name: 'publishedAt',
-      type: 'datetime',
-      title: 'Published at',
-      description: 'This can be used to schedule post for publishing'
+      name: 'category',
+      title: 'Category',
+      type: 'reference',
+      description: 'This determines which page of your portfolio this piece will appear under.',
+      to: [
+        {
+          type: 'category'
+        }
+      ],
+      validation: Rule =>
+        Rule.error(
+          'You have to choose a category. If you have not created any, please do so first.'
+        ).required(),
+      options: {
+        isHighlighted: true
+      }
     },
     {
       name: 'portfolioImage',
       type: 'portfolioImage',
-      title: 'Entry Image'
+      title: 'Entry Image',
+      description: 'The entry / image of the entry to be added to your portfolio.'
     },
     {
       name: 'excerpt',
       type: 'excerptPortableText',
       title: 'Excerpt',
       description:
-        'This ends up on summary pages, on Google, when people share your post in social media.'
+        'Add a bit about the piece. This will end up in summary pages, on Google, when people share your post on social media.'
+    },
+    {
+      name: 'showOnHome',
+      type: 'boolean',
+      title: 'Display on Home Page',
+      description: 'This post will show up on the home page if this is set.'
     },
     {
       name: 'authors',
@@ -50,17 +70,10 @@ export default {
       ]
     },
     {
-      name: 'categories',
-      type: 'array',
-      title: 'Categories',
-      of: [
-        {
-          type: 'reference',
-          to: {
-            type: 'category'
-          }
-        }
-      ]
+      name: 'publishedAt',
+      type: 'datetime',
+      title: 'Published at',
+      description: 'When do you want this to be published?'
     }
   ],
   orderings: [
@@ -109,5 +122,8 @@ export default {
         subtitle: publishedAt ? path : 'Missing publishing date'
       }
     }
+  },
+  initialValue: {
+    showOnHome: false
   }
 }

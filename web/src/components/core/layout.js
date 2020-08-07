@@ -12,9 +12,15 @@ const LayoutWrapper = styled.div`
   }
 `
 
-const Layout = ({children, onHideNav, onShowNav, showNav, siteTitle}) => (
+const Layout = ({children, onHideNav, onShowNav, showNav, siteTitle, categories}) => (
   <LayoutWrapper>
-    <Header siteTitle={siteTitle} onHideNav={onHideNav} onShowNav={onShowNav} showNav={showNav} />
+    <Header
+      siteTitle={siteTitle}
+      onHideNav={onHideNav}
+      onShowNav={onShowNav}
+      showNav={showNav}
+      categories={categories}
+    />
     <main>{children}</main>
     {/* <footer>
       <div>

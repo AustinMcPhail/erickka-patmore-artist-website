@@ -25,7 +25,7 @@ const NavList = styled.ul`
   box-shadow: 0 0px 5px 10px ${(props) => props.theme.backgroundColor};
 `
 const NavListItem = styled.li`
-  padding: 1em;
+  padding: auto;
   margin-left: 4em;
   text-align: center;
 `
@@ -50,8 +50,13 @@ const BrandLinks = styled.div`
     margin-right: 10px;
   }
 `
+const ArtCategoriesNavItem = styled.div`
+  &:hover {
+    cursor: pointer;
+  }
+`
 
-const Header = ({onHideNav, onShowNav, showNav, siteTitle}) => {
+const Header = ({onHideNav, onShowNav, showNav, siteTitle, categories}) => {
   return (
     <HeaderWrapper>
       <Brand>
@@ -71,9 +76,16 @@ const Header = ({onHideNav, onShowNav, showNav, siteTitle}) => {
       </Brand>
       <Navigation>
         <NavList>
-          <Link to='/art'>
+          <ArtCategoriesNavItem>
             <NavListItem>Art</NavListItem>
-          </Link>
+            <ul style={{display: 'flex', position: 'fixed'}}>
+              {categories.map((cat) => (
+                <Link to={'art/' + cat.slug.current}>
+                  <li style={{marginRight: '1em'}}>{cat.title}</li>
+                </Link>
+              ))}
+            </ul>
+          </ArtCategoriesNavItem>
           <Link to='/reach-out'>
             <NavListItem>Reach Out</NavListItem>
           </Link>

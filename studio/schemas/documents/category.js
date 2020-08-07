@@ -9,6 +9,18 @@ export default {
       title: 'Title'
     },
     {
+      name: 'slug',
+      type: 'slug',
+      title: 'Slug',
+      description:
+        'This is used to create a human-readable link. Hit generate unless you have one in mind.',
+      options: {
+        source: 'title',
+        maxLength: 96
+      },
+      validation: Rule => Rule.error('Categories require a slug.').required()
+    },
+    {
       name: 'description',
       type: 'text',
       title: 'Description'

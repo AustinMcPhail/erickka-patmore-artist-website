@@ -5,19 +5,16 @@ const {isFuture} = require('date-fns')
  * See: https://www.gatsbyjs.org/docs/node-apis/
  */
 
-const {format} = require('date-fns')
+// const {format} = require('date-fns')
 // TODO: Create the pages for each art piece
 async function createBlogPostPages (graphql, actions) {
   const {createPage} = actions
   const result = await graphql(`
     {
-      allSanityPost(
-        filter: { slug: { current: { ne: null } }, publishedAt: { ne: null } }
-      ) {
+      categories: allSanityCategory {
         edges {
           node {
-            id
-            publishedAt
+            title
             slug {
               current
             }
@@ -28,21 +25,35 @@ async function createBlogPostPages (graphql, actions) {
   `)
   if (result.errors) throw result.errors
 
-  const postEdges = (result.data.allSanityPost || {}).edges || []
+  // TODO: Entry Pages
+  // const entryEdges = (result.data.entries || {}).edges || []
 
-  postEdges
-    .filter(edge => !isFuture(edge.node.publishedAt))
-    .forEach((edge, index) => {
-      const {id, slug = {}, publishedAt} = edge.node
-      const dateSegment = format(publishedAt, 'YYYY/MM')
-      const path = `/blog/${dateSegment}/${slug.current}/`
+  // entryEdges
+  //   .filter(edge => !isFuture(edge.node.publishedAt))
+  //   .forEach((edge, index) => {
+  //     const {id, slug = {}, publishedAt, category} = edge.node
+  //     const dateSegment = format(publishedAt, 'YYYY/MM')
+  //     const path = `art/${category}/`
 
-      createPage({
-        path,
-        component: require.resolve('./src/templates/blog-post.js'),
-        context: {id}
-      })
+  //     createPage({
+  //       path,
+  //       component: require.resolve('./src/templates/blog-post.js'),
+  //       context: {id}
+  //     })
+  //   })
+
+  // TODO: Category Pages
+  const categoryEdges = (result.data.categories || {}).edges || []
+  categoryEdges.forEach((edge, index) => {
+    const {current} = edge.node
+    const path = `art/${current}`
+
+    createPage({
+      path,
+      component: require.resolve('./src/templates/portfolio/category.js'),
+      context: {slug: current}
     })
+  })
 }
 
 exports.createPages = async ({graphql, actions}) => {

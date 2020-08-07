@@ -37,21 +37,30 @@ export const query = graphql`
       keywords
     }
     posts: allSanityPortfolioEntry(
-      limit: 2
       sort: {fields: [publishedAt], order: DESC}
-      filter: {slug: {current: {ne: null}}, publishedAt: {ne: null}}
+      filter: {slug: {current: {ne: null}}, publishedAt: {ne: null}, showOnHome: {ne: false}}
     ) {
       edges {
         node {
           title
           portfolioImage {
             asset {
-              fluid {
+              fluid(maxWidth: 1200) {
                 ...GatsbySanityImageFluid
               }
             }
           }
           _rawExcerpt(resolveReferences: {maxDepth: 5})
+        }
+      }
+    }
+    categories: allSanityCategory {
+      edges {
+        node {
+          title
+          slug {
+            current
+          }
         }
       }
     }
@@ -67,6 +76,12 @@ const ImagePost = styled.article`
   display: grid;
   grid-template-columns: 1fr 2fr;
   gap: 2em;
+  margin-bottom: 2em;
+  Img {
+    &:hover {
+      cursor: pointer;
+    }
+  }
 `
 
 const ImagePostRight = styled(ImagePost)`
@@ -85,17 +100,7 @@ const ImagePostInfo = styled.div`
 `
 
 const ImagePostImageWrapper = styled.div`
-  padding: 5em;
-  padding-bottom: 2.5em;
-  padding-top: 2.5em;
-  object-fit: 'contain';
-
-  Img {
-    &:hover {
-      cursor: pointer;
-      filter: blur(2.5px);
-    }
-  }
+  max-height: 75vh;
 `
 
 const IndexPage = (props) => {
@@ -111,14 +116,13 @@ const IndexPage = (props) => {
 
   const site = (data || {}).site
   const posts = data.posts.edges.map((e) => e.node) || []
+  const categories = data.categories.edges.map((e) => e.node) || []
 
   if (!site) {
     throw new Error(
       'Missing "Site settings". Open the studio at http://localhost:3333 and add some content to "Site settings" and restart the development server.'
     )
   }
-
-  console.log('posts', posts)
 
   return (
     <ThemeProvider
@@ -127,9 +131,8 @@ const IndexPage = (props) => {
       }}
     >
       <GlobalStyle />
-      <Layout siteTitle={site.title}>
+      <Layout siteTitle={site.title} categories={categories}>
         <SEO title={site.title} description={site.description} keywords={site.keywords} />
-        {/* TODO: Display posts that have "showOnHome" set to true */}
         <HomePage>
           {posts &&
             posts.map((e, i) => {
@@ -138,12 +141,19 @@ const IndexPage = (props) => {
                   <ImagePostRight key={e._id}>
                     <ImagePostInfo>
                       <h1>{e.title}</h1>
-                      <small>
-                        <PortableText blocks={e._rawExcerpt} />
-                      </small>
+                      {e._rawExcerpt && (
+                        <small>
+                          <PortableText blocks={e._rawExcerpt} />
+                        </small>
+                      )}
                     </ImagePostInfo>
                     <ImagePostImageWrapper>
-                      <Img fluid={e.portfolioImage.asset.fluid} />
+                      <Img
+                        alt={e.portfolioImage.asset.name}
+                        key={e.portfolioImage.asset.fluid.src}
+                        imgStyle={{objectFit: 'contain', maxHeight: '75vh'}}
+                        fluid={e.portfolioImage.asset.fluid}
+                      />
                     </ImagePostImageWrapper>
                   </ImagePostRight>
                 )
@@ -151,7 +161,12 @@ const IndexPage = (props) => {
                 return (
                   <ImagePostLeft key={e._id}>
                     <ImagePostImageWrapper>
-                      <Img fluid={e.portfolioImage.asset.fluid} />
+                      <Img
+                        alt={e.portfolioImage.asset.name}
+                        key={e.portfolioImage.asset.fluid.src}
+                        imgStyle={{objectFit: 'contain', maxHeight: '75vh'}}
+                        fluid={e.portfolioImage.asset.fluid}
+                      />
                     </ImagePostImageWrapper>
                     <ImagePostInfo>
                       <h1>{e.title}</h1>
