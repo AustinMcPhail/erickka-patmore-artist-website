@@ -45,9 +45,10 @@ async function createBlogPostPages (graphql, actions) {
   // TODO: Category Pages
   const categoryEdges = (result.data.categories || {}).edges || []
   categoryEdges.forEach((edge, index) => {
-    const {current} = edge.node
-    const path = `art/${current}`
-
+    const {
+      slug: {current}
+    } = edge.node
+    const path = `portfolio/${current}`
     createPage({
       path,
       component: require.resolve('./src/templates/portfolio/category.js'),

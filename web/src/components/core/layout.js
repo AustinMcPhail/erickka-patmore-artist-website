@@ -7,8 +7,8 @@ const LayoutWrapper = styled.div`
   margin-right: 2rem;
 
   @media (min-width: 768px) {
-    margin-left: 5rem;
-    margin-right: 5rem;
+    margin-left: 10rem;
+    margin-right: 10rem;
   }
 `
 

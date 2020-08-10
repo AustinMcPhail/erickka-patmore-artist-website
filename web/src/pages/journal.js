@@ -5,10 +5,9 @@ import {GlobalStyle} from '../lib/styled'
 import GraphQLErrorList from '../components/graphql-error-list'
 import SEO from '../components/core/seo'
 import Layout from '../components/core/layout'
-import EntryList from '../components/EntryList'
 
 export const query = graphql`
-  query IndexPageQuery {
+  query JournalPageQuery {
     site: sanitySiteSettings(_id: {regex: "/(drafts.|)siteSettings/"}) {
       title
       description
@@ -44,7 +43,7 @@ export const query = graphql`
     }
   }
 `
-const IndexPage = (props) => {
+const JournalPage = (props) => {
   const {data, errors} = props
 
   if (errors) {
@@ -74,10 +73,9 @@ const IndexPage = (props) => {
       <GlobalStyle />
       <Layout siteTitle={site.title} categories={categories}>
         <SEO title={site.title} description={site.description} keywords={site.keywords} />
-        <EntryList posts={posts} />
       </Layout>
     </ThemeProvider>
   )
 }
 
-export default IndexPage
+export default JournalPage

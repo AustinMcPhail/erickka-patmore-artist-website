@@ -5,10 +5,10 @@ import {GlobalStyle} from '../lib/styled'
 import GraphQLErrorList from '../components/graphql-error-list'
 import SEO from '../components/core/seo'
 import Layout from '../components/core/layout'
-import EntryList from '../components/EntryList'
+import Home from '../components/EntryList'
 
 export const query = graphql`
-  query IndexPageQuery {
+  query PortfolioPageQuery {
     site: sanitySiteSettings(_id: {regex: "/(drafts.|)siteSettings/"}) {
       title
       description
@@ -26,7 +26,7 @@ export const query = graphql`
     }
     posts: allSanityPortfolioEntry(
       sort: {fields: [publishedAt], order: DESC}
-      filter: {slug: {current: {ne: null}}, publishedAt: {ne: null}, showOnHome: {ne: false}}
+      filter: {slug: {current: {ne: null}}, publishedAt: {ne: null}}
     ) {
       edges {
         node {
@@ -44,7 +44,7 @@ export const query = graphql`
     }
   }
 `
-const IndexPage = (props) => {
+const PortfolioPage = (props) => {
   const {data, errors} = props
 
   if (errors) {
@@ -72,12 +72,16 @@ const IndexPage = (props) => {
       }}
     >
       <GlobalStyle />
-      <Layout siteTitle={site.title} categories={categories}>
+      <Layout
+        siteTitle={site.title}
+        categories={categories}
+        currentCategory={{slug: {current: 'portfolio'}}}
+      >
         <SEO title={site.title} description={site.description} keywords={site.keywords} />
-        <EntryList posts={posts} />
+        <Home posts={posts} />
       </Layout>
     </ThemeProvider>
   )
 }
 
-export default IndexPage
+export default PortfolioPage
