@@ -33,11 +33,14 @@ const ImagePostInfo = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  text-align: center;
   padding: 1em;
+  font-family: 'Cutive Mono', monospace;
 `
 
 const ImagePostImageWrapper = styled.div`
   max-height: 75vh;
+  overflow: hidden;
 `
 
 const EntryList = ({posts}) => {
@@ -53,11 +56,34 @@ const EntryList = ({posts}) => {
             return (
               <ImagePostRight key={e._id}>
                 <ImagePostInfo>
-                  <h1>{e.title}</h1>
+                  <h1 style={{marginBottom: '0'}}>{e.title}</h1>
+                  <hr
+                    style={{
+                      border: 'solid 1px white',
+                      width: '2em',
+                      marginTop: '0.5em',
+                      marginBottom: '0.5em'
+                    }}
+                  />
                   {e._rawExcerpt && (
                     <small>
                       <PortableText blocks={e._rawExcerpt} />
                     </small>
+                  )}
+                  {e.portfolioImage && e.portfolioImage.dimensions && (
+                    <small>{e.portfolioImage.dimensions}</small>
+                  )}
+                  {e.portfolioImage && e.portfolioImage.mediums && (
+                    <div style={{display: 'flex', flexWrap: 'wrap'}}>
+                      {e.portfolioImage.mediums.map((m, i) => (
+                        <small style={{opacity: 0.5}} key={e._id + '.' + m.name}>
+                          <i>{m.name}</i>
+                          {i !== e.portfolioImage.mediums.length - 1 && (
+                            <span style={{marginLeft: '0.5em', marginRight: '0.5em'}}>|</span>
+                          )}
+                        </small>
+                      ))}
+                    </div>
                   )}
                 </ImagePostInfo>
                 <ImagePostImageWrapper>
@@ -82,8 +108,36 @@ const EntryList = ({posts}) => {
                   />
                 </ImagePostImageWrapper>
                 <ImagePostInfo>
-                  <h1>{e.title}</h1>
-                  <small>{toPlainText(e._rawExcerpt)}</small>
+                  <h1 style={{marginBottom: '0'}}>{e.title}</h1>
+                  {/* TODO: Turn into styled thing */}
+                  <hr
+                    style={{
+                      border: 'solid 1px white',
+                      width: '2em',
+                      marginTop: '0.5em',
+                      marginBottom: '0.5em'
+                    }}
+                  />
+                  {e._rawExcerpt && (
+                    <small>
+                      <PortableText blocks={e._rawExcerpt} />
+                    </small>
+                  )}
+                  {e.portfolioImage && e.portfolioImage.dimensions && (
+                    <small>{e.portfolioImage.dimensions}</small>
+                  )}
+                  {e.portfolioImage && e.portfolioImage.mediums && (
+                    <div style={{display: 'flex', flexWrap: 'wrap'}}>
+                      {e.portfolioImage.mediums.map((m, i) => (
+                        <small style={{opacity: 0.5}} key={e._id + '.' + m.name}>
+                          <i>{m.name}</i>
+                          {i !== e.portfolioImage.mediums.length - 1 && (
+                            <span style={{marginLeft: '0.5em', marginRight: '0.5em'}}>|</span>
+                          )}
+                        </small>
+                      ))}
+                    </div>
+                  )}
                 </ImagePostInfo>
               </ImagePostLeft>
             )

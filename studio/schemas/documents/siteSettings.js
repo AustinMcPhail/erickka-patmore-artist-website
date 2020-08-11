@@ -26,6 +26,36 @@ export default {
       }
     },
     {
+      name: 'backgroundColor',
+      type: 'color',
+      title: 'Choose a Background Color',
+      description: 'The background color of your site.'
+    },
+    {
+      name: 'fontColor',
+      type: 'color',
+      title: 'Choose a Font Color',
+      description: 'The main font color of your site.'
+    },
+    {
+      name: 'twitterUrl',
+      type: 'string',
+      title: 'Twitter Url',
+      description: 'The link to your Twitter profile'
+    },
+    {
+      name: 'facebookUrl',
+      type: 'string',
+      title: 'Facebook Url',
+      description: 'The link to your Facebook page'
+    },
+    {
+      name: 'instagramUrl',
+      type: 'string',
+      title: 'Instagram Url',
+      description: 'The link to your Instagram feed'
+    },
+    {
       name: 'author',
       type: 'reference',
       description: 'Publish an author and set a reference to them here.',

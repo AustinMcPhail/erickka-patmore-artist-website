@@ -1,5 +1,3 @@
-import {format} from 'date-fns'
-
 export default {
   name: 'portfolioEntry',
   type: 'document',
@@ -60,20 +58,13 @@ export default {
       description: 'This post will show up on the home page if this is set.'
     },
     {
-      name: 'authors',
-      title: 'Authors',
-      type: 'array',
-      of: [
-        {
-          type: 'authorReference'
-        }
-      ]
-    },
-    {
       name: 'publishedAt',
-      type: 'datetime',
-      title: 'Published at',
-      description: 'When do you want this to be published?'
+      type: 'date',
+      title: 'Date',
+      description: 'When was this piece made? (Only the year is displayed on your site)',
+      options: {
+        dateFormat: 'MMMM D, YYYY'
+      }
     }
   ],
   orderings: [
@@ -114,8 +105,7 @@ export default {
       media: 'portfolioImage'
     },
     prepare ({title = 'No title', publishedAt, slug = {}, media}) {
-      const dateSegment = format(publishedAt, 'YYYY/MM')
-      const path = `/${dateSegment}/${slug.current}/`
+      const path = `/portfolio/all/${slug.current}/`
       return {
         title,
         media,

@@ -7,16 +7,19 @@ export default {
   },
   fields: [
     {
-      name: 'medium',
-      type: 'reference',
-      title: 'Medium',
-      to: [
+      name: 'mediums',
+      type: 'array',
+      of: [
         {
-          type: 'medium'
+          type: 'reference',
+          to: [{type: 'medium'}]
         }
       ],
-      validation: Rule => Rule.error('You have to choose a medium. Add a medium if none are available.').required(),
+      title: 'Mediums',
+      validation: Rule =>
+        Rule.error('You have to choose a medium. Add a medium if none are available.').required(),
       options: {
+        layout: 'tags',
         isHighlighted: true
       }
     },

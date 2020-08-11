@@ -17,6 +17,9 @@ export const GlobalStyle = createGlobalStyle`
 
   body {
     background-color: ${(props) => props.theme.backgroundColor};
-    font-family: 'Roboto', sans-serif;
+    /* font-family: 'Roboto', sans-serif; */
+    /* font-family: 'Cutive Mono', monospace; */
+    font-family: 'Paytone One', sans-serif;
+    color: ${(props) => props.theme.fontColor};
   }
 `
