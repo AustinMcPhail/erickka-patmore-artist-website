@@ -12,7 +12,16 @@ const LayoutWrapper = styled.div`
   }
 `
 
-const Layout = ({children, onHideNav, onShowNav, showNav, siteTitle, categories, socials}) => (
+const Layout = ({
+  children,
+  onHideNav,
+  onShowNav,
+  showNav,
+  siteTitle,
+  categories,
+  socials,
+  fontColor
+}) => (
   <LayoutWrapper>
     <Header
       siteTitle={siteTitle}
@@ -21,7 +30,7 @@ const Layout = ({children, onHideNav, onShowNav, showNav, siteTitle, categories,
       showNav={showNav}
       categories={categories}
       socials={socials}
-      socials={socials}
+      fontColor={fontColor}
     />
     <main>{children}</main>
     {/* <footer>

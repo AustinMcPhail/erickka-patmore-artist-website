@@ -23,6 +23,14 @@ export const query = graphql`
           a
         }
       }
+      fontColor {
+        rgb {
+          r
+          g
+          b
+          a
+        }
+      }
     }
     categories: allSanityCategory {
       edges {
@@ -84,6 +92,9 @@ const ReachOutPage = (props) => {
   return (
     <ThemeProvider
       theme={{
+        fontColor: site.fontColor
+          ? `rgba(${site.fontColor.rgb.r}, ${site.fontColor.rgb.g}, ${site.fontColor.rgb.b}, ${site.fontColor.rgb.a})`
+          : '#2f2f2f',
         backgroundColor: site.backgroundColor
           ? `rgba(${site.backgroundColor.rgb.r}, ${site.backgroundColor.rgb.g}, ${site.backgroundColor.rgb.b}, ${site.backgroundColor.rgb.a})`
           : 'rgba(241, 238, 244, 1)',
@@ -93,7 +104,12 @@ const ReachOutPage = (props) => {
       }}
     >
       <GlobalStyle />
-      <Layout siteTitle={site.title} categories={categories} socials={socials}>
+      <Layout
+        fontColor={site.fontColor}
+        siteTitle={site.title}
+        categories={categories}
+        socials={socials}
+      >
         <SEO title={site.title} description={site.description} keywords={site.keywords} />
       </Layout>
     </ThemeProvider>

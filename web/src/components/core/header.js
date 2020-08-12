@@ -1,10 +1,9 @@
 import {Link} from 'gatsby'
 import React, {useState} from 'react'
 import styled, {keyframes} from 'styled-components'
-import facebook from '../icon/facebook.svg'
-import twitter from '../icon/twitter.svg'
-import instagram from '../icon/instagram.svg'
-import IconLink from '../icon/iconLink'
+import FacebookIcon from '../icon/FacebookIcon'
+import TwitterIcon from '../icon/TwitterIcon'
+import InstagramIcon from '../icon/InstagramIcon'
 
 const HeaderWrapper = styled.header`
   top: 0;
@@ -31,11 +30,9 @@ const NavList = styled.ul`
   font-family: 'Cutive Mono', monospace;
 `
 const NavListItem = styled.li`
-  /* padding: auto; */
   margin-left: 1em;
   margin-right: 1em;
-  /* margin-right: auto; */
-  /* text-align: center; */
+  padding-bottom: 0.5em;
 `
 
 const Brand = styled.div`
@@ -58,7 +55,7 @@ const BrandLinks = styled.div`
   align-items: center;
   margin-top: 1em;
 
-  * {
+  a {
     margin-right: 0.75em;
     &:hover {
       animation: ${zoomTilt} 0.25s linear forwards;
@@ -72,30 +69,42 @@ const statementPath = '/statement'
 const portfolioPath = '/portfolio'
 const journalPath = '/journal'
 
-const activeStyle = {
-  borderTop: 'solid 4px black',
-  paddingTop: '0.5em',
-  fontWeight: 'bold',
-  boxShadow: 'inset 0 7px 9px -7px rgba(0,0,0,0.4)'
-}
-
 const inactiveStyle = {
   borderTop: 'solid 4px transparent',
   paddingTop: '0.5em'
-}
-
-const subActiveStyle = {
-  borderTop: 'solid 2px black'
 }
 
 const subInactiveStyle = {
   borderTop: 'solid 2px transparent'
 }
 
-const Header = ({onHideNav, onShowNav, showNav, siteTitle, categories, socials}) => {
+const Header = ({onHideNav, onShowNav, showNav, siteTitle, categories, socials, fontColor}) => {
   const [portfolioListOpen, setPortfolioListOpen] = useState(
     window.location.href.includes('/portfolio/')
   )
+
+  const activeStyle = {
+    borderTop: `solid 4px ${
+      fontColor
+        ? `rgba(${fontColor.rgb.r}, ${fontColor.rgb.g}, ${fontColor.rgb.b}, ${fontColor.rgb.a})`
+        : '#2f2f2f'
+    }`,
+    paddingTop: '0.5em',
+    fontWeight: 'bold',
+    boxShadow: `inset 0 7px 9px -7px ${
+      fontColor
+        ? `rgba(${fontColor.rgb.r}, ${fontColor.rgb.g}, ${fontColor.rgb.b}, 0.4)`
+        : '#2f2f2f'
+    }`
+  }
+
+  const subActiveStyle = {
+    borderTop: `solid 2px ${
+      fontColor
+        ? `rgba(${fontColor.rgb.r}, ${fontColor.rgb.g}, ${fontColor.rgb.b}, ${fontColor.rgb.a})`
+        : '#2f2f2f'
+    }`
+  }
 
   return (
     <HeaderWrapper>
@@ -109,11 +118,9 @@ const Header = ({onHideNav, onShowNav, showNav, siteTitle, categories, socials})
         </Link>
         <BrandLinks>
           {/* TODO: Add links to social media */}
-          {socials && socials.instagramUrl && (
-            <IconLink url={socials.instagramUrl} icon={instagram} />
-          )}
-          {socials && socials.facebookUrl && <IconLink url={socials.facebookUrl} icon={facebook} />}
-          {socials && socials.twitterUrl && <IconLink url={socials.twitterUrl} icon={twitter} />}
+          {socials && socials.instagramUrl && <InstagramIcon url={socials.instagramUrl} />}
+          {socials && socials.facebookUrl && <FacebookIcon url={socials.facebookUrl} />}
+          {socials && socials.twitterUrl && <TwitterIcon url={socials.twitterUrl} />}
         </BrandLinks>
       </Brand>
       <Navigation>
@@ -132,7 +139,7 @@ const Header = ({onHideNav, onShowNav, showNav, siteTitle, categories, socials})
                     key={'category.' + cat.slug.current}
                     to={'/portfolio/' + cat.slug.current}
                     activeStyle={subActiveStyle}
-                    style={{marginRight: '1em', ...subInactiveStyle}}
+                    style={{marginRight: '1em', paddingBottom: '.5em', ...subInactiveStyle}}
                   >
                     <li>{cat.title}</li>
                   </Link>

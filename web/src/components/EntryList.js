@@ -43,6 +43,13 @@ const ImagePostImageWrapper = styled.div`
   overflow: hidden;
 `
 
+const Divider = styled.hr`
+  border: solid 1px ${(props) => props.theme.fontColor};
+  width: 2em;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+`
+
 const EntryList = ({posts}) => {
   if (!posts || posts.length === 0) {
     // TODO: Empty State
@@ -57,14 +64,7 @@ const EntryList = ({posts}) => {
               <ImagePostRight key={e._id}>
                 <ImagePostInfo>
                   <h1 style={{marginBottom: '0'}}>{e.title}</h1>
-                  <hr
-                    style={{
-                      border: 'solid 1px white',
-                      width: '2em',
-                      marginTop: '0.5em',
-                      marginBottom: '0.5em'
-                    }}
-                  />
+                  <Divider />
                   {e._rawExcerpt && (
                     <small>
                       <PortableText blocks={e._rawExcerpt} />
@@ -110,14 +110,7 @@ const EntryList = ({posts}) => {
                 <ImagePostInfo>
                   <h1 style={{marginBottom: '0'}}>{e.title}</h1>
                   {/* TODO: Turn into styled thing */}
-                  <hr
-                    style={{
-                      border: 'solid 1px white',
-                      width: '2em',
-                      marginTop: '0.5em',
-                      marginBottom: '0.5em'
-                    }}
-                  />
+                  <Divider />
                   {e._rawExcerpt && (
                     <small>
                       <PortableText blocks={e._rawExcerpt} />

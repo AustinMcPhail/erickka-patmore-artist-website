@@ -110,7 +110,12 @@ const IndexPage = (props) => {
       }}
     >
       <GlobalStyle />
-      <Layout siteTitle={site.title} categories={categories} socials={socials}>
+      <Layout
+        fontColor={site.fontColor}
+        siteTitle={site.title}
+        categories={categories}
+        socials={socials}
+      >
         <SEO title={site.title} description={site.description} keywords={site.keywords} />
         <EntryList posts={posts} />
       </Layout>
