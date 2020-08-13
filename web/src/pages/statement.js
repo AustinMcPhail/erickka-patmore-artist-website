@@ -42,24 +42,6 @@ export const query = graphql`
         }
       }
     }
-    posts: allSanityPortfolioEntry(
-      sort: {fields: [publishedAt], order: DESC}
-      filter: {slug: {current: {ne: null}}, publishedAt: {ne: null}, showOnHome: {ne: false}}
-    ) {
-      edges {
-        node {
-          title
-          portfolioImage {
-            asset {
-              fluid(maxWidth: 1200) {
-                ...GatsbySanityImageFluid
-              }
-            }
-          }
-          _rawExcerpt(resolveReferences: {maxDepth: 5})
-        }
-      }
-    }
   }
 `
 const StatementPage = (props) => {
@@ -74,7 +56,6 @@ const StatementPage = (props) => {
   }
 
   const site = (data || {}).site
-  const posts = data.posts.edges.map((e) => e.node) || []
   const categories = data.categories.edges.map((e) => e.node) || []
 
   if (!site) {

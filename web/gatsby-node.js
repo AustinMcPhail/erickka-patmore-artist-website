@@ -7,7 +7,7 @@ const {isFuture} = require('date-fns')
 
 // const {format} = require('date-fns')
 // TODO: Create the pages for each art piece
-async function createBlogPostPages (graphql, actions) {
+async function createPages (graphql, actions) {
   const {createPage} = actions
   const result = await graphql(`
     {
@@ -21,28 +21,23 @@ async function createBlogPostPages (graphql, actions) {
           }
         }
       }
+      posts: allSanityPortfolioEntry(
+        sort: {fields: [publishedAt], order: DESC}
+        filter: {slug: {current: {ne: null}}}
+      ) {
+        edges {
+          node {
+            _id
+            slug {
+              current
+            }
+          }
+        }
+      }
     }
   `)
   if (result.errors) throw result.errors
 
-  // TODO: Entry Pages
-  // const entryEdges = (result.data.entries || {}).edges || []
-
-  // entryEdges
-  //   .filter(edge => !isFuture(edge.node.publishedAt))
-  //   .forEach((edge, index) => {
-  //     const {id, slug = {}, publishedAt, category} = edge.node
-  //     const dateSegment = format(publishedAt, 'YYYY/MM')
-  //     const path = `art/${category}/`
-
-  //     createPage({
-  //       path,
-  //       component: require.resolve('./src/templates/blog-post.js'),
-  //       context: {id}
-  //     })
-  //   })
-
-  // TODO: Category Pages
   const categoryEdges = (result.data.categories || {}).edges || []
   categoryEdges.forEach((edge, index) => {
     const {
@@ -55,8 +50,22 @@ async function createBlogPostPages (graphql, actions) {
       context: {slug: current}
     })
   })
+
+  const postEdges = (result.data.posts || {}).edges || []
+  postEdges.forEach((edge, index) => {
+    const {
+      _id,
+      slug: {current}
+    } = edge.node
+    const path = `portfolio/${current}`
+    createPage({
+      path,
+      component: require.resolve('./src/templates/portfolio/entry.js'),
+      context: {_id}
+    })
+  })
 }
 
 exports.createPages = async ({graphql, actions}) => {
-  await createBlogPostPages(graphql, actions)
+  await createPages(graphql, actions)
 }

@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import {toPlainText} from '../lib/helpers'
 import Img from 'gatsby-image'
 import PortableText from './portableText'
+import {Link} from 'gatsby'
 
 const EntryListWrapper = styled.section`
   display: flex;
@@ -51,10 +52,6 @@ const Divider = styled.hr`
 `
 
 const EntryList = ({posts}) => {
-  if (!posts || posts.length === 0) {
-    // TODO: Empty State
-  }
-
   return (
     <EntryListWrapper>
       {posts &&
@@ -65,11 +62,6 @@ const EntryList = ({posts}) => {
                 <ImagePostInfo>
                   <h1 style={{marginBottom: '0'}}>{e.title}</h1>
                   <Divider />
-                  {e._rawExcerpt && (
-                    <small>
-                      <PortableText blocks={e._rawExcerpt} />
-                    </small>
-                  )}
                   {e.portfolioImage && e.portfolioImage.dimensions && (
                     <small>{e.portfolioImage.dimensions}</small>
                   )}
@@ -85,14 +77,21 @@ const EntryList = ({posts}) => {
                       ))}
                     </div>
                   )}
+                  {e._rawExcerpt && (
+                    <small>
+                      <PortableText blocks={e._rawExcerpt} />
+                    </small>
+                  )}
                 </ImagePostInfo>
                 <ImagePostImageWrapper>
-                  <Img
-                    alt={e.portfolioImage.asset.name}
-                    key={e.portfolioImage.asset.fluid.src}
-                    imgStyle={{objectFit: 'contain', maxHeight: '75vh'}}
-                    fluid={e.portfolioImage.asset.fluid}
-                  />
+                  <Link to={`/portfolio/${e.slug.current}`}>
+                    <Img
+                      alt={e.portfolioImage.asset.name}
+                      key={e.portfolioImage.asset.fluid.src}
+                      imgStyle={{objectFit: 'contain', maxHeight: '75vh'}}
+                      fluid={e.portfolioImage.asset.fluid}
+                    />
+                  </Link>
                 </ImagePostImageWrapper>
               </ImagePostRight>
             )
@@ -100,22 +99,18 @@ const EntryList = ({posts}) => {
             return (
               <ImagePostLeft key={e._id}>
                 <ImagePostImageWrapper>
-                  <Img
-                    alt={e.portfolioImage.asset.name}
-                    key={e.portfolioImage.asset.fluid.src}
-                    imgStyle={{objectFit: 'contain', maxHeight: '75vh'}}
-                    fluid={e.portfolioImage.asset.fluid}
-                  />
+                  <Link to={`/portfolio/${e.slug.current}`}>
+                    <Img
+                      alt={e.portfolioImage.asset.name}
+                      key={e.portfolioImage.asset.fluid.src}
+                      imgStyle={{objectFit: 'contain', maxHeight: '75vh'}}
+                      fluid={e.portfolioImage.asset.fluid}
+                    />
+                  </Link>
                 </ImagePostImageWrapper>
                 <ImagePostInfo>
                   <h1 style={{marginBottom: '0'}}>{e.title}</h1>
-                  {/* TODO: Turn into styled thing */}
                   <Divider />
-                  {e._rawExcerpt && (
-                    <small>
-                      <PortableText blocks={e._rawExcerpt} />
-                    </small>
-                  )}
                   {e.portfolioImage && e.portfolioImage.dimensions && (
                     <small>{e.portfolioImage.dimensions}</small>
                   )}
@@ -130,6 +125,11 @@ const EntryList = ({posts}) => {
                         </small>
                       ))}
                     </div>
+                  )}
+                  {e._rawExcerpt && (
+                    <small>
+                      <PortableText blocks={e._rawExcerpt} />
+                    </small>
                   )}
                 </ImagePostInfo>
               </ImagePostLeft>

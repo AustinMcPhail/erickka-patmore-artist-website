@@ -56,7 +56,7 @@ export const query = graphql`
               }
             }
           }
-          _rawExcerpt(resolveReferences: {maxDepth: 5})
+          _rawExcerpt
         }
       }
     }
@@ -74,7 +74,6 @@ const JournalPage = (props) => {
   }
 
   const site = (data || {}).site
-  const posts = data.posts.edges.map((e) => e.node) || []
   const categories = data.categories.edges.map((e) => e.node) || []
 
   if (!site) {

@@ -24,10 +24,20 @@ const Navigation = styled.nav`
 const NavList = styled.ul`
   display: flex;
   flex-direction: row;
+
+  flex-direction: column-reverse;
+  padding-left: 0;
+
   flex-wrap: wrap;
   justify-content: space-between;
-  padding-left: 2em;
   font-family: 'Cutive Mono', monospace;
+
+  text-align: end;
+
+  @media (min-width: 1280px) {
+    flex-direction: row;
+    padding-left: 2em;
+  }
 `
 const NavListItem = styled.li`
   margin-left: 1em;
@@ -63,6 +73,17 @@ const BrandLinks = styled.div`
   }
 `
 
+const NavLinkList = styled.ul`
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  @media (min-width: 1280px) {
+    flex-direction: row;
+    position: absolute;
+    justify-content: flex-end;
+  }
+`
+
 const reachOutPath = '/reach-out'
 const cvPath = '/cv'
 const statementPath = '/statement'
@@ -79,9 +100,7 @@ const subInactiveStyle = {
 }
 
 const Header = ({onHideNav, onShowNav, showNav, siteTitle, categories, socials, fontColor}) => {
-  const [portfolioListOpen, setPortfolioListOpen] = useState(
-    window.location.href.includes('/portfolio/')
-  )
+  const [portfolioListOpen, setPortfolioListOpen] = useState(false)
 
   const activeStyle = {
     borderTop: `solid 4px ${
@@ -125,15 +144,16 @@ const Header = ({onHideNav, onShowNav, showNav, siteTitle, categories, socials, 
       </Brand>
       <Navigation>
         <NavList>
-          <div style={window.location.href.includes(portfolioPath) ? activeStyle : inactiveStyle}>
-            <Link to={portfolioPath} onMouseEnter={() => setPortfolioListOpen(true)}>
+          <div
+            onMouseEnter={() => setPortfolioListOpen(true)}
+            onClick={() => setPortfolioListOpen(true)}
+            style={window.location.href.includes(portfolioPath) ? activeStyle : inactiveStyle}
+          >
+            <Link to={portfolioPath}>
               <NavListItem>Portfolio</NavListItem>
             </Link>
             {portfolioListOpen && (
-              <ul
-                style={{display: 'flex', position: 'absolute', padding: '15px'}}
-                onMouseLeave={() => setPortfolioListOpen(false)}
-              >
+              <NavLinkList onMouseLeave={() => setPortfolioListOpen(false)}>
                 {categories.map((cat, i) => (
                   <Link
                     key={'category.' + cat.slug.current}
@@ -144,7 +164,7 @@ const Header = ({onHideNav, onShowNav, showNav, siteTitle, categories, socials, 
                     <li>{cat.title}</li>
                   </Link>
                 ))}
-              </ul>
+              </NavLinkList>
             )}
           </div>
           <Link to={reachOutPath} activeStyle={activeStyle} style={inactiveStyle} partiallyActive>

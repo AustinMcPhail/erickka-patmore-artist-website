@@ -43,28 +43,29 @@ export const query = graphql`
         }
       }
     }
-    currentCategory: sanityCategory(slug: {current: {eq: $slug}}) {
-      title
-      slug {
-        current
-      }
-    }
-    posts: allSanityPortfolioEntry(filter: {category: {slug: {current: {eq: $slug}}}}) {
+    posts: allSanityPortfolioEntry(
+      sort: {fields: [publishedAt], order: DESC}
+      filter: {category: {slug: {current: {eq: $slug}}}}
+    ) {
       edges {
         node {
           _id
           title
+          slug {
+            current
+          }
           portfolioImage {
             dimensions
             mediums {
               name
             }
             asset {
-              fluid(maxWidth: 400) {
+              fluid(maxWidth: 1200) {
                 ...GatsbySanityImageFluid
               }
             }
           }
+          _rawExcerpt
         }
       }
     }
@@ -75,7 +76,6 @@ const CategoryTemplate = (props) => {
   const {data, errors} = props
   const site = (data || {}).site
   const categories = (data || {}).categories.edges.map((e) => e.node) || []
-  const currentCategory = (data || {}).currentCategory
   const posts = data.posts.edges.map((e) => e.node) || []
 
   const socials = {
@@ -104,7 +104,6 @@ const CategoryTemplate = (props) => {
         siteTitle={site.title}
         categories={categories}
         socials={socials}
-        currentCategory={currentCategory}
       >
         <SEO title={site.title} description={site.description} keywords={site.keywords} />
         {posts && <EntryList posts={posts} />}

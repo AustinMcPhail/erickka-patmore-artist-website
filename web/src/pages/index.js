@@ -45,12 +45,15 @@ export const query = graphql`
     }
     posts: allSanityPortfolioEntry(
       sort: {fields: [publishedAt], order: DESC}
-      filter: {slug: {current: {ne: null}}, publishedAt: {ne: null}, showOnHome: {ne: false}}
+      filter: {slug: {current: {ne: null}}, showOnHome: {ne: false}}
     ) {
       edges {
         node {
           _id
           title
+          slug {
+            current
+          }
           portfolioImage {
             dimensions
             mediums {
@@ -62,7 +65,7 @@ export const query = graphql`
               }
             }
           }
-          _rawExcerpt(resolveReferences: {maxDepth: 5})
+          _rawExcerpt
         }
       }
     }
