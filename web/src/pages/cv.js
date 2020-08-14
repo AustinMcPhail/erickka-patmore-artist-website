@@ -1,6 +1,6 @@
 import React from 'react'
 import {graphql} from 'gatsby'
-import {ThemeProvider} from 'styled-components'
+import styled, {ThemeProvider} from 'styled-components'
 import {GlobalStyle} from '../lib/styled'
 import GraphQLErrorList from '../components/graphql-error-list'
 import SEO from '../components/core/seo'
@@ -31,6 +31,11 @@ export const query = graphql`
           a
         }
       }
+      cv {
+        asset {
+          url
+        }
+      }
     }
     categories: allSanityCategory {
       edges {
@@ -44,6 +49,38 @@ export const query = graphql`
     }
   }
 `
+
+const PageWrapper = styled.div`
+  display: grid;
+  grid-gap: 1em;
+  grid-template-columns: 1fr 1fr;
+`
+
+const Cv = styled.section`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+`
+
+const CvDownload = styled.a`
+  align-self: flex-end;
+  padding: 1em;
+  border: solid 2px ${(props) => props.theme.fontColor};
+  border-radius: 10px;
+  margin-bottom: 1em;
+`
+
+const CvPreview = styled.iframe`
+  width: 100%;
+  height: 700px;
+  border-radius: 5px;
+`
+
+const Bio = styled.section`
+  display: flex;
+  align-items: center;
+`
+
 const CvPage = (props) => {
   const {data, errors} = props
 
@@ -92,6 +129,20 @@ const CvPage = (props) => {
         socials={socials}
       >
         <SEO title={site.title} description={site.description} keywords={site.keywords} />
+        {site.cv && (
+          <PageWrapper>
+            <Bio>
+              <p>Hello</p>
+            </Bio>
+            <Cv>
+              <CvDownload href={`${site.cv.asset.url}?dl=`}>Download a copy of my CV</CvDownload>
+              <CvPreview
+                src={`http://docs.google.com/gview?url=${site.cv.asset.url}&embedded=true`}
+                frameBorder={0}
+              />
+            </Cv>
+          </PageWrapper>
+        )}
       </Layout>
     </ThemeProvider>
   )

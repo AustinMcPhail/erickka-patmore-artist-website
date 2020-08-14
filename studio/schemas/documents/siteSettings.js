@@ -56,6 +56,18 @@ export default {
       description: 'The link to your Instagram feed'
     },
     {
+      name: 'cv',
+      type: 'file',
+      title: 'CV / Resume',
+      description: 'A copy of your resume / cv that users can download from the CV page'
+    },
+    {
+      name: 'Bio',
+      type: 'bodyPortableText',
+      title: 'Bio',
+      description: 'The biography that appears on the the Cv page of the site'
+    },
+    {
       name: 'author',
       type: 'reference',
       description: 'Publish an author and set a reference to them here.',

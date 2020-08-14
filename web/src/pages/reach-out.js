@@ -1,6 +1,6 @@
 import React from 'react'
 import {graphql} from 'gatsby'
-import {ThemeProvider} from 'styled-components'
+import styled, {ThemeProvider} from 'styled-components'
 import {GlobalStyle} from '../lib/styled'
 import GraphQLErrorList from '../components/graphql-error-list'
 import SEO from '../components/core/seo'
@@ -70,6 +70,36 @@ const ReachOutPage = (props) => {
     instagramUrl: site.instagramUrl
   }
 
+  const ReachOutWrapper = styled.div`
+    display: grid;
+    grid-gap: 0.5em;
+    grid-template-areas:
+      'i f t'
+      'c c c';
+  `
+
+  const Social = styled.section`
+    max-height: 75vh;
+    overflow: auto;
+    border-radius: 10px;
+  `
+
+  const FacebookWrapper = styled(Social)`
+    grid-area: f;
+  `
+
+  const TwitterWrapper = styled(Social)`
+    grid-area: t;
+  `
+
+  const InstagramWrapper = styled(Social)`
+    grid-area: i;
+  `
+
+  const ContactFormWrapper = styled.section`
+    grid-area: c;
+  `
+
   return (
     <ThemeProvider
       theme={{
@@ -92,6 +122,19 @@ const ReachOutPage = (props) => {
         socials={socials}
       >
         <SEO title={site.title} description={site.description} keywords={site.keywords} />
+        <ReachOutWrapper>
+          <InstagramWrapper>Instagram</InstagramWrapper>
+          <FacebookWrapper>Facebook</FacebookWrapper>
+          <TwitterWrapper>
+            <a
+              className='twitter-timeline'
+              href='https://twitter.com/Erickkapatmore?ref_src=twsrc%5Etfw'
+            >
+              Tweets by Erickkapatmore
+            </a>
+          </TwitterWrapper>
+          <ContactFormWrapper>Contact</ContactFormWrapper>
+        </ReachOutWrapper>
       </Layout>
     </ThemeProvider>
   )
