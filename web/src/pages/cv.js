@@ -50,35 +50,45 @@ export const query = graphql`
   }
 `
 
-const PageWrapper = styled.div`
-  display: grid;
-  grid-gap: 1em;
-  grid-template-columns: 1fr 1fr;
-`
+// const PageWrapper = styled.div`
+//   display: grid;
+//   grid-gap: 1em;
+//   grid-template-columns: 1fr;
+//   @media (min-width: 1280px) {
+//     grid-template-columns: 1fr 1fr;
+//   }
+// `
 
 const Cv = styled.section`
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+`
+const DownloadWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 1em;
+  justify-content: space-between;
+`
+const AccentDivider = styled.hr`
+  border: solid 1px ${(props) => props.theme.fontColor};
+  width: 90%;
+  margin: 0;
 `
 
 const CvDownload = styled.a`
-  align-self: flex-end;
-  padding: 1em;
+  padding: 0.5em;
+  margin-left: 1em;
   border: solid 2px ${(props) => props.theme.fontColor};
   border-radius: 10px;
-  margin-bottom: 1em;
+  text-align: center;
 `
 
 const CvPreview = styled.iframe`
   width: 100%;
-  height: 700px;
+  height: 100%;
   border-radius: 5px;
-`
-
-const Bio = styled.section`
-  display: flex;
-  align-items: center;
+  height: 75vh;
+  margin-bottom: 1em;
 `
 
 const CvPage = (props) => {
@@ -130,18 +140,16 @@ const CvPage = (props) => {
       >
         <SEO title={site.title} description={site.description} keywords={site.keywords} />
         {site.cv && (
-          <PageWrapper>
-            <Bio>
-              <p>Hello</p>
-            </Bio>
-            <Cv>
-              <CvDownload href={`${site.cv.asset.url}?dl=`}>Download a copy of my CV</CvDownload>
-              <CvPreview
-                src={`http://docs.google.com/gview?url=${site.cv.asset.url}&embedded=true`}
-                frameBorder={0}
-              />
-            </Cv>
-          </PageWrapper>
+          <Cv>
+            <DownloadWrapper>
+              <AccentDivider />
+              <CvDownload href={`${site.cv.asset.url}?dl=`}>Download CV</CvDownload>
+            </DownloadWrapper>
+            <CvPreview
+              src={`http://docs.google.com/gview?url=${site.cv.asset.url}&embedded=true`}
+              frameBorder={0}
+            />
+          </Cv>
         )}
       </Layout>
     </ThemeProvider>
