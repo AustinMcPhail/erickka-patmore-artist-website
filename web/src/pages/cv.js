@@ -146,7 +146,7 @@ const CvPage = (props) => {
               <CvDownload href={`${site.cv.asset.url}?dl=`}>Download CV</CvDownload>
             </DownloadWrapper>
             <CvPreview
-              src={`http://docs.google.com/gview?url=${site.cv.asset.url}&embedded=true`}
+              src={`https://docs.google.com/gview?url=${site.cv.asset.url}&embedded=true`}
               frameBorder={0}
             />
           </Cv>
