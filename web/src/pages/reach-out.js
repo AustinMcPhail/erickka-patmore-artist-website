@@ -138,6 +138,42 @@ const ReachOutPage = (props) => {
             </a>
           </TwitterWrapper>
           <ContactFormWrapper>
+            <form name='contact' method='POST' data-netlify='true'>
+              <div className='field'>
+                <label className='label'>
+                  Your Name:
+                  <input className='input' type='text' name='name' />
+                </label>
+              </div>
+              <div className='field'>
+                <label className='label'>
+                  Your Email:
+                  <input className='input' type='email' name='email' />
+                </label>
+              </div>
+              <div className='field'>
+                <label htmlFor='role[]' className='label'>
+                  Your Role:
+                </label>
+                <div className='select is-multiple'>
+                  <select name='role[]' multiple size='2'>
+                    <option value='leader'>Leader</option>
+                    <option value='follower'>Follower</option>
+                  </select>
+                </div>
+              </div>
+              <div className='field'>
+                <label className='label'>
+                  Message:
+                  <textarea className='textarea' name='message' />
+                </label>
+              </div>
+              <div className='field'>
+                <button className='button is-primary is-medium' type='submit'>
+                  Send
+                </button>
+              </div>
+            </form>
             {/* <form method='post' netlify-honeypot='bot-field' data-netlify='true' name='contact'>
               <input type='hidden' name='bot-field' />
               <input type='hidden' name='form-name' value='contact' />
