@@ -1,7 +1,6 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import Header from './header'
 import styled, {keyframes} from 'styled-components'
-import ToTopIcon from '../icon/ToTopIcon'
 
 const LayoutWrapper = styled.div`
   margin-left: 2rem;
@@ -84,7 +83,11 @@ const Layout = ({
       toTopButton.classList.add('hideToTop')
     }
   }
-  window.addEventListener('scroll', handleScrolling)
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    console.log('found a window')
+    window.addEventListener('scroll', handleScrolling)
+  })
 
   return (
     <LayoutWrapper>

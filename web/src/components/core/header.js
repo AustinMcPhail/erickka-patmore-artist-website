@@ -1,5 +1,5 @@
 import {Link} from 'gatsby'
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import styled, {keyframes} from 'styled-components'
 import FacebookIcon from '../icon/FacebookIcon'
 import TwitterIcon from '../icon/TwitterIcon'
@@ -101,6 +101,15 @@ const subInactiveStyle = {
 
 const Header = ({onHideNav, onShowNav, showNav, siteTitle, categories, socials, fontColor}) => {
   const [portfolioListOpen, setPortfolioListOpen] = useState(false)
+  const [onPortfolioPath, setOnPortfolioPath] = useState(false)
+
+  useEffect(() => {
+    if (typeof window === 'undefined') {
+      setOnPortfolioPath(false)
+    } else if (window.location.href.includes(portfolioPath)) {
+      setOnPortfolioPath(true)
+    }
+  })
 
   const activeStyle = {
     borderTop: `solid 4px ${
@@ -129,11 +138,12 @@ const Header = ({onHideNav, onShowNav, showNav, siteTitle, categories, socials, 
     <HeaderWrapper>
       <Brand>
         <Link to='/'>
-          {siteTitle.split(' ').map((substr, i) => (
-            <h1 key={'h1.' + i} style={{margin: 0}}>
-              {substr}
-            </h1>
-          ))}
+          {siteTitle &&
+            siteTitle.split(' ').map((substr, i) => (
+              <h1 key={'h1.' + i} style={{margin: 0}}>
+                {substr}
+              </h1>
+            ))}
         </Link>
         <BrandLinks>
           {/* TODO: Add links to social media */}
@@ -147,7 +157,7 @@ const Header = ({onHideNav, onShowNav, showNav, siteTitle, categories, socials, 
           <div
             onMouseEnter={() => setPortfolioListOpen(true)}
             onClick={() => setPortfolioListOpen(true)}
-            style={window.location.href.includes(portfolioPath) ? activeStyle : inactiveStyle}
+            style={onPortfolioPath ? activeStyle : inactiveStyle}
           >
             <Link to={portfolioPath}>
               <NavListItem>Portfolio</NavListItem>
