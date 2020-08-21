@@ -79,7 +79,7 @@ const CvDownload = styled.a`
   padding: 0.5em;
   margin-left: 1em;
   border: solid 2px ${(props) => props.theme.fontColor};
-  border-radius: 10px;
+  border-radius: 2px;
   text-align: center;
 `
 

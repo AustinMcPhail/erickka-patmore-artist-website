@@ -30,7 +30,7 @@ const NavList = styled.ul`
 
   flex-wrap: wrap;
   justify-content: space-between;
-  font-family: 'Cutive Mono', monospace;
+  font-family: 'Inconsolata', monospace;
 
   text-align: end;
 
@@ -40,10 +40,10 @@ const NavList = styled.ul`
   }
 `
 const NavListItem = styled.li`
-  margin-left: 1em;
+  padding-left: 0.5em;
   padding-bottom: 0.5em;
   @media (min-width: 1280px) {
-    margin-right: 1em;
+    padding-right: 0.5em;
   }
 `
 
@@ -66,7 +66,6 @@ const BrandLinks = styled.div`
   display: flex;
   align-items: center;
   margin-top: 1em;
-
   a {
     margin-right: 0.75em;
     &:hover {
@@ -76,17 +75,24 @@ const BrandLinks = styled.div`
 `
 
 const NavLinkList = styled.ul`
-  display: flex;
+  left: 0;
+  display: inline-flex;
   flex-direction: column;
+  a {
+    padding-left: 0.5em;
+  }
   @media (min-width: 1280px) {
+    padding-top: 1em;
     a {
-      margin-inline: 1em;
+      padding-right: 0.5em;
     }
-    padding: 15px;
     flex-direction: row;
     position: absolute;
-    justify-content: flex-end;
   }
+`
+
+const PortfolioItem = styled.div`
+  position: relative;
 `
 
 const reachOutPath = '/reach-out'
@@ -156,7 +162,7 @@ const Header = ({onHideNav, onShowNav, showNav, siteTitle, categories, socials, 
       </Brand>
       <Navigation>
         <NavList>
-          <div style={portfolioListOpen ? activeStyle : inactiveStyle}>
+          <PortfolioItem style={portfolioListOpen ? activeStyle : inactiveStyle}>
             <Link to={portfolioPath}>
               <NavListItem>Portfolio</NavListItem>
             </Link>
@@ -175,7 +181,7 @@ const Header = ({onHideNav, onShowNav, showNav, siteTitle, categories, socials, 
                 ))}
               </NavLinkList>
             )}
-          </div>
+          </PortfolioItem>
           <Link to={reachOutPath} activeStyle={activeStyle} style={inactiveStyle} partiallyActive>
             <NavListItem>Reach Out</NavListItem>
           </Link>

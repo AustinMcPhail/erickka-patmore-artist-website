@@ -30,7 +30,7 @@ const ImagePostInfo = styled.div`
   align-items: center;
   text-align: center;
   padding: 1em;
-  font-family: 'Cutive Mono', monospace;
+  font-family: 'Inconsolata', monospace;
 `
 
 const ImagePostImageWrapper = styled.div`
