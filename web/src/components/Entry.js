@@ -30,7 +30,7 @@ const ImagePostInfo = styled.div`
   align-items: center;
   text-align: center;
   padding: 1em;
-  font-family: 'Inconsolata', monospace;
+  font-family: ${(props) => props.theme.secondaryFont};
 `
 
 const ImagePostImageWrapper = styled.div`
@@ -57,7 +57,7 @@ const EntryList = ({entry}) => {
         {entry.portfolioImage && entry.portfolioImage.mediums && (
           <div style={{display: 'flex', flexWrap: 'wrap'}}>
             {entry.portfolioImage.mediums.map((m, i) => (
-              <small style={{opacity: 0.5}} key={entry._id + '.' + m.name}>
+              <small style={{opacity: 0.75}} key={entry._id + '.' + m.name}>
                 <i>{m.name}</i>
                 {i !== entry.portfolioImage.mediums.length - 1 && (
                   <span style={{marginLeft: '0.5em', marginRight: '0.5em'}}>|</span>

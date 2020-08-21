@@ -70,10 +70,8 @@ function SEO ({description, lang, meta, keywords, title, image}) {
               .concat(meta)}
           >
             <style>
-              @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap'); @import
-              url('https://fonts.googleapis.com/css2?family=Cutive+Mono&display=swap'); @import
-              url('https://fonts.googleapis.com/css2?family=Paytone+One&display=swap'); @import
-              url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@300;400;500&display=swap');
+              @import
+              url('https://fonts.googleapis.com/css2?family=Inconsolata&family=Montserrat&display=swap');
             </style>
           </Helmet>
         )

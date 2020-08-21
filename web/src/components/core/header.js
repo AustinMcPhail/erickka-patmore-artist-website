@@ -18,7 +18,7 @@ const HeaderWrapper = styled.header`
 `
 
 const Navigation = styled.nav`
-  /* padding-top: 15px; */
+  /* margin-top: 1rem; */
 `
 
 const NavList = styled.ul`
@@ -30,7 +30,7 @@ const NavList = styled.ul`
 
   flex-wrap: wrap;
   justify-content: space-between;
-  font-family: 'Inconsolata', monospace;
+  font-family: ${(props) => props.theme.secondaryFont};
 
   text-align: end;
 
@@ -40,14 +40,16 @@ const NavList = styled.ul`
   }
 `
 const NavListItem = styled.li`
-  padding-left: 0.5em;
-  padding-bottom: 0.5em;
+  padding-left: 1em;
+  padding-bottom: 1em;
   @media (min-width: 1280px) {
-    padding-right: 0.5em;
+    padding-right: 1em;
+    padding-top: 1em;
   }
 `
 
 const Brand = styled.div`
+  padding-top: 1em;
   text-align: left;
   border-bottom-right-radius: 100px;
 `
@@ -79,12 +81,12 @@ const NavLinkList = styled.ul`
   display: inline-flex;
   flex-direction: column;
   a {
-    padding-left: 0.5em;
+    padding-left: 1em;
   }
   @media (min-width: 1280px) {
     padding-top: 1em;
     a {
-      padding-right: 0.5em;
+      padding-right: 1em;
     }
     flex-direction: row;
     position: absolute;
@@ -185,9 +187,9 @@ const Header = ({onHideNav, onShowNav, showNav, siteTitle, categories, socials, 
           <Link to={reachOutPath} activeStyle={activeStyle} style={inactiveStyle} partiallyActive>
             <NavListItem>Reach Out</NavListItem>
           </Link>
-          <Link to={journalPath} activeStyle={activeStyle} style={inactiveStyle} partiallyActive>
+          {/* <Link to={journalPath} activeStyle={activeStyle} style={inactiveStyle} partiallyActive>
             <NavListItem>Journal</NavListItem>
-          </Link>
+          </Link> */}
           <Link to={statementPath} activeStyle={activeStyle} style={inactiveStyle} partiallyActive>
             <NavListItem>Statement</NavListItem>
           </Link>

@@ -36,7 +36,29 @@ const ImagePostInfo = styled.div`
   align-items: center;
   text-align: center;
   padding: 1em;
-  font-family: 'Inconsolata', monospace;
+  font-family: ${(props) => props.theme.secondaryFont};
+  .title {
+    display: block;
+    max-width: 30vh;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    overflow: hidden;
+    max-height: 2.3em;
+    line-height: 1.15;
+  }
+  @media (min-width: 1280px) {
+    .title {
+      display: unset;
+      width: unset;
+      white-space: unset;
+      text-overflow: unset;
+      word-wrap: unset;
+      overflow: unset;
+      max-height: unset;
+      line-height: unset;
+    }
+  }
 `
 
 const ImagePostImageWrapper = styled.div`
@@ -60,7 +82,9 @@ const EntryList = ({posts}) => {
             return (
               <ImagePostRight key={e._id}>
                 <ImagePostInfo>
-                  <h1 style={{marginBottom: '0'}}>{e.title}</h1>
+                  <h1 className={'title'} style={{marginBottom: '0'}}>
+                    {e.title}
+                  </h1>
                   <Divider />
                   {e.portfolioImage && e.portfolioImage.dimensions && (
                     <small>{e.portfolioImage.dimensions}</small>
@@ -68,7 +92,7 @@ const EntryList = ({posts}) => {
                   {e.portfolioImage && e.portfolioImage.mediums && (
                     <div style={{display: 'flex', flexWrap: 'wrap'}}>
                       {e.portfolioImage.mediums.map((m, i) => (
-                        <small style={{opacity: 0.5}} key={e._id + '.' + m.name}>
+                        <small style={{opacity: 0.75}} key={e._id + '.' + m.name}>
                           <i>{m.name}</i>
                           {i !== e.portfolioImage.mediums.length - 1 && (
                             <span style={{marginLeft: '0.5em', marginRight: '0.5em'}}>|</span>
@@ -109,7 +133,9 @@ const EntryList = ({posts}) => {
                   </Link>
                 </ImagePostImageWrapper>
                 <ImagePostInfo>
-                  <h1 style={{marginBottom: '0'}}>{e.title}</h1>
+                  <h1 className={'title'} style={{marginBottom: '0'}}>
+                    {e.title}
+                  </h1>
                   <Divider />
                   {e.portfolioImage && e.portfolioImage.dimensions && (
                     <small>{e.portfolioImage.dimensions}</small>
@@ -117,7 +143,7 @@ const EntryList = ({posts}) => {
                   {e.portfolioImage && e.portfolioImage.mediums && (
                     <div style={{display: 'flex', flexWrap: 'wrap'}}>
                       {e.portfolioImage.mediums.map((m, i) => (
-                        <small style={{opacity: 0.5}} key={e._id + '.' + m.name}>
+                        <small style={{opacity: 0.75}} key={e._id + '.' + m.name}>
                           <i>{m.name}</i>
                           {i !== e.portfolioImage.mediums.length - 1 && (
                             <span style={{marginLeft: '0.5em', marginRight: '0.5em'}}>|</span>

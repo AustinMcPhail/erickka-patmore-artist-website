@@ -1,7 +1,7 @@
 import React from 'react'
 import {graphql} from 'gatsby'
 import styled, {ThemeProvider} from 'styled-components'
-import {GlobalStyle} from '../lib/styled'
+import {GlobalStyle, theme} from '../lib/styled'
 import GraphQLErrorList from '../components/graphql-error-list'
 import SEO from '../components/core/seo'
 import Layout from '../components/core/layout'
@@ -86,9 +86,12 @@ const CvDownload = styled.a`
 const CvPreview = styled.iframe`
   width: 100%;
   height: 100%;
-  border-radius: 5px;
+  border-radius: 2px;
   height: 75vh;
   margin-bottom: 1em;
+  -webkit-box-shadow: 0px 14px 23px -11px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0px 14px 23px -11px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 14px 23px -11px rgba(0, 0, 0, 0.5);
 `
 
 const CvPage = (props) => {
@@ -118,19 +121,7 @@ const CvPage = (props) => {
   }
 
   return (
-    <ThemeProvider
-      theme={{
-        fontColor: site.fontColor
-          ? `rgba(${site.fontColor.rgb.r}, ${site.fontColor.rgb.g}, ${site.fontColor.rgb.b}, ${site.fontColor.rgb.a})`
-          : '#2f2f2f',
-        backgroundColor: site.backgroundColor
-          ? `rgba(${site.backgroundColor.rgb.r}, ${site.backgroundColor.rgb.g}, ${site.backgroundColor.rgb.b}, ${site.backgroundColor.rgb.a})`
-          : 'rgba(241, 238, 244, 1)',
-        headerBackgroundColor: site.backgroundColor
-          ? `rgba(${site.backgroundColor.rgb.r}, ${site.backgroundColor.rgb.g}, ${site.backgroundColor.rgb.b}, 0.75)`
-          : 'rgba(241, 238, 244, 0.75)'
-      }}
-    >
+    <ThemeProvider theme={theme(site)}>
       <GlobalStyle />
       <Layout
         fontColor={site.fontColor}

@@ -1,4 +1,4 @@
-const {isFuture} = require('date-fns')
+// const {isFuture} = require('date-fns')
 /**
  * Implement Gatsby's Node APIs in this file.
  *
@@ -6,12 +6,11 @@ const {isFuture} = require('date-fns')
  */
 
 // const {format} = require('date-fns')
-// TODO: Create the pages for each art piece
 async function createPages (graphql, actions) {
   const {createPage} = actions
   const result = await graphql(`
     {
-      categories: allSanityCategory {
+      categories: allSanityCategory(filter: {slug: {current: {ne: null}}}) {
         edges {
           node {
             title

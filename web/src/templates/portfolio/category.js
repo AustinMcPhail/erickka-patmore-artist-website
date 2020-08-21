@@ -2,9 +2,9 @@ import React from 'react'
 import {graphql} from 'gatsby'
 import SEO from '../../components/core/seo'
 import Layout from '../../components/core/layout'
-import {toPlainText} from '../../lib/helpers'
+import GraphQLErrorList from '../../components/graphql-error-list'
 import {ThemeProvider} from 'styled-components'
-import {GlobalStyle} from '../../lib/styled'
+import {GlobalStyle, theme} from '../../lib/styled'
 import EntryList from '../../components/EntryList'
 
 export const query = graphql`
@@ -74,6 +74,14 @@ export const query = graphql`
 
 const CategoryTemplate = (props) => {
   const {data, errors} = props
+  if (errors) {
+    return (
+      <Layout>
+        <GraphQLErrorList errors={errors} />
+      </Layout>
+    )
+  }
+
   const site = (data || {}).site
   const categories = (data || {}).categories.edges.map((e) => e.node) || []
   const posts = data.posts.edges.map((e) => e.node) || []
@@ -85,19 +93,7 @@ const CategoryTemplate = (props) => {
   }
 
   return (
-    <ThemeProvider
-      theme={{
-        fontColor: site.fontColor
-          ? `rgba(${site.fontColor.rgb.r}, ${site.fontColor.rgb.g}, ${site.fontColor.rgb.b}, ${site.fontColor.rgb.a})`
-          : '#2f2f2f',
-        backgroundColor: site.backgroundColor
-          ? `rgba(${site.backgroundColor.rgb.r}, ${site.backgroundColor.rgb.g}, ${site.backgroundColor.rgb.b}, ${site.backgroundColor.rgb.a})`
-          : 'rgba(241, 238, 244, 1)',
-        headerBackgroundColor: site.backgroundColor
-          ? `rgba(${site.backgroundColor.rgb.r}, ${site.backgroundColor.rgb.g}, ${site.backgroundColor.rgb.b}, 0.75)`
-          : 'rgba(241, 238, 244, 0.75)'
-      }}
-    >
+    <ThemeProvider theme={theme(site)}>
       <GlobalStyle />
       <Layout
         fontColor={site.fontColor}
