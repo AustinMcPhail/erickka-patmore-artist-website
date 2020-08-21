@@ -41,8 +41,10 @@ const NavList = styled.ul`
 `
 const NavListItem = styled.li`
   margin-left: 1em;
-  margin-right: 1em;
   padding-bottom: 0.5em;
+  @media (min-width: 1280px) {
+    margin-right: 1em;
+  }
 `
 
 const Brand = styled.div`
@@ -76,8 +78,11 @@ const BrandLinks = styled.div`
 const NavLinkList = styled.ul`
   display: flex;
   flex-direction: column;
-  padding: 15px;
   @media (min-width: 1280px) {
+    a {
+      margin-inline: 1em;
+    }
+    padding: 15px;
     flex-direction: row;
     position: absolute;
     justify-content: flex-end;
@@ -101,13 +106,11 @@ const subInactiveStyle = {
 
 const Header = ({onHideNav, onShowNav, showNav, siteTitle, categories, socials, fontColor}) => {
   const [portfolioListOpen, setPortfolioListOpen] = useState(false)
-  const [onPortfolioPath, setOnPortfolioPath] = useState(false)
-
   useEffect(() => {
     if (typeof window === 'undefined') {
-      setOnPortfolioPath(false)
+      setPortfolioListOpen(false)
     } else if (window.location.href.includes(portfolioPath)) {
-      setOnPortfolioPath(true)
+      setPortfolioListOpen(true)
     }
   })
 
@@ -146,7 +149,6 @@ const Header = ({onHideNav, onShowNav, showNav, siteTitle, categories, socials, 
             ))}
         </Link>
         <BrandLinks>
-          {/* TODO: Add links to social media */}
           {socials && socials.instagramUrl && <InstagramIcon url={socials.instagramUrl} />}
           {socials && socials.facebookUrl && <FacebookIcon url={socials.facebookUrl} />}
           {socials && socials.twitterUrl && <TwitterIcon url={socials.twitterUrl} />}
@@ -154,22 +156,19 @@ const Header = ({onHideNav, onShowNav, showNav, siteTitle, categories, socials, 
       </Brand>
       <Navigation>
         <NavList>
-          <div
-            onMouseEnter={() => setPortfolioListOpen(true)}
-            onClick={() => setPortfolioListOpen(true)}
-            style={onPortfolioPath ? activeStyle : inactiveStyle}
-          >
+          <div style={portfolioListOpen ? activeStyle : inactiveStyle}>
             <Link to={portfolioPath}>
               <NavListItem>Portfolio</NavListItem>
             </Link>
             {portfolioListOpen && (
-              <NavLinkList onMouseLeave={() => setPortfolioListOpen(false)}>
+              <NavLinkList>
                 {categories.map((cat, i) => (
                   <Link
+                    className={'test'}
                     key={'category.' + cat.slug.current}
                     to={'/portfolio/' + cat.slug.current}
                     activeStyle={subActiveStyle}
-                    style={{marginRight: '1em', paddingBottom: '.5em', ...subInactiveStyle}}
+                    style={{paddingBottom: '.5em', ...subInactiveStyle}}
                   >
                     <li>{cat.title}</li>
                   </Link>
