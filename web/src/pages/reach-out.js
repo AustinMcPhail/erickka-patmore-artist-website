@@ -104,6 +104,8 @@ const ReachOutPage = (props) => {
     grid-area: c;
   `
 
+  const gramzUrl = `https://www.instagram.com/graphql/query/?query_hash=bfa387b2992c3a52dcbe447467b4b771&variables={%22id%22:%225440495711%22,%22first%22:12}`
+
   return (
     <ThemeProvider
       theme={{
