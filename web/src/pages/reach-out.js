@@ -5,6 +5,7 @@ import {GlobalStyle, theme} from '../lib/styled'
 import GraphQLErrorList from '../components/graphql-error-list'
 import SEO from '../components/core/seo'
 import Layout from '../components/core/layout'
+import Instagram from '../components/Instagram'
 
 export const query = graphql`
   query ReachOutPageQuery {
@@ -44,9 +45,28 @@ export const query = graphql`
     }
   }
 `
+
+const ReachOutWrapper = styled.div`
+  display: grid;
+  grid-gap: 0.5em;
+  grid-template-columns: 1fr 1fr;
+`
+
+const Social = styled.section`
+  max-height: 75vh;
+  overflow: auto;
+  border-radius: 10px;
+`
+
+const InstagramWrapper = styled(Social)``
+
+const ContactFormWrapper = styled.section`
+  max-height: 75vh;
+  padding: 2rem;
+`
+
 const ReachOutPage = (props) => {
   const {data, errors} = props
-
   if (errors) {
     return (
       <Layout>
@@ -70,36 +90,6 @@ const ReachOutPage = (props) => {
     instagramUrl: site.instagramUrl
   }
 
-  const ReachOutWrapper = styled.div`
-    display: grid;
-    grid-gap: 0.5em;
-    grid-template-areas: 'c i';
-  `
-
-  const Social = styled.section`
-    max-height: 75vh;
-    overflow: auto;
-    border-radius: 10px;
-  `
-
-  // const FacebookWrapper = styled(Social)`
-  //   grid-area: f;
-  // `
-
-  // const TwitterWrapper = styled(Social)`
-  //   grid-area: t;
-  // `
-
-  const InstagramWrapper = styled(Social)`
-    grid-area: i;
-  `
-
-  const ContactFormWrapper = styled.section`
-    grid-area: c;
-  `
-
-  const gramzUrl = `https://www.instagram.com/graphql/query/?query_hash=bfa387b2992c3a52dcbe447467b4b771&variables={%22id%22:%225440495711%22,%22first%22:12}`
-
   return (
     <ThemeProvider theme={theme(site)}>
       <GlobalStyle />
@@ -111,8 +101,6 @@ const ReachOutPage = (props) => {
       >
         <SEO title={site.title} description={site.description} keywords={site.keywords} />
         <ReachOutWrapper>
-          <InstagramWrapper>Instagram</InstagramWrapper>
-          {/* <FacebookWrapper>Facebook</FacebookWrapper> */}
           <ContactFormWrapper>
             <form name='contact' method='POST' data-netlify='true'>
               <div className='field'>
@@ -150,29 +138,10 @@ const ReachOutPage = (props) => {
                 </button>
               </div>
             </form>
-            {/* <form method='post' netlify-honeypot='bot-field' data-netlify='true' name='contact'>
-              <input type='hidden' name='bot-field' />
-              <input type='hidden' name='form-name' value='contact' />
-              <label>
-                Name
-                <input type='text' name='name' id='name' />
-              </label>
-              <label>
-                Email
-                <input type='email' name='email' id='email' />
-              </label>
-              <label>
-                Subject
-                <input type='text' name='subject' id='subject' />
-              </label>
-              <label>
-                Message
-                <textarea name='message' id='message' rows='5' />
-              </label>
-              <button type='submit'>Send</button>
-              <input type='reset' value='Clear' />
-            </form> */}
           </ContactFormWrapper>
+          <InstagramWrapper>
+            <Instagram />
+          </InstagramWrapper>
         </ReachOutWrapper>
       </Layout>
     </ThemeProvider>
