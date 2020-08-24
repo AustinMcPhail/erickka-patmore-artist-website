@@ -9,5 +9,8 @@ module.exports = {
       pragma: 'React',
       version: '16.8.4'
     }
+  },
+  globals: {
+    fetch: false
   }
 }
