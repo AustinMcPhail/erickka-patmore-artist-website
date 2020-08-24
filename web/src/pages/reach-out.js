@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {graphql} from 'gatsby'
 import styled, {ThemeProvider} from 'styled-components'
 import {GlobalStyle, theme} from '../lib/styled'
@@ -73,9 +73,50 @@ const InstagramWrapper = styled(Social)`
   }
 `
 
-const ContactFormWrapper = styled.section`
-  max-height: 70vh;
+const ContactFormWrapper = styled.form`
   padding: 2rem;
+  label {
+    width: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    font-weight: bold;
+    margin-bottom: 20px;
+
+    .input-label {
+      transition: transform 0.1s ease-in-out;
+      transform: translateY(20px);
+    }
+    .input-label-raised {
+      transition: transform 0.1s ease-in-out;
+      transform: translateY(-5px);
+    }
+
+    input {
+      caret-color: ${(props) => props.theme.fontColor};
+      background: none;
+      border: none;
+      color: ${(props) => props.theme.fontColor};
+      border-bottom: 2px solid ${(props) => props.theme.fontColor};
+    }
+    input:focus {
+      outline: none;
+    }
+
+    textarea {
+      line-height: 27px;
+      border: none;
+      outline: none;
+      color: ${(props) => props.theme.fontColor};
+      background: repeating-linear-gradient(
+        to bottom,
+        transparent,
+        transparent 26px,
+        ${(props) => props.theme.fontColor} 27px
+      );
+      background-attachment: local;
+    }
+  }
 `
 
 const ReachOutPage = (props) => {
@@ -90,6 +131,28 @@ const ReachOutPage = (props) => {
 
   const site = (data || {}).site
   const categories = data.categories.edges.map((e) => e.node) || []
+
+  useEffect(() => {
+    if (document) {
+      const els = document.getElementsByClassName('input-field')
+      Array.prototype.forEach.call(els, function (el) {
+        el.addEventListener('focusin', (event) => {
+          event.target.previousSibling.classList.add('input-label-raised')
+        })
+        el.addEventListener('focusout', (event) => {
+          if (event.target.value) {
+            event.target.previousSibling.classList.remove('input-label')
+            event.target.previousSibling.classList.add('input-label-raised')
+            // event.target.previousSibling.style = 'transform: translateY(-5px);'
+          } else {
+            event.target.previousSibling.classList.remove('input-label-raised')
+            event.target.previousSibling.classList.add('input-label')
+            // event.target.previousSibling.classList.add()
+          }
+        })
+      })
+    }
+  }, [])
 
   if (!site) {
     throw new Error(
@@ -114,43 +177,27 @@ const ReachOutPage = (props) => {
       >
         <SEO title={site.title} description={site.description} keywords={site.keywords} />
         <ReachOutWrapper>
-          <ContactFormWrapper>
-            <form name='contact' method='POST' data-netlify='true'>
-              <div className='field'>
-                <label className='label'>
-                  Your Name:
-                  <input className='input' type='text' name='name' />
-                </label>
-              </div>
-              <div className='field'>
-                <label className='label'>
-                  Your Email:
-                  <input className='input' type='email' name='email' />
-                </label>
-              </div>
-              <div className='field'>
-                <label htmlFor='role[]' className='label'>
-                  Your Role:
-                </label>
-                <div className='select is-multiple'>
-                  <select name='role[]' multiple size='2'>
-                    <option value='leader'>Leader</option>
-                    <option value='follower'>Follower</option>
-                  </select>
-                </div>
-              </div>
-              <div className='field'>
-                <label className='label'>
-                  Message:
-                  <textarea className='textarea' name='message' />
-                </label>
-              </div>
-              <div className='field'>
-                <button className='button is-primary is-medium' type='submit'>
-                  Send
-                </button>
-              </div>
-            </form>
+          <ContactFormWrapper method='post' action='#'>
+            <div style={{display: 'flex', justifyContent: 'space-between'}}>
+              <label style={{marginRight: '1rem'}}>
+                <span className='input-label'>Name</span>
+                <input className='input-field' type='text' id='name' required />
+              </label>
+              <label>
+                <span className='input-label'>Subject</span>
+                <input className='input-field' type='text' id='subject' required />
+              </label>
+            </div>
+            <label>
+              <span className='input-label'>Message</span>
+              <textarea className='input-label' name='message' id='message' rows='3' required />
+            </label>
+            <label>
+              <span className='input-label'>Contact</span>
+              <input className='input-field' type='email' id='contact' required />
+            </label>
+            <button type='submit'>Send</button>
+            <input type='reset' value='Clear' />
           </ContactFormWrapper>
           <InstagramWrapper>
             <div className='heading'>
