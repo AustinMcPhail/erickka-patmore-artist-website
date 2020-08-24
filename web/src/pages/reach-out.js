@@ -1,7 +1,7 @@
 import React from 'react'
 import {graphql} from 'gatsby'
 import styled, {ThemeProvider} from 'styled-components'
-import {GlobalStyle} from '../lib/styled'
+import {GlobalStyle, theme} from '../lib/styled'
 import GraphQLErrorList from '../components/graphql-error-list'
 import SEO from '../components/core/seo'
 import Layout from '../components/core/layout'
@@ -73,13 +73,7 @@ const ReachOutPage = (props) => {
   const ReachOutWrapper = styled.div`
     display: grid;
     grid-gap: 0.5em;
-    grid-template-areas:
-      'c i'
-      'c f'
-      'c t'
-      'c t'
-      'c t'
-      'c t';
+    grid-template-areas: 'c i';
   `
 
   const Social = styled.section`
@@ -88,13 +82,13 @@ const ReachOutPage = (props) => {
     border-radius: 10px;
   `
 
-  const FacebookWrapper = styled(Social)`
-    grid-area: f;
-  `
+  // const FacebookWrapper = styled(Social)`
+  //   grid-area: f;
+  // `
 
-  const TwitterWrapper = styled(Social)`
-    grid-area: t;
-  `
+  // const TwitterWrapper = styled(Social)`
+  //   grid-area: t;
+  // `
 
   const InstagramWrapper = styled(Social)`
     grid-area: i;
@@ -104,20 +98,10 @@ const ReachOutPage = (props) => {
     grid-area: c;
   `
 
+  const gramzUrl = `https://www.instagram.com/graphql/query/?query_hash=bfa387b2992c3a52dcbe447467b4b771&variables={%22id%22:%225440495711%22,%22first%22:12}`
+
   return (
-    <ThemeProvider
-      theme={{
-        fontColor: site.fontColor
-          ? `rgba(${site.fontColor.rgb.r}, ${site.fontColor.rgb.g}, ${site.fontColor.rgb.b}, ${site.fontColor.rgb.a})`
-          : '#2f2f2f',
-        backgroundColor: site.backgroundColor
-          ? `rgba(${site.backgroundColor.rgb.r}, ${site.backgroundColor.rgb.g}, ${site.backgroundColor.rgb.b}, ${site.backgroundColor.rgb.a})`
-          : 'rgba(241, 238, 244, 1)',
-        headerBackgroundColor: site.backgroundColor
-          ? `rgba(${site.backgroundColor.rgb.r}, ${site.backgroundColor.rgb.g}, ${site.backgroundColor.rgb.b}, 0.75)`
-          : 'rgba(241, 238, 244, 0.75)'
-      }}
-    >
+    <ThemeProvider theme={theme(site)}>
       <GlobalStyle />
       <Layout
         fontColor={site.fontColor}
@@ -128,15 +112,7 @@ const ReachOutPage = (props) => {
         <SEO title={site.title} description={site.description} keywords={site.keywords} />
         <ReachOutWrapper>
           <InstagramWrapper>Instagram</InstagramWrapper>
-          <FacebookWrapper>Facebook</FacebookWrapper>
-          <TwitterWrapper>
-            <a
-              className='twitter-timeline'
-              href='https://twitter.com/Erickkapatmore?ref_src=twsrc%5Etfw'
-            >
-              Tweets by Erickkapatmore
-            </a>
-          </TwitterWrapper>
+          {/* <FacebookWrapper>Facebook</FacebookWrapper> */}
           <ContactFormWrapper>
             <form name='contact' method='POST' data-netlify='true'>
               <div className='field'>

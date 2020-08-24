@@ -17,9 +17,23 @@ export const GlobalStyle = createGlobalStyle`
 
   body {
     background-color: ${(props) => props.theme.backgroundColor};
-    /* font-family: 'Roboto', sans-serif; */
-    /* font-family: 'Cutive Mono', monospace; */
-    font-family: 'Paytone One', sans-serif;
+    font-family: 'Montserrat', sans-serif;
+    /* font-family: 'Montserrat', sans-serif; */
     color: ${(props) => props.theme.fontColor};
   }
 `
+
+export const theme = (site) => {
+  return {
+    secondaryFont: 'Inconsolata',
+    fontColor: site.fontColor
+      ? `rgba(${site.fontColor.rgb.r}, ${site.fontColor.rgb.g}, ${site.fontColor.rgb.b}, ${site.fontColor.rgb.a})`
+      : '#2f2f2f',
+    backgroundColor: site.backgroundColor
+      ? `rgba(${site.backgroundColor.rgb.r}, ${site.backgroundColor.rgb.g}, ${site.backgroundColor.rgb.b}, ${site.backgroundColor.rgb.a})`
+      : 'rgba(241, 238, 244, 1)',
+    headerBackgroundColor: site.backgroundColor
+      ? `rgba(${site.backgroundColor.rgb.r}, ${site.backgroundColor.rgb.g}, ${site.backgroundColor.rgb.b}, 0.75)`
+      : 'rgba(241, 238, 244, 0.75)'
+  }
+}

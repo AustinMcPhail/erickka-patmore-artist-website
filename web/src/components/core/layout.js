@@ -38,7 +38,7 @@ const fadeOut = keyframes`
 
 const ToTopButton = styled.button`
   cursor: pointer;
-  z-index: 5;
+  /* z-index: ; */
   position: fixed;
   bottom: 0;
   right: 0;
@@ -51,12 +51,12 @@ const ToTopButton = styled.button`
     animation: ${fadeIn} 0.5s ease-in-out forwards;
   }
 
-  margin-right: 2rem;
+  margin-right: 0rem;
   margin-bottom: 1rem;
 
   font-weight: thin;
   @media (min-width: 768px) {
-    margin-right: 10rem;
+    margin-right: 5rem;
   }
 `
 

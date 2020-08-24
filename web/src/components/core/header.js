@@ -18,7 +18,7 @@ const HeaderWrapper = styled.header`
 `
 
 const Navigation = styled.nav`
-  /* padding-top: 15px; */
+  /* margin-top: 1rem; */
 `
 
 const NavList = styled.ul`
@@ -30,7 +30,7 @@ const NavList = styled.ul`
 
   flex-wrap: wrap;
   justify-content: space-between;
-  font-family: 'Cutive Mono', monospace;
+  font-family: ${(props) => props.theme.secondaryFont};
 
   text-align: end;
 
@@ -40,12 +40,16 @@ const NavList = styled.ul`
   }
 `
 const NavListItem = styled.li`
-  margin-left: 1em;
-  margin-right: 1em;
-  padding-bottom: 0.5em;
+  padding-left: 1em;
+  padding-bottom: 1em;
+  @media (min-width: 1280px) {
+    padding-right: 1em;
+    padding-top: 1em;
+  }
 `
 
 const Brand = styled.div`
+  padding-top: 1em;
   text-align: left;
   border-bottom-right-radius: 100px;
 `
@@ -64,7 +68,6 @@ const BrandLinks = styled.div`
   display: flex;
   align-items: center;
   margin-top: 1em;
-
   a {
     margin-right: 0.75em;
     &:hover {
@@ -74,14 +77,24 @@ const BrandLinks = styled.div`
 `
 
 const NavLinkList = styled.ul`
-  display: flex;
+  left: 0;
+  display: inline-flex;
   flex-direction: column;
-  padding: 15px;
+  a {
+    padding-left: 1em;
+  }
   @media (min-width: 1280px) {
+    padding-top: 1em;
+    a {
+      padding-right: 1em;
+    }
     flex-direction: row;
     position: absolute;
-    justify-content: flex-end;
   }
+`
+
+const PortfolioItem = styled.div`
+  position: relative;
 `
 
 const reachOutPath = '/reach-out'
@@ -101,13 +114,11 @@ const subInactiveStyle = {
 
 const Header = ({onHideNav, onShowNav, showNav, siteTitle, categories, socials, fontColor}) => {
   const [portfolioListOpen, setPortfolioListOpen] = useState(false)
-  const [onPortfolioPath, setOnPortfolioPath] = useState(false)
-
   useEffect(() => {
     if (typeof window === 'undefined') {
-      setOnPortfolioPath(false)
+      setPortfolioListOpen(false)
     } else if (window.location.href.includes(portfolioPath)) {
-      setOnPortfolioPath(true)
+      setPortfolioListOpen(true)
     }
   })
 
@@ -146,7 +157,6 @@ const Header = ({onHideNav, onShowNav, showNav, siteTitle, categories, socials, 
             ))}
         </Link>
         <BrandLinks>
-          {/* TODO: Add links to social media */}
           {socials && socials.instagramUrl && <InstagramIcon url={socials.instagramUrl} />}
           {socials && socials.facebookUrl && <FacebookIcon url={socials.facebookUrl} />}
           {socials && socials.twitterUrl && <TwitterIcon url={socials.twitterUrl} />}
@@ -154,35 +164,32 @@ const Header = ({onHideNav, onShowNav, showNav, siteTitle, categories, socials, 
       </Brand>
       <Navigation>
         <NavList>
-          <div
-            onMouseEnter={() => setPortfolioListOpen(true)}
-            onClick={() => setPortfolioListOpen(true)}
-            style={onPortfolioPath ? activeStyle : inactiveStyle}
-          >
+          <PortfolioItem style={portfolioListOpen ? activeStyle : inactiveStyle}>
             <Link to={portfolioPath}>
               <NavListItem>Portfolio</NavListItem>
             </Link>
             {portfolioListOpen && (
-              <NavLinkList onMouseLeave={() => setPortfolioListOpen(false)}>
+              <NavLinkList>
                 {categories.map((cat, i) => (
                   <Link
+                    className={'test'}
                     key={'category.' + cat.slug.current}
                     to={'/portfolio/' + cat.slug.current}
                     activeStyle={subActiveStyle}
-                    style={{marginRight: '1em', paddingBottom: '.5em', ...subInactiveStyle}}
+                    style={{paddingBottom: '.5em', ...subInactiveStyle}}
                   >
                     <li>{cat.title}</li>
                   </Link>
                 ))}
               </NavLinkList>
             )}
-          </div>
+          </PortfolioItem>
           <Link to={reachOutPath} activeStyle={activeStyle} style={inactiveStyle} partiallyActive>
             <NavListItem>Reach Out</NavListItem>
           </Link>
-          <Link to={journalPath} activeStyle={activeStyle} style={inactiveStyle} partiallyActive>
+          {/* <Link to={journalPath} activeStyle={activeStyle} style={inactiveStyle} partiallyActive>
             <NavListItem>Journal</NavListItem>
-          </Link>
+          </Link> */}
           <Link to={statementPath} activeStyle={activeStyle} style={inactiveStyle} partiallyActive>
             <NavListItem>Statement</NavListItem>
           </Link>
