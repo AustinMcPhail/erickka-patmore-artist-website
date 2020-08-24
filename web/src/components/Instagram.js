@@ -4,16 +4,16 @@ import styled from 'styled-components'
 const url = `/.netlify/functions/instagram`
 
 const InstagramPosts = styled.div`
-  grid-area: i;
-  padding: 2rem;
-
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
+  display: flex;
+  overflow: auto;
+  padding-block-end: 1rem;
+  a:not(:last-child) {
+    margin-inline-end: 1rem;
+  }
 
   a {
     img {
-      max-width: 100%;
+      box-shadow: 0px 10px 10px -10px rgba(0, 0, 0, 0.5);
     }
   }
 `
@@ -36,7 +36,10 @@ const Instagram = () => {
         insta.map((post) => {
           return (
             <a key={post.id} href={post.url} target='_blank' rel='noopener noreferrer'>
-              <img src={post.thumbnail} alt={post.caption} />
+              <img
+                src={`https://images.weserv.nl/?url=${encodeURIComponent(post.thumbnail)}&w=230`}
+                alt={post.caption}
+              />
             </a>
           )
         })}

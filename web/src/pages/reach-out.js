@@ -23,6 +23,10 @@ export const query = graphql`
           b
           a
         }
+        hsl {
+          h
+          s
+        }
       }
       fontColor {
         rgb {
@@ -46,22 +50,31 @@ export const query = graphql`
   }
 `
 
-const ReachOutWrapper = styled.div`
-  display: grid;
-  grid-gap: 0.5em;
-  grid-template-columns: 1fr 1fr;
-`
+const ReachOutWrapper = styled.div``
 
-const Social = styled.section`
-  max-height: 75vh;
-  overflow: auto;
-  border-radius: 10px;
-`
+const Social = styled.section``
 
-const InstagramWrapper = styled(Social)``
+const InstagramWrapper = styled(Social)`
+  .heading {
+    display: flex;
+    align-items: center;
+    margin-block-end: 1rem;
+
+    hr {
+      width: 100%;
+    }
+
+    h3 {
+      text-align: center;
+      width: 50%;
+      margin-inline-start: 1rem;
+      margin-inline-end: 1rem;
+    }
+  }
+`
 
 const ContactFormWrapper = styled.section`
-  max-height: 75vh;
+  max-height: 70vh;
   padding: 2rem;
 `
 
@@ -140,6 +153,11 @@ const ReachOutPage = (props) => {
             </form>
           </ContactFormWrapper>
           <InstagramWrapper>
+            <div className='heading'>
+              <hr />
+              <h3>Instagram</h3>
+              <hr />
+            </div>
             <Instagram />
           </InstagramWrapper>
         </ReachOutWrapper>
