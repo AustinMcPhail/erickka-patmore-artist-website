@@ -33,7 +33,9 @@ export const theme = (site) => {
       ? `hsla(${site.backgroundColor.hsl.h}, ${site.backgroundColor.hsl.s * 100}%, ${
         site.backgroundColor.hsl.l * 100
       }%, ${site.backgroundColor.hsl.a})`
-      : 'rgba(241, 238, 244, 1)',
-    backgroundHsl: site.backgroundColor.hsl
+      : 'hsla(210, 21%, 95%, 1)',
+    backgroundHsl: site.backgroundColor
+      ? site.backgroundColor.hsl
+      : {h: 210, s: 0.21, l: 0.95, a: 1}
   }
 }

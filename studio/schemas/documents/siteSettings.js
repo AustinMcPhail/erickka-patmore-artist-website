@@ -69,6 +69,15 @@ export default {
         "The statement that appears on the Statement page of the site. Tell 'em what you're about."
     },
     {
+      name: 'statementImage',
+      type: 'mainImage',
+      title: 'Statement Image',
+      description: 'Image that appears next to your satement.',
+      options: {
+        hotspot: true
+      }
+    },
+    {
       name: 'author',
       type: 'reference',
       description: 'Publish an author and set a reference to them here.',

@@ -101,7 +101,6 @@ const reachOutPath = '/reach-out'
 const cvPath = '/cv'
 const statementPath = '/statement'
 const portfolioPath = '/portfolio'
-// const journalPath = '/journal'
 
 const inactiveStyle = {
   borderTop: 'solid 4px transparent',
@@ -186,9 +185,6 @@ const Header = ({siteTitle, categories, socials, fontColor}) => {
           <Link to={reachOutPath} activeStyle={activeStyle} style={inactiveStyle} partiallyActive>
             <NavListItem>Reach Out</NavListItem>
           </Link>
-          {/* <Link to={journalPath} activeStyle={activeStyle} style={inactiveStyle} partiallyActive>
-            <NavListItem>Journal</NavListItem>
-          </Link> */}
           <Link to={statementPath} activeStyle={activeStyle} style={inactiveStyle} partiallyActive>
             <NavListItem>Statement</NavListItem>
           </Link>
