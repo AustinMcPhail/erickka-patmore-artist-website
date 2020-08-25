@@ -111,7 +111,7 @@ const EntryList = ({entry}) => {
             fluid={entry.portfolioImage.asset.fluid}
           />
         </a>
-        <a href='#' className='overlay' id={'fs_' + entry.slug.current} tabIndex='0'>
+        <a href='#' className='overlay' id={'fs_' + entry.slug.current}>
           <img
             alt={entry.title}
             key={entry.portfolioImage.asset.fluid.src}
