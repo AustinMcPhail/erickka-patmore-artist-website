@@ -41,22 +41,6 @@ function SEO ({description, lang, meta, keywords, title, image}) {
               {
                 property: 'og:image',
                 content: metaImage
-              },
-              {
-                name: 'twitter:card',
-                content: 'summary'
-              },
-              {
-                name: 'twitter:creator',
-                content: siteAuthor
-              },
-              {
-                name: 'twitter:title',
-                content: title
-              },
-              {
-                name: 'twitter:description',
-                content: metaDescription
               }
             ]
               .concat(

@@ -1,10 +1,12 @@
 import React, {useEffect} from 'react'
 import Header from './header'
 import styled, {keyframes} from 'styled-components'
+import SEO from './seo'
 
 const LayoutWrapper = styled.div`
   margin-left: 2rem;
   margin-right: 2rem;
+  margin-block-end: 4rem;
 
   @media (min-width: 768px) {
     margin-left: 10rem;
@@ -38,7 +40,6 @@ const fadeOut = keyframes`
 
 const ToTopButton = styled.button`
   cursor: pointer;
-  /* z-index: ; */
   position: fixed;
   bottom: 0;
   right: 0;
@@ -60,16 +61,7 @@ const ToTopButton = styled.button`
   }
 `
 
-const Layout = ({
-  children,
-  onHideNav,
-  onShowNav,
-  showNav,
-  siteTitle,
-  categories,
-  socials,
-  fontColor
-}) => {
+const Layout = ({children, site, categories, socials}) => {
   const scrollToTop = () => {
     window.scrollTo({top: 0, behavior: 'smooth'})
   }
@@ -85,26 +77,23 @@ const Layout = ({
   }
   useEffect(() => {
     if (typeof window === 'undefined') return
-    console.log('found a window')
     window.addEventListener('scroll', handleScrolling)
   })
 
   return (
     <LayoutWrapper>
+      <SEO title={site.title} description={site.description} keywords={site.keywords} />
       <Header
-        siteTitle={siteTitle}
-        onHideNav={onHideNav}
-        onShowNav={onShowNav}
-        showNav={showNav}
+        siteTitle={site.title}
         categories={categories}
         socials={socials}
-        fontColor={fontColor}
+        fontColor={site.fontColor}
       />
+      <main>{children}</main>
       <ToTopButton onClick={() => scrollToTop()} id='toTop'>
         Back to Top
         {/* <ToTopIcon /> */}
       </ToTopButton>
-      <main>{children}</main>
     </LayoutWrapper>
   )
 }

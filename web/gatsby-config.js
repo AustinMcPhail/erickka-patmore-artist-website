@@ -9,7 +9,6 @@ const isProd = process.env.NODE_ENV === 'production'
 
 module.exports = {
   plugins: [
-    'gatsby-plugin-twitter',
     'gatsby-plugin-instagram-embed',
     'gatsby-plugin-sharp',
     'gatsby-transformer-sharp',

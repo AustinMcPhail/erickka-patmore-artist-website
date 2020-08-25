@@ -3,7 +3,6 @@ import {graphql} from 'gatsby'
 import styled, {ThemeProvider} from 'styled-components'
 import {GlobalStyle, theme} from '../lib/styled'
 import GraphQLErrorList from '../components/graphql-error-list'
-import SEO from '../components/core/seo'
 import Layout from '../components/core/layout'
 
 export const query = graphql`
@@ -12,7 +11,6 @@ export const query = graphql`
       title
       description
       keywords
-      twitterUrl
       facebookUrl
       instagramUrl
       backgroundColor {
@@ -43,7 +41,7 @@ export const query = graphql`
         }
       }
     }
-    categories: allSanityCategory {
+    categories: allSanityCategory(filter: {enabled: {ne: false}}) {
       edges {
         node {
           title
@@ -55,15 +53,6 @@ export const query = graphql`
     }
   }
 `
-
-// const PageWrapper = styled.div`
-//   display: grid;
-//   grid-gap: 1em;
-//   grid-template-columns: 1fr;
-//   @media (min-width: 1280px) {
-//     grid-template-columns: 1fr 1fr;
-//   }
-// `
 
 const Cv = styled.section`
   display: flex;
@@ -87,17 +76,35 @@ const CvDownload = styled.a`
   border: solid 2px ${(props) => props.theme.fontColor};
   border-radius: 2px;
   text-align: center;
+  :focus {
+    outline: dashed 1px ${(props) => props.theme.fontColor};
+  }
 `
 
 const CvPreview = styled.iframe`
+  animation: fadeIn 2s ease-in-out forwards;
+
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+      box-shadow: 0px 10px 20px 5px
+        hsl(
+          ${(props) => props.theme.backgroundHsl.h},
+          ${(props) =>
+    props.theme.backgroundHsl.s * 100 - props.theme.backgroundHsl.s * 100 * 0.5 + '%'},
+          ${(props) =>
+    props.theme.backgroundHsl.l * 100 - props.theme.backgroundHsl.l * 100 * 0.5 + '%'}
+        );
+    }
+    100% {
+      opacity: 1;
+      box-shadow: 0px 15px 10px -10px hsl(${(props) => props.theme.backgroundHsl.h}, ${(props) => props.theme.backgroundHsl.s * 100 - props.theme.backgroundHsl.s * 100 * 0.5 + '%'}, ${(props) => props.theme.backgroundHsl.l * 100 - props.theme.backgroundHsl.l * 100 * 0.5 + '%'});
+    }
+  }
   width: 100%;
-  height: 100%;
   border-radius: 2px;
   height: 75vh;
   margin-bottom: 1em;
-  -webkit-box-shadow: 0px 14px 23px -11px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0px 14px 23px -11px rgba(0, 0, 0, 0.5);
-  box-shadow: 0px 14px 23px -11px rgba(0, 0, 0, 0.5);
 `
 
 const CvPage = (props) => {
@@ -121,7 +128,6 @@ const CvPage = (props) => {
   }
 
   const socials = {
-    twitterUrl: site.twitterUrl,
     facebookUrl: site.facebookUrl,
     instagramUrl: site.instagramUrl
   }
@@ -129,13 +135,7 @@ const CvPage = (props) => {
   return (
     <ThemeProvider theme={theme(site)}>
       <GlobalStyle />
-      <Layout
-        fontColor={site.fontColor}
-        siteTitle={site.title}
-        categories={categories}
-        socials={socials}
-      >
-        <SEO title={site.title} description={site.description} keywords={site.keywords} />
+      <Layout site={site} categories={categories} socials={socials}>
         {site.cv && (
           <Cv>
             <DownloadWrapper>

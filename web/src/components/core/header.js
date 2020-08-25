@@ -1,21 +1,15 @@
 import {Link} from 'gatsby'
 import React, {useState, useEffect} from 'react'
-import styled, {keyframes} from 'styled-components'
+import styled from 'styled-components'
 import FacebookIcon from '../icon/FacebookIcon'
-import TwitterIcon from '../icon/TwitterIcon'
 import InstagramIcon from '../icon/InstagramIcon'
 
 const HeaderWrapper = styled.header`
   top: 0;
-  /* position: sticky; */
   display: grid;
   grid-template-columns: 1fr 3fr;
   z-index: 1;
   margin-bottom: 1em;
-`
-
-const Navigation = styled.nav`
-  /* margin-top: 1rem; */
 `
 
 const NavList = styled.ul`
@@ -46,30 +40,38 @@ const NavListItem = styled.li`
 `
 
 const Brand = styled.div`
-  margin-top: 4rem;
   padding-top: 1em;
   text-align: left;
   border-bottom-right-radius: 100px;
-`
-
-const zoomTilt = keyframes`
-  from {
-    transform: rotate(0deg) scale(1);
-  }
-
-  to {
-    transform: rotate(5deg) scale(1.05);
-  }
 `
 
 const BrandLinks = styled.div`
   display: flex;
   align-items: center;
   margin-top: 1em;
+
+  @keyframes zoomTiltIn {
+    from {
+      transform: rotate(0deg) scale(1);
+    }
+    to {
+      transform: rotate(5deg) scale(1.05);
+    }
+  }
+  @keyframes zoomTiltOut {
+    from {
+      transform: rotate(5deg) scale(1.05);
+    }
+    to {
+      transform: rotate(0deg) scale(1);
+    }
+  }
+
   a {
     margin-right: 0.75em;
-    &:hover {
-      animation: ${zoomTilt} 0.25s linear forwards;
+    animation: zoomTiltOut 0.25s linear forwards;
+    :hover {
+      animation: zoomTiltIn 0.25s linear forwards;
     }
   }
 `
@@ -110,7 +112,7 @@ const subInactiveStyle = {
   borderTop: 'solid 2px transparent'
 }
 
-const Header = ({onHideNav, onShowNav, showNav, siteTitle, categories, socials, fontColor}) => {
+const Header = ({siteTitle, categories, socials, fontColor}) => {
   const [portfolioListOpen, setPortfolioListOpen] = useState(false)
   useEffect(() => {
     if (typeof window === 'undefined') {
@@ -157,10 +159,9 @@ const Header = ({onHideNav, onShowNav, showNav, siteTitle, categories, socials, 
         <BrandLinks>
           {socials && socials.instagramUrl && <InstagramIcon url={socials.instagramUrl} />}
           {socials && socials.facebookUrl && <FacebookIcon url={socials.facebookUrl} />}
-          {socials && socials.twitterUrl && <TwitterIcon url={socials.twitterUrl} />}
         </BrandLinks>
       </Brand>
-      <Navigation>
+      <nav>
         <NavList>
           <PortfolioItem style={portfolioListOpen ? activeStyle : inactiveStyle}>
             <Link to={portfolioPath}>
@@ -195,7 +196,7 @@ const Header = ({onHideNav, onShowNav, showNav, siteTitle, categories, socials, 
             <NavListItem>CV</NavListItem>
           </Link>
         </NavList>
-      </Navigation>
+      </nav>
     </HeaderWrapper>
   )
 }

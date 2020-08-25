@@ -1,6 +1,5 @@
 import React from 'react'
 import {graphql} from 'gatsby'
-import SEO from '../../components/core/seo'
 import Layout from '../../components/core/layout'
 import GraphQLErrorList from '../../components/graphql-error-list'
 import {ThemeProvider} from 'styled-components'
@@ -13,7 +12,6 @@ export const query = graphql`
       title
       description
       keywords
-      twitterUrl
       facebookUrl
       instagramUrl
       backgroundColor {
@@ -39,7 +37,7 @@ export const query = graphql`
         }
       }
     }
-    categories: allSanityCategory {
+    categories: allSanityCategory(filter: {enabled: {ne: false}}) {
       edges {
         node {
           title
@@ -93,7 +91,6 @@ const CategoryTemplate = (props) => {
   const posts = data.posts.edges.map((e) => e.node) || []
 
   const socials = {
-    twitterUrl: site.twitterUrl,
     facebookUrl: site.facebookUrl,
     instagramUrl: site.instagramUrl
   }
@@ -101,13 +98,7 @@ const CategoryTemplate = (props) => {
   return (
     <ThemeProvider theme={theme(site)}>
       <GlobalStyle />
-      <Layout
-        fontColor={site.fontColor}
-        siteTitle={site.title}
-        categories={categories}
-        socials={socials}
-      >
-        <SEO title={site.title} description={site.description} keywords={site.keywords} />
+      <Layout site={site} categories={categories} socials={socials}>
         {posts && <EntryList posts={posts} />}
       </Layout>
     </ThemeProvider>

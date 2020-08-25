@@ -15,7 +15,8 @@ export default {
       name: 'slug',
       type: 'slug',
       title: 'Slug',
-      description: 'This is used to create a human-readable link. Hit generate unless you have one in mind',
+      description:
+        'This is used to create a human-readable link. Hit generate unless you have one in mind',
       options: {
         source: 'title',
         maxLength: 96
@@ -46,19 +47,6 @@ export default {
       of: [
         {
           type: 'authorReference'
-        }
-      ]
-    },
-    {
-      name: 'categories',
-      type: 'array',
-      title: 'Categories',
-      of: [
-        {
-          type: 'reference',
-          to: {
-            type: 'category'
-          }
         }
       ]
     },

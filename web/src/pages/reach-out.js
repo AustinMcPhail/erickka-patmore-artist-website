@@ -3,7 +3,6 @@ import {graphql} from 'gatsby'
 import styled, {ThemeProvider} from 'styled-components'
 import {GlobalStyle, theme} from '../lib/styled'
 import GraphQLErrorList from '../components/graphql-error-list'
-import SEO from '../components/core/seo'
 import Layout from '../components/core/layout'
 import Instagram from '../components/Instagram'
 
@@ -13,7 +12,6 @@ export const query = graphql`
       title
       description
       keywords
-      twitterUrl
       facebookUrl
       instagramUrl
       backgroundColor {
@@ -39,7 +37,7 @@ export const query = graphql`
         }
       }
     }
-    categories: allSanityCategory {
+    categories: allSanityCategory(filter: {enabled: {ne: false}}) {
       edges {
         node {
           title
@@ -57,7 +55,6 @@ const ReachOutWrapper = styled.div`
   gap: 1rem;
   grid-template-columns: 1fr;
   justify-items: center;
-  margin-block-end: 4rem;
 
   @media (min-width: 1280px) {
     grid-template-columns: 1fr auto;
@@ -134,22 +131,13 @@ const ReachOutPage = (props) => {
   }
 
   const socials = {
-    twitterUrl: site.twitterUrl,
     facebookUrl: site.facebookUrl,
     instagramUrl: site.instagramUrl
   }
-  const t = theme(site)
-  console.log(t)
   return (
-    <ThemeProvider theme={t}>
+    <ThemeProvider theme={theme(site)}>
       <GlobalStyle />
-      <Layout
-        fontColor={site.fontColor}
-        siteTitle={site.title}
-        categories={categories}
-        socials={socials}
-      >
-        <SEO title={site.title} description={site.description} keywords={site.keywords} />
+      <Layout site={site} categories={categories} socials={socials}>
         <ReachOutWrapper>
           <section aria-labelledby='instagram-header'>
             <div className='heading'>
@@ -172,7 +160,7 @@ const ReachOutPage = (props) => {
               style={{border: 'none', overflow: 'hidden'}}
               scrolling='no'
               frameBorder='0'
-              allowTransparency='true'
+              allowtransparency='true'
               allow='encrypted-media'
             />
           </section>

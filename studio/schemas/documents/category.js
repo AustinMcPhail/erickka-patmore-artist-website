@@ -21,9 +21,13 @@ export default {
       validation: Rule => Rule.error('Categories require a slug.').required()
     },
     {
-      name: 'description',
-      type: 'text',
-      title: 'Description'
+      name: 'enabled',
+      type: 'boolean',
+      title: 'Show Category',
+      description: 'This category will be available for viewing if this is enabled.'
     }
-  ]
+  ],
+  initialValue: {
+    enabled: false
+  }
 }

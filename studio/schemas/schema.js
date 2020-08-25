@@ -19,8 +19,6 @@ import authorReference from './objects/authorReference'
 import portfolioEntry from './documents/portfolioEntry'
 import portfolioImage from './objects/portfolioImage'
 import medium from './documents/medium'
-import submission from './documents/submission'
-import submissionData from './objects/submissionData'
 
 // Then we give our schema to the builder and provide the result to Sanity
 export default createSchema({
@@ -42,9 +40,7 @@ export default createSchema({
     excerptPortableText,
     portfolioEntry,
     portfolioImage,
-    medium,
-    submission,
-    submissionData
+    medium
 
     // When added to this list, object types can be used as
     // { type: 'typename' } in other document schemas

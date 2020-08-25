@@ -38,34 +38,35 @@ export default {
       description: 'The main font color of your site.'
     },
     {
-      name: 'twitterUrl',
-      type: 'string',
-      title: 'Twitter Url',
-      description: 'The link to your Twitter profile'
-    },
-    {
       name: 'facebookUrl',
       type: 'string',
       title: 'Facebook Url',
-      description: 'The link to your Facebook page'
+      description: 'The link to your Facebook page.'
     },
     {
       name: 'instagramUrl',
       type: 'string',
       title: 'Instagram Url',
-      description: 'The link to your Instagram feed'
+      description: 'The link to your Instagram feed.'
     },
     {
       name: 'cv',
       type: 'file',
       title: 'CV / Resume',
-      description: 'A copy of your resume / cv that users can download from the CV page'
+      description: 'A copy of your resume / cv that users can download from the CV page.'
     },
     {
-      name: 'Bio',
+      name: 'bio',
       type: 'bodyPortableText',
       title: 'Bio',
-      description: 'The biography that appears on the the Cv page of the site'
+      description: 'The biography that appears on the the Cv page of the site.'
+    },
+    {
+      name: 'statement',
+      type: 'bodyPortableText',
+      title: 'Statement',
+      description:
+        "The statement that appears on the Statement page of the site. Tell 'em what you're about."
     },
     {
       name: 'author',
