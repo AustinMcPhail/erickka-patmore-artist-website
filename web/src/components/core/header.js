@@ -23,7 +23,7 @@ const NavList = styled.ul`
   flex-direction: row;
 
   flex-direction: column-reverse;
-  padding-left: 0;
+  padding-left: 2em;
 
   flex-wrap: wrap;
   justify-content: space-between;
@@ -46,6 +46,7 @@ const NavListItem = styled.li`
 `
 
 const Brand = styled.div`
+  margin-top: 4rem;
   padding-top: 1em;
   text-align: left;
   border-bottom-right-radius: 100px;
