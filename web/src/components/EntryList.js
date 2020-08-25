@@ -15,21 +15,62 @@ const ImagePost = styled.article`
   grid-template-columns: 1fr 2fr;
   gap: 2em;
   margin-bottom: 2em;
+
   Img {
     &:hover {
       cursor: pointer;
+    }
+  }
+
+  @keyframes fadeInFromRight {
+    0% {
+      transform: translateX(10px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0px);
+      opacity: 1;
+    }
+  }
+
+  @keyframes fadeInFromLeft {
+    0% {
+      transform: translateX(-10px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0px);
+      opacity: 1;
+    }
+  }
+
+  @keyframes fadeInFromBack {
+    0% {
+      transform: scale(0.95);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(1);
+      opacity: 1;
     }
   }
 `
 
 const ImagePostRight = styled(ImagePost)`
   grid-template-columns: 1fr 2fr;
+  Img {
+    animation: fadeInFromRight 1s ease-in-out forwards;
+  }
 `
 
 const ImagePostLeft = styled(ImagePost)`
   grid-template-columns: 2fr 1fr;
+  Img {
+    animation: fadeInFromLeft 1s ease-in-out forwards;
+  }
 `
 const ImagePostInfo = styled.div`
+  animation: fadeInFromBack 1s ease-in-out forwards;
   display: flex;
   flex-direction: column;
   justify-content: center;

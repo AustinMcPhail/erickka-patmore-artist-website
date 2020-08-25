@@ -12,9 +12,6 @@ const HeaderWrapper = styled.header`
   grid-template-columns: 1fr 3fr;
   z-index: 1;
   margin-bottom: 1em;
-
-  background-color: ${(props) => props.theme.headerBackgroundColor};
-  box-shadow: 0 0px 10px 10px ${(props) => props.theme.headerBackgroundColor};
 `
 
 const Navigation = styled.nav`
@@ -101,7 +98,7 @@ const reachOutPath = '/reach-out'
 const cvPath = '/cv'
 const statementPath = '/statement'
 const portfolioPath = '/portfolio'
-const journalPath = '/journal'
+// const journalPath = '/journal'
 
 const inactiveStyle = {
   borderTop: 'solid 4px transparent',

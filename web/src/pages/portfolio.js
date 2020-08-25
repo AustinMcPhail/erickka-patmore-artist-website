@@ -23,6 +23,12 @@ export const query = graphql`
           b
           a
         }
+        hsl {
+          h
+          s
+          l
+          a
+        }
       }
       fontColor {
         rgb {

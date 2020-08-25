@@ -1,7 +1,7 @@
 // Credit to Wes Bos https://github.com/wesbos/wesbos/blob/master/functions/instagram.js
 require('isomorphic-fetch')
 
-const url = `https://www.instagram.com/graphql/query/?query_hash=bfa387b2992c3a52dcbe447467b4b771&variables={"id":"5440495711","first":8}`
+const url = `https://www.instagram.com/graphql/query/?query_hash=bfa387b2992c3a52dcbe447467b4b771&variables={"id":"5440495711","first":16}`
 
 const cache = {
   lastFetch: 0,

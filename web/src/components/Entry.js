@@ -36,6 +36,36 @@ const ImagePostInfo = styled.div`
 const ImagePostImageWrapper = styled.div`
   max-height: 75vh;
   overflow: hidden;
+
+  .overlay {
+    /* Display over the entire page */
+    position: fixed;
+    z-index: 99;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+
+    /* Horizontal and vertical centering of the image */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    /* We hide all this by default */
+    visibility: hidden;
+  }
+
+  .overlay img {
+    max-height: 90%;
+    max-width: 90%;
+  }
+
+  .overlay:target {
+    visibility: visible;
+    cursor: pointer;
+  }
 `
 
 const Divider = styled.hr`
@@ -73,14 +103,21 @@ const EntryList = ({entry}) => {
         )}
       </ImagePostInfo>
       <ImagePostImageWrapper>
-        <Link to={`/portfolio/${entry.slug.current}`}>
+        <a href={'#fs_' + entry.slug.current}>
           <Img
-            alt={entry.portfolioImage.asset.name}
+            alt={entry.title}
             key={entry.portfolioImage.asset.fluid.src}
             imgStyle={{objectFit: 'contain', maxHeight: '75vh'}}
             fluid={entry.portfolioImage.asset.fluid}
           />
-        </Link>
+        </a>
+        <a href='#' className='overlay' id={'fs_' + entry.slug.current} tabIndex='0'>
+          <img
+            alt={entry.title}
+            key={entry.portfolioImage.asset.fluid.src}
+            src={entry.portfolioImage.asset.fluid.src}
+          />
+        </a>
       </ImagePostImageWrapper>
     </EntryWrapper>
   )

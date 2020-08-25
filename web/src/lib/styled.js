@@ -30,12 +30,10 @@ export const theme = (site) => {
       ? `rgba(${site.fontColor.rgb.r}, ${site.fontColor.rgb.g}, ${site.fontColor.rgb.b}, ${site.fontColor.rgb.a})`
       : '#2f2f2f',
     backgroundColor: site.backgroundColor
-      ? `rgba(${site.backgroundColor.rgb.r}, ${site.backgroundColor.rgb.g}, ${site.backgroundColor.rgb.b}, ${site.backgroundColor.rgb.a})`
+      ? `hsla(${site.backgroundColor.hsl.h}, ${site.backgroundColor.hsl.s * 100}%, ${
+        site.backgroundColor.hsl.l * 100
+      }%, ${site.backgroundColor.hsl.a})`
       : 'rgba(241, 238, 244, 1)',
-    backgroundHue: site.backgroundColor.hsl ? site.backgroundColor.hsl.h : 250,
-    backgroundSaturation: site.backgroundColor.hsl ? site.backgroundColor.hsl.s : 100,
-    headerBackgroundColor: site.backgroundColor
-      ? `rgba(${site.backgroundColor.rgb.r}, ${site.backgroundColor.rgb.g}, ${site.backgroundColor.rgb.b}, 0.75)`
-      : 'rgba(241, 238, 244, 0.75)'
+    backgroundHsl: site.backgroundColor.hsl
   }
 }
