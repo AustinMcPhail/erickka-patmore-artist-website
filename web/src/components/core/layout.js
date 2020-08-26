@@ -4,8 +4,8 @@ import styled, {keyframes} from 'styled-components'
 import SEO from './seo'
 
 const LayoutWrapper = styled.div`
-  margin-left: 2rem;
-  margin-right: 2rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
   margin-block-end: 4rem;
 
   @media (min-width: 768px) {
