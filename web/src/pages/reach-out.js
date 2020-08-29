@@ -74,6 +74,9 @@ const ReachOutWrapper = styled.div`
     animation-delay: 2s;
     border-radius: 10px;
     transform: translateY(-10px);
+    @media (max-width: 320px) {
+      width: 95vw;
+    }
   }
 
   @keyframes fadeInFacebook {
