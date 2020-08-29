@@ -1,209 +1,184 @@
 import React from 'react'
 import styled from 'styled-components'
-import {toPlainText} from '../lib/helpers'
-import Img from 'gatsby-image'
+import {buildImageObj} from '../lib/helpers'
 import PortableText from './portableText'
 import {Link} from 'gatsby'
-
-const EntryListWrapper = styled.section`
-  display: flex;
-  flex-direction: column;
-`
-
-const ImagePost = styled.article`
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: 2em;
-  margin-bottom: 2em;
-
-  Img {
-    &:hover {
-      cursor: pointer;
-    }
-  }
-
-  @keyframes fadeInFromRight {
-    0% {
-      transform: translateX(10px);
-      opacity: 0;
-    }
-    100% {
-      transform: translateY(0px);
-      opacity: 1;
-    }
-  }
-
-  @keyframes fadeInFromLeft {
-    0% {
-      transform: translateX(-10px);
-      opacity: 0;
-    }
-    100% {
-      transform: translateY(0px);
-      opacity: 1;
-    }
-  }
-
-  @keyframes fadeInFromBack {
-    0% {
-      transform: scale(0.95);
-      opacity: 0;
-    }
-    100% {
-      transform: translateY(1);
-      opacity: 1;
-    }
-  }
-`
-
-const ImagePostRight = styled(ImagePost)`
-  grid-template-columns: 1fr 2fr;
-  Img {
-    animation: fadeInFromRight 1s ease-in-out forwards;
-  }
-`
-
-const ImagePostLeft = styled(ImagePost)`
-  grid-template-columns: 2fr 1fr;
-  Img {
-    animation: fadeInFromLeft 1s ease-in-out forwards;
-  }
-`
-const ImagePostInfo = styled.div`
-  animation: fadeInFromBack 1s ease-in-out forwards;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 1em;
-  font-family: ${(props) => props.theme.secondaryFont};
-  .title {
-    display: block;
-    max-width: 30vh;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    word-wrap: break-word;
-    overflow: hidden;
-    max-height: 2.3em;
-    line-height: 1.15;
-  }
-  @media (min-width: 1280px) {
-    .title {
-      display: unset;
-      width: unset;
-      white-space: unset;
-      text-overflow: unset;
-      word-wrap: unset;
-      overflow: unset;
-      max-height: unset;
-      line-height: unset;
-    }
-  }
-`
-
-const ImagePostImageWrapper = styled.div`
-  max-height: 75vh;
-  overflow: hidden;
-`
+import {imageUrlFor} from '../lib/image-url'
 
 const Divider = styled.hr`
   border: solid 1px ${(props) => props.theme.fontColor};
-  width: 2em;
-  margin-top: 0.5em;
-  margin-bottom: 0.5em;
+  opacity: 0.25;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  animation: expand 1s ease-in-out forwards;
+
+  @keyframes expand {
+    0% {
+      width: 0%;
+    }
+    100% {
+      width: 100%
+    }
+  }
 `
+
+const NewEntryListWrapper = styled.section`
+  .entry-container {
+    margin-bottom: 4rem;
+    display: grid;
+    align-items: center;
+    gap: 1rem;
+    justify-items: center;
+    grid-template-areas: 'L R';
+    .left {
+      grid-area: L;
+      animation: fadeInFromLeft 1s ease-in-out forwards;
+      text-align: left;
+      &.img-container {
+        animation: shadowedFadeInFromLeft 1s ease-in-out forwards;
+        @keyframes shadowedFadeInFromLeft {
+          0% {
+            transform: translateX(-10px);
+            opacity: 0;
+            box-shadow: 0px 10px 20px 5px
+            hsl(${(props) => props.theme.backgroundHsl.h}, ${(props) => props.theme.backgroundHsl.s * 100 - props.theme.backgroundHsl.s * 100 * 0.5 + '%'}, ${(props) => props.theme.backgroundHsl.l * 100 - props.theme.backgroundHsl.l * 100 * 0.5 + '%'}, 0);
+          }
+          100% {
+            transform: translateY(0px);
+            opacity: 1;
+            box-shadow: 0px 15px 10px -10px
+            hsl(${(props) => props.theme.backgroundHsl.h}, ${(props) => props.theme.backgroundHsl.s * 100 - props.theme.backgroundHsl.s * 100 * 0.5 + '%'}, ${(props) => props.theme.backgroundHsl.l * 100 - props.theme.backgroundHsl.l * 100 * 0.5 + '%'}, 1);
+          }
+        }
+      }
+      @keyframes fadeInFromLeft {
+        0% {
+          transform: translateX(-10px);
+          opacity: 0;
+        }
+        100% {
+          transform: translateY(0px);
+          opacity: 1;
+        }
+      }
+    }
+    .right {
+      grid-area: R;
+      animation: fadeInFromRight 1s ease-in-out forwards;
+      text-align: right;
+      &.img-container {
+        animation: shadowedFadeInFromRight 1s ease-in-out forwards;
+        @keyframes shadowedFadeInFromRight {
+          0% {
+            transform: translateX(10px);
+            opacity: 0;
+            box-shadow: 0px 10px 20px 5px
+            hsl(${(props) => props.theme.backgroundHsl.h}, ${(props) => props.theme.backgroundHsl.s * 100 - props.theme.backgroundHsl.s * 100 * 0.5 + '%'}, ${(props) => props.theme.backgroundHsl.l * 100 - props.theme.backgroundHsl.l * 100 * 0.5 + '%'}, 0);
+          }
+          100% {
+            transform: translateY(0px);
+            opacity: 1;
+            box-shadow: 0px 15px 10px -10px
+            hsl(${(props) => props.theme.backgroundHsl.h}, ${(props) => props.theme.backgroundHsl.s * 100 - props.theme.backgroundHsl.s * 100 * 0.5 + '%'}, ${(props) => props.theme.backgroundHsl.l * 100 - props.theme.backgroundHsl.l * 100 * 0.5 + '%'}, 1);
+          }
+        }
+      }
+      @keyframes fadeInFromRight {
+        0% {
+          transform: translateX(10px);
+          opacity: 0;
+        }
+        100% {
+          transform: translateY(0px);
+          opacity: 1;
+        }
+      }
+    }
+
+    @media (max-width: 1024px) {
+      display: flex;
+      flex-direction: column;
+      .left, .right {
+        text-align: center;
+        margin-bottom: 1rem;
+      }
+    }
+
+    .entry-info {
+      width: 100%;
+      .title {
+        margin-bottom: 0;
+      }
+
+      .info {
+        font-style: italic;
+        font-size: 0.75rem;
+        margin-bottom: 1rem;
+      }
+      
+      .excerpt {
+        font-size: 0.75rem;
+      }
+    }
+
+    .img-container {
+      display: grid;
+      height: 100%;
+
+        &:hover, &:focus {
+          .fit-image {
+            transform: scale(1.01);
+            filter: blur(1px);
+          }
+        }
+
+      .fit-image {
+        transition: filter 0.25s ease-in-out, transform 0.25s ease-in-out;
+        max-width: 100%;
+        max-height: 75vh;
+        margin: auto;
+      }
+    }
+  }
+`
+const getPlacement = (index, flipped) => {
+  if (index % 2 === 0) return flipped ? 'right' : 'left'
+  return flipped ? 'left' : 'right'
+}
 
 const EntryList = ({posts}) => {
   return (
-    <EntryListWrapper>
-      {posts &&
-        posts.map((e, i) => {
-          if (i % 2 === 0) {
-            return (
-              <ImagePostRight key={e._id}>
-                <ImagePostInfo>
-                  <h1 className={'title'} style={{marginBottom: '0'}}>
-                    {e.title}
-                  </h1>
-                  <Divider />
-                  {e.portfolioImage && e.portfolioImage.dimensions && (
-                    <small>{e.portfolioImage.dimensions}</small>
-                  )}
-                  {e.portfolioImage && e.portfolioImage.mediums && (
-                    <div style={{display: 'flex', flexWrap: 'wrap'}}>
-                      {e.portfolioImage.mediums.map((m, i) => (
-                        <small style={{opacity: 0.75}} key={e._id + '.' + m.name}>
-                          <i>{m.name}</i>
-                          {i !== e.portfolioImage.mediums.length - 1 && (
-                            <span style={{marginLeft: '0.5em', marginRight: '0.5em'}}>|</span>
-                          )}
-                        </small>
-                      ))}
-                    </div>
-                  )}
-                  {e._rawExcerpt && (
-                    <small>
-                      <PortableText blocks={e._rawExcerpt} />
-                    </small>
-                  )}
-                </ImagePostInfo>
-                <ImagePostImageWrapper>
-                  <Link to={`/portfolio/${e.slug.current}`}>
-                    <Img
-                      alt={e.portfolioImage.asset.name}
-                      key={e.portfolioImage.asset.fluid.src}
-                      imgStyle={{objectFit: 'contain', maxHeight: '75vh'}}
-                      fluid={e.portfolioImage.asset.fluid}
-                    />
-                  </Link>
-                </ImagePostImageWrapper>
-              </ImagePostRight>
-            )
-          } else {
-            return (
-              <ImagePostLeft key={e._id}>
-                <ImagePostImageWrapper>
-                  <Link to={`/portfolio/${e.slug.current}`}>
-                    <Img
-                      alt={e.portfolioImage.asset.name}
-                      key={e.portfolioImage.asset.fluid.src}
-                      imgStyle={{objectFit: 'contain', maxHeight: '75vh'}}
-                      fluid={e.portfolioImage.asset.fluid}
-                    />
-                  </Link>
-                </ImagePostImageWrapper>
-                <ImagePostInfo>
-                  <h1 className={'title'} style={{marginBottom: '0'}}>
-                    {e.title}
-                  </h1>
-                  <Divider />
-                  {e.portfolioImage && e.portfolioImage.dimensions && (
-                    <small>{e.portfolioImage.dimensions}</small>
-                  )}
-                  {e.portfolioImage && e.portfolioImage.mediums && (
-                    <div style={{display: 'flex', flexWrap: 'wrap'}}>
-                      {e.portfolioImage.mediums.map((m, i) => (
-                        <small style={{opacity: 0.75}} key={e._id + '.' + m.name}>
-                          <i>{m.name}</i>
-                          {i !== e.portfolioImage.mediums.length - 1 && (
-                            <span style={{marginLeft: '0.5em', marginRight: '0.5em'}}>|</span>
-                          )}
-                        </small>
-                      ))}
-                    </div>
-                  )}
-                  {e._rawExcerpt && (
-                    <small>
-                      <PortableText blocks={e._rawExcerpt} />
-                    </small>
-                  )}
-                </ImagePostInfo>
-              </ImagePostLeft>
-            )
-          }
-        })}
-    </EntryListWrapper>
+    <NewEntryListWrapper>
+      {posts && posts.map((post, i) => {
+        return (post.portfolioImage && post.portfolioImage.asset && (
+          <div className='entry-container' key={post._id}>
+            <article className={'entry-info ' + getPlacement(i, false)}>
+              <h1 className='title'>{post.title}</h1>
+              <Divider />
+              <p className='info'>
+                {post.portfolioImage.dimensions ? post.portfolioImage.dimensions : ''}
+                {post.portfolioImage.dimensions && post.portfolioImage.mediums ? ' | ' : ''}
+                {post.portfolioImage.mediums && post.portfolioImage.mediums.length > 0 ? post.portfolioImage.mediums.map(m => m.name).join(', ') : ''}
+              </p>
+              {post._rawExcerpt && (
+                <p className='excerpt'>
+                  <PortableText blocks={post._rawExcerpt} />
+                </p>
+              )}
+            </article>
+            <Link to={`/portfolio/${post.slug.current}`} className={'img-container ' + getPlacement(i, true)}>
+              <img
+                src={imageUrlFor(buildImageObj(post.portfolioImage))
+                  .auto('format')
+                  .url()}
+                alt={post.portfolioImage.alt}
+                className='fit-image'
+              />
+            </Link>
+          </div>
+        ))
+      })}
+    </NewEntryListWrapper>
   )
 }
 

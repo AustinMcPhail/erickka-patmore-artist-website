@@ -7,6 +7,27 @@ import {GlobalStyle, theme} from '../../lib/styled'
 import EntryList from '../../components/EntryList'
 
 export const query = graphql`
+fragment SanityImage on SanityPortfolioImage {
+  crop {
+    _key
+    _type
+    top
+    bottom
+    left
+    right
+  }
+  hotspot {
+    _key
+    _type
+    x
+    y
+    height
+    width
+  }
+  asset {
+    _id
+  }
+}
   query CategoryTemplateQuery($slug: String!) {
     site: sanitySiteSettings(_id: {regex: "/(drafts.|)siteSettings/"}) {
       title
@@ -59,14 +80,11 @@ export const query = graphql`
             current
           }
           portfolioImage {
+            ...SanityImage
+            alt
             dimensions
             mediums {
               name
-            }
-            asset {
-              fluid(maxWidth: 1200) {
-                ...GatsbySanityImageFluid
-              }
             }
           }
           _rawExcerpt
