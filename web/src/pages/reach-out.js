@@ -51,14 +51,16 @@ export const query = graphql`
 `
 
 const ReachOutWrapper = styled.div`
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 1rem;
-  grid-template-columns: 1fr;
   justify-items: center;
 
-  @media (min-width: 1280px) {
+  @media (min-width: 1024px) {
+    display: grid;
     grid-template-columns: 1fr auto;
   }
+  
   section {
     display: flex;
     flex-direction: column;
@@ -67,7 +69,7 @@ const ReachOutWrapper = styled.div`
 
   iframe {
     align-self: center;
-    animation: fadeInFacebook 2s ease-in-out forwards;
+    animation: fadeInFacebook 1s ease-in-out forwards;
     opacity: 0;
     animation-delay: 2s;
     border-radius: 10px;
