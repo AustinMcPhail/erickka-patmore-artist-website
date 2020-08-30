@@ -66,6 +66,10 @@ const NewHeaderWrapper = styled.header`
                 &:hover, :focus {
                   border-bottom: 2px solid ${(props) => props.theme.fontColor};
                 }
+
+                &.active {
+                  border-bottom: 2px solid ${(props) => props.theme.fontColor};
+                }
               }
             }
 
