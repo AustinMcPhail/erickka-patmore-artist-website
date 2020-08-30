@@ -9,6 +9,27 @@ import {imageUrlFor} from '../lib/image-url'
 import {buildImageObj} from '../lib/helpers'
 
 export const query = graphql`
+fragment SanityMImage on SanityMainImage {
+  crop {
+    _key
+    _type
+    top
+    bottom
+    left
+    right
+  }
+  hotspot {
+    _key
+    _type
+    x
+    y
+    height
+    width
+  }
+  asset {
+    _id
+  }
+}
   query StatementPageQuery {
     site: sanitySiteSettings(_id: {regex: "/(drafts.|)siteSettings/"}) {
       title
@@ -40,28 +61,8 @@ export const query = graphql`
       }
       _rawStatement(resolveReferences: {maxDepth: 5})
       statementImage {
-        crop {
-          _key
-          _type
-          top
-          bottom
-          left
-          right
-        }
-        hotspot {
-          _key
-          _type
-          x
-          y
-          height
-          width
-        }
-        asset {
-          _id
-          fluid(maxWidth: 400) {
-            ...GatsbySanityImageFluid
-          }
-        }
+        ...SanityMImage
+            alt
       }
       author {
         image {
@@ -77,26 +78,72 @@ export const query = graphql`
   }
 `
 
-const StatementWrapper = styled.article`
-  display: grid;
-  grid-template-areas:
-    's'
-    'i';
-  gap: 1rem;
+const StatementWrapper = styled.section`
+  .statement-container {
+    margin-bottom: 4rem;
+    display: grid;
+    align-items: center;
+    gap: 1rem;
+    justify-items: center;
+    grid-template-areas:
+      'R'
+      'L';
+    @media (min-width: 1024px) {
+      grid-template-areas:
+        'L R';
+    }
+    
+    .left {
+      grid-area: L;
+      &.img-container {
+        animation: shadowedFadeInFromBottomLeft 1s ease-in-out forwards;
+      }
+      @keyframes shadowedFadeInFromBottomLeft {
+          0% {
+            transform: translateY(10px) translateX(-10px);
+            opacity: 0;
+            box-shadow: 0px 10px 20px 5px
+            hsl(${(props) => props.theme.backgroundHsl.h}, ${(props) => props.theme.backgroundHsl.s * 100 - props.theme.backgroundHsl.s * 100 * 0.5 + '%'}, ${(props) => props.theme.backgroundHsl.l * 100 - props.theme.backgroundHsl.l * 100 * 0.5 + '%'}, 0);
+          }
+          100% {
+            transform: translateY(0px) translateX(0px);
+            opacity: 1;
+            box-shadow: 0px 15px 10px -10px
+            hsl(${(props) => props.theme.backgroundHsl.h}, ${(props) => props.theme.backgroundHsl.s * 100 - props.theme.backgroundHsl.s * 100 * 0.5 + '%'}, ${(props) => props.theme.backgroundHsl.l * 100 - props.theme.backgroundHsl.l * 100 * 0.5 + '%'}, 1);
+          }
+      }
+    }
 
-  @media (min-width: 1280px) {
-    grid-template-areas: 'i s s s';
-  }
+    .right {
+      grid-area: R;
+      animation: fadeInFromTopRight 1s ease-in-out forwards;
+      @keyframes fadeInFromTopRight {
+        0% {
+          transform: translateY(-10px) translateX(10px);
+          opacity: 0;
+        }
+        100% {
+          transform: translateY(0px) translateX(0px);
+          opacity: 1;
+        }
+      }
+    }
 
-  #statementImage {
-    grid-area: i;
-  }
+    .statement-body {
+      width: 100%;
+    }
 
-  #statement {
-    grid-area: s;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    .img-container {
+      display: grid;
+      height: 100%;
+
+      .fit-image {
+        transition: filter 0.25s ease-in-out, transform 0.25s ease-in-out;
+        max-width: 100%;
+        max-height: 75vh;
+        margin: auto;
+      }
+    }
   }
 `
 
@@ -129,21 +176,19 @@ const StatementPage = (props) => {
       <GlobalStyle />
       <Layout site={site} categories={[]} socials={socials}>
         <StatementWrapper>
-          {site.statementImage && site.statementImage.asset && (
-            <div id='statementImage'>
+          <div className='statement-container'>
+            <div className='img-container left'>
               <img
                 src={imageUrlFor(buildImageObj(site.statementImage))
-                  .width(400)
-                  .height(Math.floor((9 / 16) * 1000))
-                  .fit('crop')
                   .auto('format')
                   .url()}
-                alt={'Statement Splash Image'}
+                alt={site.statementImage.alt}
+                className='fit-image'
               />
             </div>
-          )}
-          <div id='statement'>
-            {site._rawStatement && <PortableText blocks={site._rawStatement} />}
+            <article className={'statement-body right'}>
+              {site._rawStatement && <PortableText blocks={site._rawStatement} />}
+            </article>
           </div>
         </StatementWrapper>
       </Layout>
