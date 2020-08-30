@@ -50,28 +50,12 @@ const BrandLinks = styled.div`
   align-items: center;
   margin-top: 1em;
 
-  @keyframes zoomTiltIn {
-    from {
-      transform: rotate(0deg) scale(1);
-    }
-    to {
-      transform: rotate(5deg) scale(1.05);
-    }
-  }
-  @keyframes zoomTiltOut {
-    from {
-      transform: rotate(5deg) scale(1.05);
-    }
-    to {
-      transform: rotate(0deg) scale(1);
-    }
-  }
-
   a {
     margin-right: 0.75em;
-    animation: zoomTiltOut 0.25s linear forwards;
-    :hover {
-      animation: zoomTiltIn 0.25s linear forwards;
+    transition: transform 0.25s ease-in-out;
+
+    :hover, :focus {
+      transform: rotate(5deg) scale(1.05)
     }
   }
 `
