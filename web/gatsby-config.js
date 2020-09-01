@@ -9,6 +9,22 @@ const isProd = process.env.NODE_ENV === 'production'
 
 module.exports = {
   plugins: [
+    {
+      resolve: `gatsby-plugin-google-analytics`,
+      options: {
+        // The property ID; the tracking code won't be generated without it
+        trackingId: 'UA-176934536-1',
+        // Defines where to place the tracking script - `true` in the head and `false` in the body
+        head: true,
+        // Setting this parameter is optional
+        anonymize: true,
+        // Setting this parameter is also optional
+        respectDNT: true,
+        // Defers execution of google analytics script after page load
+        defer: false,
+        cookieDomain: 'erickka.art'
+      }
+    },
     'gatsby-plugin-instagram-embed',
     'gatsby-plugin-sharp',
     'gatsby-transformer-sharp',
