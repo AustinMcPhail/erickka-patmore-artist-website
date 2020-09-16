@@ -75,6 +75,7 @@ fragment SanityImage on SanityPortfolioImage {
       edges {
         node {
           _id
+          publishedAt
           title
           slug {
             current

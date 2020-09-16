@@ -31,6 +31,15 @@ const ImagePostInfo = styled.div`
   text-align: center;
   padding: 1em;
   font-family: ${(props) => props.theme.secondaryFont};
+
+  .title {
+    margin-bottom: 0;
+
+    small {
+      font-weight: .5em;
+      opacity: 0.75;
+    }
+  }
 `
 
 const ImagePostImageWrapper = styled.div`
@@ -79,7 +88,7 @@ const EntryList = ({entry}) => {
   return (
     <EntryWrapper>
       <ImagePostInfo>
-        <h1 style={{marginBottom: '0'}}>{entry.title}</h1>
+        <h1 className='title'>{entry.title}<small>{entry.publishedAt && ` ${entry.publishedAt.split('-')[0]}`}</small></h1>
         <Divider />
         {entry.portfolioImage && entry.portfolioImage.dimensions && (
           <small>{entry.portfolioImage.dimensions}</small>
