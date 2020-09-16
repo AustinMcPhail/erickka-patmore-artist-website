@@ -108,6 +108,10 @@ const NewEntryListWrapper = styled.section`
       width: 100%;
       .title {
         margin-bottom: 0;
+        small {
+          font-size: .5em;
+          opacity: 0.75;
+        }
       }
 
       .info {
@@ -153,7 +157,7 @@ const EntryList = ({posts}) => {
         return (post.portfolioImage && post.portfolioImage.asset && (
           <div className='entry-container' key={post._id}>
             <article className={'entry-info ' + getPlacement(i, false)}>
-              <h1 className='title'>{post.title}</h1>
+              <h1 className='title'>{post.title}<small>{post.publishedAt && ` ${post.publishedAt.split('-')[0]}`}</small></h1>
               <Divider />
               <p className='info'>
                 {post.portfolioImage.dimensions ? post.portfolioImage.dimensions : ''}

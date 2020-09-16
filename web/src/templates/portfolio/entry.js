@@ -48,6 +48,7 @@ export const query = graphql`
       }
     }
     post: sanityPortfolioEntry(_id: {eq: $_id}) {
+      publishedAt
       _id
       title
       slug {
