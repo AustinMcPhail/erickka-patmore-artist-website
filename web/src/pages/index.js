@@ -28,9 +28,8 @@ export const query = graphql`
       _id
     }
   }
-  query IndexPageQuery {
-    site: sanitySiteSettings(_id: {regex: "/(drafts.|)siteSettings/"}) {
-      title
+  fragment SiteSettings on SanitySiteSettings {
+    title
       description
       keywords
       facebookUrl
@@ -57,14 +56,44 @@ export const query = graphql`
           a
         }
       }
+  }
+  fragment Category on SanityCategory {
+    title
+    slug {
+      current
+    }
+  }
+  fragment MainImage on SanityMainImage {
+    crop {
+      _key
+      _type
+      top
+      bottom
+      left
+      right
+    }
+    hotspot {
+      _key
+      _type
+      x
+      y
+      height
+      width
+    }
+    asset {
+      _id
+    }
+  }
+
+
+  query IndexPageQuery {
+    site: sanitySiteSettings(_id: {regex: "/(drafts.|)siteSettings/"}) {
+      ...SiteSettings
     }
     categories: allSanityCategory(filter: {enabled: {ne: false}}) {
       edges {
         node {
-          title
-          slug {
-            current
-          }
+          ...Category
         }
       }
     }

@@ -61,7 +61,7 @@ fragment SanityMImage on SanityMainImage {
       }
       _rawStatement(resolveReferences: {maxDepth: 5})
       statementImage {
-        ...SanityMImage
+        ...MainImage
             alt
       }
       author {

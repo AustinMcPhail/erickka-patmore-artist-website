@@ -7,27 +7,6 @@ import Layout from '../components/core/layout'
 import Home from '../components/EntryList'
 
 export const query = graphql`
-  fragment SanityImage on SanityPortfolioImage {
-    crop {
-      _key
-      _type
-      top
-      bottom
-      left
-      right
-    }
-    hotspot {
-      _key
-      _type
-      x
-      y
-      height
-      width
-    }
-    asset {
-      _id
-    }
-  }
   query PortfolioPageQuery {
     site: sanitySiteSettings(_id: {regex: "/(drafts.|)siteSettings/"}) {
       title
