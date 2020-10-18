@@ -8,7 +8,7 @@ import Layout from '../components/core/layout'
 import {imageUrlFor} from '../lib/image-url'
 import {buildImageObj} from '../lib/helpers'
 import PortableText from '../components/portableText'
-import {format, isFuture} from 'date-fns'
+import {differenceInDays, distanceInWords, format, isFuture} from 'date-fns'
 
 export const query = graphql`
   query JournalPageQuery {
@@ -228,7 +228,9 @@ const JournalPage = (props) => {
   `
 
   const formatDate = (date) => {
-    return format(date, 'MMMM Do, YYYY h:mma')
+    return differenceInDays(new Date(date), new Date()) > 3
+      ? distanceInWords(new Date(date), new Date())
+      : format(new Date(date), 'MMMM Do, YYYY')
   }
 
   const postElements = posts.map((post) => {

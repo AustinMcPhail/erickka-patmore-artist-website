@@ -28,7 +28,7 @@ const EntryWrapper = styled.section`
   #excerpt {
     align-self: center;
     margin-block-end: 1rem;
-    max-width: 50%;
+    width: min(100%, 750px);
   }
 
   .img-container {

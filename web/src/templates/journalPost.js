@@ -61,9 +61,20 @@ export const query = graphql`
         mainImage {
             ...MainImage
             alt
+            caption
         }
         title
         _rawExcerpt
+        _rawBody
+        authors {
+            author {
+                name
+                image {
+                    ...MainImage
+                    alt
+                }
+            }
+        }
         slug {
             current
         }
