@@ -1,50 +1,47 @@
 import React from 'react'
 import styled from 'styled-components'
-import {toPlainText} from '../lib/helpers'
-import Img from 'gatsby-image'
+import {buildImageObj} from '../lib/helpers'
+import {imageUrlFor} from '../lib/image-url'
 import PortableText from './portableText'
-import {Link} from 'gatsby'
 
 const EntryWrapper = styled.section`
   display: flex;
   flex-direction: column;
-  padding-bottom: 2em;
-`
-
-const ImagePost = styled.article`
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: 2em;
-  margin-bottom: 2em;
-  Img {
-    &:hover {
-      cursor: pointer;
-    }
-  }
-`
-
-const ImagePostInfo = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   text-align: center;
-  padding: 1em;
-  font-family: ${(props) => props.theme.secondaryFont};
 
-  .title {
-    margin-bottom: 0;
+  #title {
+    font-weight: bold;
+    margin-block-end: 1rem;
+  }
+  #info {
+    display: flex;
+    justify-content: center;
+    margin-block-end: 1rem;
+    font-style: italic;
 
-    small {
-      font-weight: .5em;
-      opacity: 0.75;
+    p:not(:last-child)::after {
+      content: "|";
+      padding-inline-start: .5rem;
+      padding-inline-end: .5rem;
     }
   }
-`
+  #excerpt {
+    align-self: center;
+    margin-block-end: 1rem;
+    max-width: 50%;
+  }
 
-const ImagePostImageWrapper = styled.div`
-  max-height: 75vh;
-  overflow: hidden;
+  .img-container {
+    display: grid;
+    height: 100%;
+
+    .fit-image {
+      transition: filter 0.25s ease-in-out, transform 0.25s ease-in-out;
+      max-width: 100%;
+      max-height: 95vh;
+      margin: auto;
+    }
+  }
 
   .overlay {
     /* Display over the entire page */
@@ -67,8 +64,8 @@ const ImagePostImageWrapper = styled.div`
   }
 
   .overlay img {
-    max-height: 90%;
-    max-width: 90%;
+    max-height: 95vh;
+    max-width: 95vh;
   }
 
   .overlay:target {
@@ -77,57 +74,42 @@ const ImagePostImageWrapper = styled.div`
   }
 `
 
-const Divider = styled.hr`
-  border: solid 1px ${(props) => props.theme.fontColor};
-  width: 2em;
-  margin-top: 0.5em;
-  margin-bottom: 0.5em;
-`
-
 const EntryList = ({entry}) => {
   return (
     <EntryWrapper>
-      <ImagePostInfo>
-        <h1 className='title'>{entry.title}<small>{entry.publishedAt && ` ${entry.publishedAt.split('-')[0]}`}</small></h1>
-        <Divider />
+      <h1 id='title'>{entry.title}</h1>
+      <div id='info'>
+        {entry.publishedAt && <p id='date'>{entry.publishedAt.split('-')[0]}</p>}
         {entry.portfolioImage && entry.portfolioImage.dimensions && (
-          <small>{entry.portfolioImage.dimensions}</small>
+          <p id='dimensions'>{entry.portfolioImage.dimensions}</p>
         )}
         {entry.portfolioImage && entry.portfolioImage.mediums && (
-          <div style={{display: 'flex', flexWrap: 'wrap'}}>
-            {entry.portfolioImage.mediums.map((m, i) => (
-              <small style={{opacity: 0.75}} key={entry._id + '.' + m.name}>
-                <i>{m.name}</i>
-                {i !== entry.portfolioImage.mediums.length - 1 && (
-                  <span style={{marginLeft: '0.5em', marginRight: '0.5em'}}>|</span>
-                )}
-              </small>
-            ))}
-          </div>
+          <p className='mediums'>
+            {entry.portfolioImage.mediums.map(m => m.name).join(', ')}
+          </p>
         )}
-        {entry._rawExcerpt && (
-          <small>
-            <PortableText blocks={entry._rawExcerpt} />
-          </small>
-        )}
-      </ImagePostInfo>
-      <ImagePostImageWrapper>
-        <a href={'#fs_' + entry.slug.current}>
-          <Img
-            alt={entry.title}
-            key={entry.portfolioImage.asset.fluid.src}
-            imgStyle={{objectFit: 'contain', maxHeight: '75vh'}}
-            fluid={entry.portfolioImage.asset.fluid}
-          />
-        </a>
-        <a href='#' className='overlay' id={'fs_' + entry.slug.current}>
-          <img
-            alt={entry.title}
-            key={entry.portfolioImage.asset.fluid.src}
-            src={entry.portfolioImage.asset.fluid.src}
-          />
-        </a>
-      </ImagePostImageWrapper>
+      </div>
+      {entry._rawExcerpt && (<div id='excerpt'>
+        <PortableText blocks={entry._rawExcerpt} />
+      </div>)}
+      <a className='img-container' href={'#fs_' + entry.slug.current}>
+        <img
+          src={imageUrlFor(buildImageObj(entry.portfolioImage))
+            .auto('format')
+            .url()}
+          alt={entry.portfolioImage.alt}
+          className='fit-image'
+        />
+      </a>
+      <a href='#' className='overlay' id={'fs_' + entry.slug.current}>
+        <img
+          src={imageUrlFor(buildImageObj(entry.portfolioImage))
+            .auto('format')
+            .url()}
+          alt={entry.portfolioImage.alt}
+          className='fit-image'
+        />
+      </a>
     </EntryWrapper>
   )
 }
