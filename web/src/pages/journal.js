@@ -8,7 +8,7 @@ import Layout from '../components/core/layout'
 import {imageUrlFor} from '../lib/image-url'
 import {buildImageObj} from '../lib/helpers'
 import PortableText from '../components/portableText'
-import {format} from 'date-fns'
+import {format, isFuture} from 'date-fns'
 
 export const query = graphql`
   query JournalPageQuery {
@@ -27,7 +27,7 @@ export const query = graphql`
     ) {
       edges {
         node {
-          id
+          _id
           publishedAt
           mainImage {
             ...MainImage
@@ -56,7 +56,8 @@ const JournalPage = (props) => {
   }
 
   const site = (data || {}).site
-  const posts = data.posts.edges.map((e) => e.node) || []
+  let posts = data.posts.edges.map((e) => e.node) || []
+  posts = posts.filter(p => !isFuture(p.publishedAt))
   const categories = data.categories.edges.map((e) => e.node) || []
 
   if (!site) {

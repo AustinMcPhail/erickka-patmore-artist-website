@@ -1,13 +1,13 @@
 import React from 'react'
 import {graphql} from 'gatsby'
-import Layout from '../../components/core/layout'
-import GraphQLErrorList from '../../components/graphql-error-list'
+import Layout from '../components/core/layout'
+import GraphQLErrorList from '../components/graphql-error-list'
 import {ThemeProvider} from 'styled-components'
-import {GlobalStyle, theme} from '../../lib/styled'
-import Entry from '../../components/Entry'
+import {GlobalStyle, theme} from '../lib/styled'
+import {JournalPost} from '../components/JournalPost'
 
 export const query = graphql`
-  query EntryTemplateQuery($_id: String!) {
+  query JournalPostTemplateQuery($prev_id: String, $curr_id: String!, $next_id: String) {
     site: sanitySiteSettings(_id: {regex: "/(drafts.|)siteSettings/"}) {
       title
       description
@@ -47,27 +47,39 @@ export const query = graphql`
         }
       }
     }
-    post: sanityPortfolioEntry(_id: {eq: $_id}) {
-      publishedAt
-      _id
-      title
-      slug {
-        current
-      }
-      portfolioImage {
-        ...SanityImage
-        alt
-        dimensions
-        mediums {
-          name
+    prev: sanityPost(_id: {eq: $prev_id}) {
+        _id
+        publishedAt
+        title
+        slug {
+            current
         }
-      }
-      _rawExcerpt
+    }
+    curr: sanityPost(_id: {eq: $curr_id}) {
+        _id
+        publishedAt
+        mainImage {
+            ...MainImage
+            alt
+        }
+        title
+        _rawExcerpt
+        slug {
+            current
+        }
+    }
+    next: sanityPost(_id: {eq: $next_id}) {
+        _id
+        publishedAt
+        title
+        slug {
+            current
+        }
     }
   }
 `
 
-const EntryTemplate = (props) => {
+const JournalPostTemplate = (props) => {
   const {data, errors} = props
   if (errors) {
     return (
@@ -78,7 +90,9 @@ const EntryTemplate = (props) => {
   }
   const site = (data || {}).site
   const categories = (data || {}).categories.edges.map((e) => e.node) || []
-  const post = data.post || {}
+  const prev = data.prev || null
+  const curr = data.curr || {}
+  const next = data.next || null
 
   const socials = {
     facebookUrl: site.facebookUrl,
@@ -89,10 +103,10 @@ const EntryTemplate = (props) => {
     <ThemeProvider theme={theme(site)}>
       <GlobalStyle />
       <Layout site={site} categories={categories} socials={socials}>
-        {post && <Entry entry={post} />}
+        {curr && <JournalPost prev={prev} post={curr} next={next} />}
       </Layout>
     </ThemeProvider>
   )
 }
 
-export default EntryTemplate
+export default JournalPostTemplate
