@@ -95,7 +95,7 @@ const JournalPage = (props) => {
         flex-wrap: nowrap;
       }
 
-      margin-block-end: 1rem;
+      margin-block-end: 2rem;
 
       img {
         width: 100%;
@@ -211,15 +211,17 @@ const JournalPage = (props) => {
       }
 
       ul {
+        margin-block-end: 1rem;
+
         .heading {
           font-size: 1.1rem;
           font-weight: bold;
         }
-        .posting {
-        }
 
-        .posting + .heading {
-          margin-block-start: 1rem;
+        .posting {
+          &:hover, :focus {
+            font-weight: bold;
+          }
         }
       }
     }
@@ -231,24 +233,21 @@ const JournalPage = (props) => {
 
   const postElements = posts.map((post) => {
     return (
-      <>
-        <div className='post'>
-          {post.mainImage && (
-            <img
-              className='post-image'
-              src={imageUrlFor(buildImageObj(post.mainImage)).auto('format').url()}
-              alt={post.mainImage.alt}
-            />
-          )}
-          <div className='post-content'>
-            <Link class='title' to={'/journal/' + post.slug.current}><h2>{post.title}</h2></Link>
-            <span className='date'>{formatDate(post.publishedAt)}</span>
-            <PortableText blocks={post._rawExcerpt} />
-            <Link class='read-more' to={'/journal/' + post.slug.current}>Read<svg fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><path strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' d='M17 8l4 4m0 0l-4 4m4-4H3' /></svg></Link>
-          </div>
+      <div className='post' key={post._id}>
+        {post.mainImage && (
+          <img
+            className='post-image'
+            src={imageUrlFor(buildImageObj(post.mainImage)).auto('format').url()}
+            alt={post.mainImage.alt}
+          />
+        )}
+        <div className='post-content'>
+          <Link className='title' to={'/journal/' + post.slug.current}><h2>{post.title}</h2></Link>
+          <span className='date'>{formatDate(post.publishedAt)}</span>
+          <PortableText blocks={post._rawExcerpt} />
+          <Link className='read-more' to={'/journal/' + post.slug.current}>Read<svg fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><path strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' d='M17 8l4 4m0 0l-4 4m4-4H3' /></svg></Link>
         </div>
-        <hr className='divider' />
-      </>
+      </div>
     )
   })
 
@@ -273,21 +272,21 @@ const JournalPage = (props) => {
           </div>
           <div id='other'>
             <h1>All</h1>
-            <ul>
-              {
-                Object.keys(monthYear)
-                  .map(my => {
-                    return (
-                      <>
-                        <li className='heading'>{my}</li>
-                        {monthYear[my].map(post =>
-                          <li className='posting'><Link to={'/journal/' + post.slug.current}>{post.title}</Link> - {format(post.publishedAt, 'DD')}</li>
-                        )}
-                      </>
-                    )
-                  })
-              }
-            </ul>
+            {
+              Object.keys(monthYear)
+                .map((my, i) => {
+                  return (
+                    <ul key={i}>
+                      <li className='heading'>{my}</li>
+                      {monthYear[my].map(post =>
+                        <li key={my + '_' + post._id}>
+                          <Link className='posting' to={'/journal/' + post.slug.current}>{post.title}</Link> - {format(post.publishedAt, 'DD')}
+                        </li>
+                      )}
+                    </ul>
+                  )
+                })
+            }
           </div>
         </JournalListing>
       </Layout>
