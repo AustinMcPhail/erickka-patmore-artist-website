@@ -155,6 +155,7 @@ const NewHeaderWrapper = styled.header`
   `
 
 const reachOutPath = '/reach-out'
+const journalPath = '/journal'
 const cvPath = '/cv'
 const statementPath = '/statement'
 const portfolioPath = '/portfolio'
@@ -193,6 +194,11 @@ const Header = ({siteTitle, categories, socials, fontColor}) => {
           <li className='nav-list-item'>
             <Link className='nav-link' activeClassName='active' to={statementPath}>
               Statement
+            </Link>
+          </li>
+          <li className='nav-list-item'>
+            <Link className='nav-link' activeClassName='active' to={journalPath}>
+              Journal
             </Link>
           </li>
           <li className='nav-list-item'>
