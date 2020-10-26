@@ -24,13 +24,14 @@ const Divider = styled.hr`
 
 const NewEntryListWrapper = styled.section`
   .entry-container {
-    margin-bottom: 4rem;
+    padding-block-end: 1rem;
     display: grid;
     align-items: center;
     gap: 1rem;
     justify-items: center;
     grid-template-areas: 'L R';
     .left {
+      justify-self: flex-start;
       grid-area: L;
       animation: fadeInFromLeft 1s ease-in-out forwards;
       text-align: left;
@@ -63,6 +64,7 @@ const NewEntryListWrapper = styled.section`
       }
     }
     .right {
+      justify-self: flex-end;
       grid-area: R;
       animation: fadeInFromRight 1s ease-in-out forwards;
       text-align: right;
@@ -109,14 +111,12 @@ const NewEntryListWrapper = styled.section`
       .title {
         margin-bottom: 0;
         small {
-          font-size: .5em;
           opacity: 0.75;
         }
       }
 
       .info {
         font-style: italic;
-        font-size: 0.75rem;
         margin-bottom: 1rem;
       }
       
@@ -165,9 +165,9 @@ const EntryList = ({posts}) => {
                 {post.portfolioImage.mediums && post.portfolioImage.mediums.length > 0 ? post.portfolioImage.mediums.map(m => m.name).join(', ') : ''}
               </p>
               {post._rawExcerpt && (
-                <p className='excerpt'>
+                <div className='excerpt'>
                   <PortableText blocks={post._rawExcerpt} />
-                </p>
+                </div>
               )}
             </article>
             <Link to={`/portfolio/${post.slug.current}`} className={'img-container ' + getPlacement(i, true)}>
