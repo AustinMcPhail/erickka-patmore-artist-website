@@ -56,6 +56,7 @@ function SEO ({description, lang, meta, keywords, title, image}) {
             <style>
               @import
               url('https://fonts.googleapis.com/css2?family=Inconsolata&family=Montserrat&display=swap');
+              @import "~react-image-gallery/styles/css/image-gallery.css"
             </style>
             <link rel='apple-touch-icon' sizes='180x180' href='/apple-touch-icon.png' />
             <link rel='icon' type='image/png' sizes='32x32' href='/favicon-32x32.png' />
