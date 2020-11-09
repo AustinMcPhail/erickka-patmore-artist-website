@@ -194,14 +194,14 @@ const IndexPage = (props) => {
     infinite: true,
     slidesToShow: 1,
     slidesToScroll: 1,
-    adaptiveHeight: true,
     fade: true,
     waitForAnimation: false,
     autoplay: true,
     autoplaySpeed: 5000,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
-    beforeChange: beforeChange
+    beforeChange: beforeChange,
+    centerMode: true
   }
 
   const slides = posts.map(p => {
