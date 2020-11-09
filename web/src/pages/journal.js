@@ -23,6 +23,7 @@ export const query = graphql`
       }
     }
     posts: allSanityPost(
+      limit: 10,
       sort: {fields: [publishedAt], order: DESC}
     ) {
       edges {

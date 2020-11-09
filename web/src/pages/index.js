@@ -1,10 +1,15 @@
-import React from 'react'
-import {graphql} from 'gatsby'
+import React, {useState, useEffect} from 'react'
+import {graphql, Link} from 'gatsby'
 import {ThemeProvider} from 'styled-components'
 import {GlobalStyle, theme} from '../lib/styled'
 import GraphQLErrorList from '../components/graphql-error-list'
 import Layout from '../components/core/layout'
-import EntryList from '../components/EntryList'
+import Slider from 'react-slick'
+import 'slick-carousel/slick/slick.css'
+import 'slick-carousel/slick/slick-theme.css'
+import Img from 'gatsby-image'
+
+const {isFuture} = require('date-fns')
 
 export const query = graphql`
   fragment SanityImage on SanityPortfolioImage {
@@ -110,11 +115,15 @@ export const query = graphql`
             current
           }
           portfolioImage {
-            ...SanityImage
             alt
             dimensions
             mediums {
               name
+            }
+            asset {
+              fluid(maxWidth: 700) {
+                ...GatsbySanityImageFluid
+              }
             }
           }
           _rawExcerpt
@@ -124,6 +133,8 @@ export const query = graphql`
   }
 `
 const IndexPage = (props) => {
+  const [current, setCurrent] = useState('')
+
   const {data, errors} = props
 
   if (errors) {
@@ -135,7 +146,7 @@ const IndexPage = (props) => {
   }
 
   const site = (data || {}).site
-  const posts = data.posts.edges.map((e) => e.node) || []
+  const posts = data.posts.edges.filter(e => !isFuture(e.node.publishedAt)).map((e) => e.node) || []
   const categories = data.categories.edges.map((e) => e.node) || []
 
   if (!site) {
@@ -149,11 +160,71 @@ const IndexPage = (props) => {
     instagramUrl: site.instagramUrl
   }
 
+  const NextArrow = (props) => {
+    const {className, style, onClick} = props
+    return (<div
+      className={className}
+      style={{...style, display: 'block', borderRadius: '50%', border: 'solid 1px gray', background: 'gray', opacity: 0.5}}
+      onClick={onClick}
+    />)
+  }
+
+  const PrevArrow = (props) => {
+    const {className, style, onClick} = props
+    return (<div
+      className={className}
+      style={{...style, display: 'block', borderRadius: '50%', border: 'solid 1px gray', background: 'gray', opacity: 0.5}}
+      onClick={onClick}
+    />)
+  }
+
+  const beforeChange = (_, index) => {
+    console.log('changed', posts[index].slug.current)
+    setCurrent(posts[index].slug.current)
+  }
+
+  useEffect(() => {
+    if (posts.length) {
+      setCurrent(posts[0].slug.current)
+    }
+  }, [])
+
+  var settings = {
+    className: '',
+    infinite: true,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    fade: true,
+    waitForAnimation: false,
+    autoplay: true,
+    autoplaySpeed: 5000,
+    nextArrow: <NextArrow />,
+    prevArrow: <PrevArrow />,
+    beforeChange: beforeChange,
+    centerMode: true
+  }
+
+  const slides = posts.map(p => {
+    return (
+      <Link key={p.slug.current} style={{maxHeight: '100%'}} to={`/portfolio/${current}`}>
+        <Img
+          style={{maxHeight: '75vh'}}
+          imgStyle={{objectFit: 'contain'}}
+          fluid={p.portfolioImage.asset.fluid}
+        />
+      </Link>
+    )
+  })
+
   return (
     <ThemeProvider theme={theme(site)}>
       <GlobalStyle />
       <Layout categories={categories} socials={socials} site={site}>
-        <EntryList posts={posts} />
+        <div style={{marginLeft: '2rem', marginRight: '2rem'}}>
+          <Slider {...settings}>
+            {slides}
+          </Slider>
+        </div>
       </Layout>
     </ThemeProvider>
   )
