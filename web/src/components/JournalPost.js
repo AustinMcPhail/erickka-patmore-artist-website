@@ -200,7 +200,7 @@ export const JournalPost = ({prev, post, next}) => {
               </IconSvg>
             </a>
           </div>
-          <aside className='author'>
+          {authors[0] && <aside className='author'>
             {authors[0].author.image && authors[0].author.image.asset && (
               <img
                 src={imageUrlFor(buildImageObj(authors[0].author.image))
@@ -213,7 +213,7 @@ export const JournalPost = ({prev, post, next}) => {
               <p>Authored by</p>
               <p>{authors[0].author.name || <em>Missing name</em>}</p>
             </div>
-          </aside>
+          </aside>}
         </div>
       </div>
     </Post>
