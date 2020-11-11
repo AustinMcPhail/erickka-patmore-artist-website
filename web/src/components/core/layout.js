@@ -90,6 +90,9 @@ const Layout = ({children, site, categories, socials}) => {
         fontColor={site.fontColor}
       />
       <main>{children}</main>
+      <footer style={{display: 'flex', justifyContent: 'flex-end', opacity: '0.5', paddingTop: '2rem'}}>
+        Site by <a style={{marginLeft: '2px', marginRight: '2px'}} target='_blank' rel='noopener noreferrer' href='https://contact.mcphail.dev/'>McPhail.dev</a>&#169; {new Date().getFullYear()}
+      </footer>
       <ToTopButton onClick={() => scrollToTop()} id='toTop'>
         Back to Top
         {/* <ToTopIcon /> */}
