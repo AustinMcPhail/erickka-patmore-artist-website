@@ -6,7 +6,6 @@ export const GlobalStyle = createGlobalStyle`
   figure{margin:0;}
   input::-moz-focus-inner {border:0; padding:0; margin:0;}
   ul, ol, dd{margin:0; padding:0; list-style:none;}
-  h1, h2, h3, h4, h5, h6{margin:0;}
   p{margin:0;}
   cite {font-style:normal;}
   fieldset{border-width:0; padding:0; margin:0;}
@@ -15,15 +14,53 @@ export const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-size: 100%;
   }
 
-
   body {
+    /* Variables */
+    --max-font-size-scaler: 1;
+    --min-font-size-scaler: .5;
+
+    --h1-size: clamp(calc(4.209rem * var(--min-font-size-scaler)), 5vw, calc(4.209rem * var(--max-font-size-scaler)));
+    --h2-size:  clamp(calc(3.157rem * var(--min-font-size-scaler)), 5vw, calc(3.157rem * var(--max-font-size-scaler)));
+    --h3-size:  clamp(calc(2.369rem * var(--min-font-size-scaler)), 5vw, calc(2.369rem * var(--max-font-size-scaler)));
+    --h4-size:  clamp(calc(1.777rem * var(--min-font-size-scaler)), 5vw, calc(1.777rem * var(--max-font-size-scaler)));
+    --h5-size:  clamp(calc(1.333rem * var(--min-font-size-scaler)), 5vw, calc(1.333rem * var(--max-font-size-scaler)));
+
+    --content-spacing: clamp(.5rem, 1vw, 1rem);
+
+
     background-color: ${(props) => props.theme.backgroundColor};
+    
     font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    line-height: 1.75;
     color: ${(props) => props.theme.fontColor};
     font-size: 16px;
   }
+
+  h1, h2, h3, h4, h5 {
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    line-height: 1.3;
+  }
+
+  h1 {
+    margin-top: 0;
+    font-size: var(--h1-size);
+  }
+
+  h2 {font-size: var(--h2-size);}
+
+  h3 {font-size: var(--h3-size);}
+
+  h4 {font-size: var(--h4-size);}
+
+  h5 {font-size: var(--h5-size);}
+
+  small, .text_small {font-size: 0.75rem;}
 `
 
 export const theme = (site) => {

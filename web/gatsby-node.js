@@ -74,9 +74,9 @@ async function categoryPages ({graphql, actions}) {
       slug: {current}
     } = edge.node
     console.log(
-      `Creating Category page at 'portfolio/${current}'`
+      `Creating Category page at 'gallery/${current}'`
     )
-    const path = `portfolio/${current}`
+    const path = `gallery/${current}`
     actions.createPage({
       path,
       component: require.resolve('./src/templates/portfolio/category.js'),
