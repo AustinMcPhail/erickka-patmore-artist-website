@@ -1,7 +1,6 @@
 import React from 'react'
 import {graphql} from 'gatsby'
-import styled, {ThemeProvider} from 'styled-components'
-import {GlobalStyle, theme} from '../lib/styled'
+import styled from 'styled-components'
 import GraphQLErrorList from '../components/graphql-error-list'
 import Layout from '../components/core/layout'
 import Instagram from '../components/Instagram'
@@ -140,38 +139,33 @@ const ReachOutPage = (props) => {
     instagramUrl: site.instagramUrl
   }
   return (
-    <ThemeProvider theme={theme(site)}>
-      <GlobalStyle />
-      <Layout site={site} categories={categories} socials={socials}>
-        <ReachOutWrapper>
-          <section aria-labelledby='instagram-header'>
-            <div className='heading'>
-              <hr />
-              <h3 id='instagram-header'>Instagram</h3>
-              <hr />
-            </div>
-            <Instagram />
-          </section>
-          <section aria-labelledby='facebook-header'>
-            <div className='heading'>
-              <hr />
-              <h3 id='facebook-header'>Facebook</h3>
-              <hr />
-            </div>
-            <iframe
-              src='https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Ferickkasart&tabs=timeline&width=340&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId'
-              width='340'
-              height='500'
-              style={{border: 'none', overflow: 'hidden'}}
-              scrolling='no'
-              frameBorder='0'
-              allowtransparency='true'
-              allow='encrypted-media'
-            />
-          </section>
-        </ReachOutWrapper>
-      </Layout>
-    </ThemeProvider>
+    <ReachOutWrapper>
+      <section aria-labelledby='instagram-header'>
+        <div className='heading'>
+          <hr />
+          <h3 id='instagram-header'>Instagram</h3>
+          <hr />
+        </div>
+        <Instagram />
+      </section>
+      <section aria-labelledby='facebook-header'>
+        <div className='heading'>
+          <hr />
+          <h3 id='facebook-header'>Facebook</h3>
+          <hr />
+        </div>
+        <iframe
+          src='https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Ferickkasart&tabs=timeline&width=340&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId'
+          width='340'
+          height='500'
+          style={{border: 'none', overflow: 'hidden'}}
+          scrolling='no'
+          frameBorder='0'
+          allowtransparency='true'
+          allow='encrypted-media'
+        />
+      </section>
+    </ReachOutWrapper>
   )
 }
 

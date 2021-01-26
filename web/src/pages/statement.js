@@ -1,7 +1,6 @@
 import React from 'react'
 import {graphql} from 'gatsby'
-import styled, {ThemeProvider} from 'styled-components'
-import {GlobalStyle, theme} from '../lib/styled'
+import styled from 'styled-components'
 import GraphQLErrorList from '../components/graphql-error-list'
 import Layout from '../components/core/layout'
 import PortableText from '../components/portableText'
@@ -9,27 +8,6 @@ import {imageUrlFor} from '../lib/image-url'
 import {buildImageObj} from '../lib/helpers'
 
 export const query = graphql`
-fragment SanityMImage on SanityMainImage {
-  crop {
-    _key
-    _type
-    top
-    bottom
-    left
-    right
-  }
-  hotspot {
-    _key
-    _type
-    x
-    y
-    height
-    width
-  }
-  asset {
-    _id
-  }
-}
   query StatementPageQuery {
     site: sanitySiteSettings(_id: {regex: "/(drafts.|)siteSettings/"}) {
       title
@@ -60,10 +38,6 @@ fragment SanityMImage on SanityMainImage {
         }
       }
       _rawStatement(resolveReferences: {maxDepth: 5})
-      statementImage {
-        ...MainImage
-            alt
-      }
       author {
         image {
           asset {
@@ -171,27 +145,22 @@ const StatementPage = (props) => {
   }
 
   return (
-    <ThemeProvider theme={theme(site)}>
-      <GlobalStyle />
-      <Layout site={site} categories={[]} socials={socials}>
-        <StatementWrapper>
-          <div className='statement-container'>
-            <div className='img-container left'>
-              <img
-                src={imageUrlFor(buildImageObj(site.statementImage))
-                  .auto('format')
-                  .url()}
-                alt={site.statementImage.alt}
-                className='fit-image'
-              />
-            </div>
-            <article className={'statement-body right'}>
-              {site._rawStatement && <PortableText blocks={site._rawStatement} />}
-            </article>
-          </div>
-        </StatementWrapper>
-      </Layout>
-    </ThemeProvider>
+    <StatementWrapper>
+      <div className='statement-container'>
+        <div className='img-container left'>
+          <img
+            src={imageUrlFor(buildImageObj(site.statementImage))
+              .auto('format')
+              .url()}
+            alt={site.statementImage.alt}
+            className='fit-image'
+          />
+        </div>
+        <article className={'statement-body right'}>
+          {site._rawStatement && <PortableText blocks={site._rawStatement} />}
+        </article>
+      </div>
+    </StatementWrapper>
   )
 }
 

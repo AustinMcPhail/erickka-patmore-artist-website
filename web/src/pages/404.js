@@ -1,7 +1,5 @@
 import React from 'react'
 import {graphql} from 'gatsby'
-import {ThemeProvider} from 'styled-components'
-import {GlobalStyle, theme} from '../lib/styled'
 import GraphQLErrorList from '../components/graphql-error-list'
 import Layout from '../components/core/layout'
 
@@ -63,13 +61,10 @@ const NotFoundPage = (props) => {
   }
 
   return (
-    <ThemeProvider theme={theme(site)}>
-      <GlobalStyle />
-      <Layout categories={[]} socials={socials} site={site}>
-        <h1>NOT FOUND</h1>
-        <p>You just hit a route that doesn&#39;t exist... the sadness.</p>
-      </Layout>
-    </ThemeProvider>
+    <>
+      <h1>NOT FOUND</h1>
+      <p>You just hit a route that doesn&#39;t exist... the sadness.</p>
+    </>
   )
 }
 

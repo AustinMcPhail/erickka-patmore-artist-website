@@ -1,7 +1,6 @@
 import React from 'react'
 import {graphql} from 'gatsby'
-import styled, {ThemeProvider} from 'styled-components'
-import {GlobalStyle, theme} from '../lib/styled'
+import styled from 'styled-components'
 import GraphQLErrorList from '../components/graphql-error-list'
 import Layout from '../components/core/layout'
 
@@ -133,23 +132,16 @@ const CvPage = (props) => {
   }
 
   return (
-    <ThemeProvider theme={theme(site)}>
-      <GlobalStyle />
-      <Layout site={site} categories={categories} socials={socials}>
-        {site.cv && (
-          <Cv>
-            <DownloadWrapper>
-              <AccentDivider />
-              <CvDownload href={`${site.cv.asset.url}?dl=`}>Download CV</CvDownload>
-            </DownloadWrapper>
-            <CvPreview
-              src={`https://docs.google.com/gview?url=${site.cv.asset.url}&embedded=true`}
-              frameBorder={0}
-            />
-          </Cv>
-        )}
-      </Layout>
-    </ThemeProvider>
+    <Cv>
+      <DownloadWrapper>
+        <AccentDivider />
+        <CvDownload href={`${site.cv.asset.url}?dl=`}>Download CV</CvDownload>
+      </DownloadWrapper>
+      <CvPreview
+        src={`https://docs.google.com/gview?url=${site.cv.asset.url}&embedded=true`}
+        frameBorder={0}
+      />
+    </Cv>
   )
 }
 

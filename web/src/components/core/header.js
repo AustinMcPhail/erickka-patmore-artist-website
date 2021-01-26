@@ -27,14 +27,14 @@ const HeaderWrapper = styled.header`
   }
 `
 
-const Header = ({siteTitle, socials}) => {
+const Header = ({title, socials}) => {
   const inGallery = typeof window !== 'undefined' ? window.location.href.includes('gallery') : ''
   return (
     <HeaderWrapper>
       <div className='main'>
         <h1>
           <Link to='/'>
-            {siteTitle && siteTitle.split(' ').map(s => <p>{s}</p>)}
+            {title && title.split(' ').map(s => <p>{s}</p>)}
           </Link>
           <ul className='social' aria-label='Social Links'>
             <li aria-label='Instagram'>

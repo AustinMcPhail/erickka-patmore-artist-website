@@ -1,7 +1,8 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 import Header from './header'
 import styled from 'styled-components'
 import SEO from './seo'
+import {graphql, useStaticQuery} from 'gatsby'
 
 const LayoutWrapper = styled.div`
   display: grid;
@@ -31,27 +32,46 @@ const LayoutWrapper = styled.div`
   }
 `
 
-const Layout = ({children, site, categories, socials}) => {
-  // return (
-  //   <LayoutWrapper>
-  //     <SEO title={site.title} description={site.description} keywords={site.keywords} />
-  //     <main>{children}</main>
-  //     <footer style={{display: 'flex', justifyContent: 'flex-end', opacity: '0.5', paddingTop: '2rem'}}>
-  //       Site by <a style={{marginLeft: '2px', marginRight: '2px'}} target='_blank' rel='noopener noreferrer' href='https://contact.mcphail.dev/'>McPhail.dev</a>&#169; {new Date().getFullYear()}
-  //     </footer>
-  //     <ToTopButton onClick={() => scrollToTop()} id='toTop'>
-  //       Back to Top
-  //       {/* <ToTopIcon /> */}
-  //     </ToTopButton>
-  //   </LayoutWrapper>
-  // )
+const Layout = ({children}) => {
+  const {site} = useStaticQuery(graphql`
+    query {
+      site: sanitySiteSettings(_id: {regex: "/(drafts.|)siteSettings/"}) {
+        title
+        description
+        keywords
+        facebookUrl
+        instagramUrl
+        backgroundColor {
+          rgb {
+            r
+            g
+            b
+            a
+          }
+          hsl {
+            h
+            s
+            l
+            a
+          }
+        }
+        fontColor {
+          rgb {
+            r
+            g
+            b
+            a
+          }
+        }
+      }
+    }
+  `)
   return (
     <LayoutWrapper>
+      <SEO title={site.title} description={site.description} keywords={site.keywords} />
       <Header
-        siteTitle={site.title}
-        categories={categories}
-        socials={socials}
-        fontColor={site.fontColor}
+        title={site.title}
+        socials={{instagramUrl: site.instagramUrl, facebookUrl: site.facebookUrl}}
       />
       <main>
         {children}

@@ -58,21 +58,12 @@ export const query = graphql`
     curr: sanityPost(_id: {eq: $curr_id}) {
         _id
         publishedAt
-        mainImage {
-            ...MainImage
-            alt
-            caption
-        }
         title
         _rawExcerpt
         _rawBody
         authors {
             author {
                 name
-                image {
-                    ...MainImage
-                    alt
-                }
             }
         }
         slug {

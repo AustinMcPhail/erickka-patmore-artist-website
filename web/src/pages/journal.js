@@ -1,7 +1,6 @@
 import React from 'react'
 import {graphql, Link} from 'gatsby'
-import styled, {ThemeProvider} from 'styled-components'
-import {GlobalStyle, theme} from '../lib/styled'
+import styled from 'styled-components'
 import GraphQLErrorList from '../components/graphql-error-list'
 import Layout from '../components/core/layout'
 
@@ -12,16 +11,6 @@ import {differenceInDays, distanceInWords, format, isFuture} from 'date-fns'
 
 export const query = graphql`
   query JournalPageQuery {
-    site: sanitySiteSettings(_id: { regex: "/(drafts.|)siteSettings/" }) {
-      ...SiteSettings
-    }
-    categories: allSanityCategory(filter: { enabled: { ne: false } }) {
-      edges {
-        node {
-          ...Category
-        }
-      }
-    }
     posts: allSanityPost(
       limit: 10,
       sort: {fields: [publishedAt], order: DESC}
@@ -30,10 +19,6 @@ export const query = graphql`
         node {
           _id
           publishedAt
-          mainImage {
-            ...MainImage
-            alt
-          }
           title
           _rawExcerpt
           slug {
@@ -265,35 +250,30 @@ const JournalPage = (props) => {
   })
 
   return (
-    <ThemeProvider theme={theme(site)}>
-      <GlobalStyle />
-      <Layout categories={categories} socials={socials} site={site}>
-        <JournalListing>
-          <div id='posts'>
-            <h1>Recent</h1>
-            {postElements}
-          </div>
-          <div id='other'>
-            <h1>All</h1>
-            {
-              Object.keys(monthYear)
-                .map((my, i) => {
-                  return (
-                    <ul key={i}>
-                      <li className='heading'>{my}</li>
-                      {monthYear[my].map(post =>
-                        <li key={my + '_' + post._id}>
-                          <Link className='posting' to={'/journal/' + post.slug.current}>{post.title}</Link> - {format(post.publishedAt, 'DD')}
-                        </li>
-                      )}
-                    </ul>
-                  )
-                })
-            }
-          </div>
-        </JournalListing>
-      </Layout>
-    </ThemeProvider>
+    <JournalListing>
+      <div id='posts'>
+        <h1>Recent</h1>
+        {postElements}
+      </div>
+      <div id='other'>
+        <h1>All</h1>
+        {
+          Object.keys(monthYear)
+            .map((my, i) => {
+              return (
+                <ul key={i}>
+                  <li className='heading'>{my}</li>
+                  {monthYear[my].map(post =>
+                    <li key={my + '_' + post._id}>
+                      <Link className='posting' to={'/journal/' + post.slug.current}>{post.title}</Link> - {format(post.publishedAt, 'DD')}
+                    </li>
+                  )}
+                </ul>
+              )
+            })
+        }
+      </div>
+    </JournalListing>
   )
 }
 

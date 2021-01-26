@@ -100,12 +100,7 @@ const PortfolioPage = (props) => {
   }
 
   return (
-    <ThemeProvider theme={theme(site)}>
-      <GlobalStyle />
-      <Layout site={site} categories={categories} socials={socials}>
-        <Home posts={posts} />
-      </Layout>
-    </ThemeProvider>
+    <Home posts={posts} />
   )
 }
 
