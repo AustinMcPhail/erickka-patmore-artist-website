@@ -34,7 +34,7 @@ const Header = ({title, socials}) => {
       <div className='main'>
         <h1>
           <Link to='/'>
-            {title && title.split(' ').map(s => <p>{s}</p>)}
+            {title && title.split(' ').map(s => <p key={s}>{s}</p>)}
           </Link>
           <ul className='social' aria-label='Social Links'>
             <li aria-label='Instagram'>
