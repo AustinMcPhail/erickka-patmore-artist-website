@@ -47,7 +47,11 @@ const GalleryStyles = styled.div`
     }
   }
 
-  @media (min-width: 1024px) {
+  @media (min-width: 481px) {
+    --masonry-cols: 2;
+  }
+
+  @media (min-width: 1200px) {
     --masonry-cols: 3;
   }
 `
