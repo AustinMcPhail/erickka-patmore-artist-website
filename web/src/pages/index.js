@@ -3,8 +3,6 @@ import React from 'react'
 import styled from 'styled-components'
 import ImageGallery from '../components/ImageGallery'
 
-const { isFuture } = require('date-fns')
-
 export const query = graphql`
   query {
     allSanityPortfolioEntry(

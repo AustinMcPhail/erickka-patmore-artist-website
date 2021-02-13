@@ -1,4 +1,4 @@
-import { isFuture } from 'date-fns'
+import { isFuture, parseISO } from 'date-fns'
 import { Link } from 'gatsby'
 import Img from 'gatsby-image'
 import React from 'react'
@@ -7,7 +7,7 @@ import styled from 'styled-components'
 const ImageGallery = ({ posts }) => (
   <GalleryStyles>
     {posts
-      .filter(({ node: p }) => !isFuture(p.publishedAt))
+      .filter(({ node: p }) => !isFuture(parseISO(p.publishedAt)))
       .map(({ node: p }) => (
         <figure key={p.slug.current}>
           <Link

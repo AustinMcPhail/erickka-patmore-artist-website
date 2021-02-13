@@ -1,4 +1,4 @@
-const { isFuture } = require('date-fns')
+const { isFuture, parseISO } = require('date-fns')
 /**
  * Implement Gatsby's Node APIs in this file.
  *
@@ -103,7 +103,7 @@ async function journalPages({ graphql, actions }) {
     }
   `)
   if (!allPosts) return
-  const posts = allPosts.filter((e) => !isFuture(e.node.publishedAt))
+  const posts = allPosts.filter((e) => !isFuture(parseISO(e.node.publishedAt)))
   posts.forEach((edge, i) => {
     const {
       _id,

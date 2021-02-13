@@ -1,4 +1,4 @@
-import { differenceInDays, distanceInWords, format, isFuture } from 'date-fns'
+import { differenceInDays, distanceInWords, format, isFuture, parseISO } from 'date-fns'
 import { graphql, Link } from 'gatsby'
 import React from 'react'
 import styled from 'styled-components'
@@ -230,7 +230,7 @@ const JournalPage = (props) => {
         <Link className="title" to={`/journal/${post.slug.current}`}>
           <h2>{post.title}</h2>
         </Link>
-        <span className="date">{formatDate(post.publishedAt)}</span>
+        <span className="date">{formatDate(parseISO(post.publishedAt))}</span>
         <PortableText blocks={post._rawExcerpt} />
         <Link className="read-more" to={`/journal/${post.slug.current}`}>
           Read
@@ -254,7 +254,7 @@ const JournalPage = (props) => {
 
   const monthYear = {}
   posts.forEach((p) => {
-    const m = format(p.publishedAt, 'MMMM-YYYY')
+    const m = format(parseISO(p.publishedAt), 'MMMM-YYYY')
     if (monthYear[m]) {
       monthYear[m].push(p)
     } else {
@@ -278,7 +278,7 @@ const JournalPage = (props) => {
                 <Link className="posting" to={`/journal/${post.slug.current}`}>
                   {post.title}
                 </Link>{' '}
-                - {format(post.publishedAt, 'DD')}
+                - {format(parseISO(post.publishedAt), 'DD')}
               </li>
             ))}
           </ul>
