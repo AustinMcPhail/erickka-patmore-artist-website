@@ -1,7 +1,7 @@
-import React, {useState, useEffect} from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
-const url = `/.netlify/functions/instagram`
+const url = '/.netlify/functions/instagram'
 
 const InstagramPosts = styled.div`
   display: grid;
@@ -79,15 +79,15 @@ const InstagramPosts = styled.div`
         hsl(
           ${(props) => props.theme.backgroundHsl.h},
           ${(props) =>
-    props.theme.backgroundHsl.s * 100 - props.theme.backgroundHsl.s * 100 * 0.5 + '%'},
+            `${props.theme.backgroundHsl.s * 100 - props.theme.backgroundHsl.s * 100 * 0.5}%`},
           ${(props) =>
-    props.theme.backgroundHsl.l * 100 - props.theme.backgroundHsl.l * 100 * 0.5 + '%'}
+            `${props.theme.backgroundHsl.l * 100 - props.theme.backgroundHsl.l * 100 * 0.5}%`}
         );
     }
     100% {
       transform: translateY(0px);
       opacity: 1;
-      box-shadow: 0px 15px 10px -10px hsl(${(props) => props.theme.backgroundHsl.h}, ${(props) => props.theme.backgroundHsl.s * 100 - props.theme.backgroundHsl.s * 100 * 0.5 + '%'}, ${(props) => props.theme.backgroundHsl.l * 100 - props.theme.backgroundHsl.l * 100 * 0.5 + '%'});
+      box-shadow: 0px 15px 10px -10px hsl(${(props) => props.theme.backgroundHsl.h}, ${(props) => `${props.theme.backgroundHsl.s * 100 - props.theme.backgroundHsl.s * 100 * 0.5}%`}, ${(props) => `${props.theme.backgroundHsl.l * 100 - props.theme.backgroundHsl.l * 100 * 0.5}%`});
     }
   }
 `
@@ -107,16 +107,14 @@ const Instagram = () => {
   return (
     <InstagramPosts>
       {insta.length > 0 &&
-        insta.map((post) => {
-          return (
-            <a key={post.id} href={post.url} target='_blank' rel='noopener noreferrer'>
-              <img
-                src={`https://images.weserv.nl/?url=${encodeURIComponent(post.thumbnail)}`}
-                alt={post.caption}
-              />
-            </a>
-          )
-        })}
+        insta.map((post) => (
+          <a key={post.id} href={post.url} target="_blank" rel="noopener noreferrer">
+            <img
+              src={`https://images.weserv.nl/?url=${encodeURIComponent(post.thumbnail)}`}
+              alt={post.caption}
+            />
+          </a>
+        ))}
     </InstagramPosts>
   )
 }

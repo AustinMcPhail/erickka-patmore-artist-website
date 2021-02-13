@@ -1,4 +1,4 @@
-import {createGlobalStyle} from 'styled-components'
+import { createGlobalStyle } from 'styled-components'
 
 export const GlobalStyle = createGlobalStyle`
   a{text-decoration:none; color:inherit; cursor:pointer;}
@@ -29,6 +29,21 @@ export const GlobalStyle = createGlobalStyle`
     --h5-size:  clamp(calc(1.333rem * var(--min-font-size-scaler)), 5vw, calc(1.333rem * var(--max-font-size-scaler)));
 
     --content-spacing: clamp(.5rem, 1vw, 1rem);
+
+
+    --slider-height-percentage: 100%;
+    --slider-transition-duration: 700ms;
+    --organic-arrow-thickness: 4px;
+    --organic-arrow-border-radius: 0px;
+    --organic-arrow-height: 40px;
+    --organic-arrow-color: #26456f;
+    --control-button-width: 10%;
+    --control-button-height: 25%;
+    --control-button-background: transparent;
+    --control-bullet-color: #2d5182;
+    --control-bullet-active-color: #26456f;
+    --loader-bar-color: #851515;
+    --loader-bar-height: 6px;
 
 
     background-color: ${(props) => props.theme.backgroundColor};
@@ -63,19 +78,17 @@ export const GlobalStyle = createGlobalStyle`
   small, .text_small {font-size: 0.75rem;}
 `
 
-export const theme = (site) => {
-  return {
-    secondaryFont: 'Inconsolata',
-    fontColor: site.fontColor
-      ? `rgba(${site.fontColor.rgb.r}, ${site.fontColor.rgb.g}, ${site.fontColor.rgb.b}, ${site.fontColor.rgb.a})`
-      : '#2f2f2f',
-    backgroundColor: site.backgroundColor
-      ? `hsla(${site.backgroundColor.hsl.h}, ${site.backgroundColor.hsl.s * 100}%, ${
+export const theme = (site) => ({
+  secondaryFont: 'Inconsolata',
+  fontColor: site.fontColor
+    ? `rgba(${site.fontColor.rgb.r}, ${site.fontColor.rgb.g}, ${site.fontColor.rgb.b}, ${site.fontColor.rgb.a})`
+    : '#2f2f2f',
+  backgroundColor: site.backgroundColor
+    ? `hsla(${site.backgroundColor.hsl.h}, ${site.backgroundColor.hsl.s * 100}%, ${
         site.backgroundColor.hsl.l * 100
       }%, ${site.backgroundColor.hsl.a})`
-      : 'hsla(210, 21%, 95%, 1)',
-    backgroundHsl: site.backgroundColor
-      ? site.backgroundColor.hsl
-      : {h: 210, s: 0.21, l: 0.95, a: 1}
-  }
-}
+    : 'hsla(210, 21%, 95%, 1)',
+  backgroundHsl: site.backgroundColor
+    ? site.backgroundColor.hsl
+    : { h: 210, s: 0.21, l: 0.95, a: 1 },
+})

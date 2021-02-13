@@ -1,11 +1,11 @@
 import React from 'react'
-import {graphql} from 'gatsby'
+import { graphql } from 'gatsby'
 import GraphQLErrorList from '../components/graphql-error-list'
 import Layout from '../components/core/layout'
 
 export const query = graphql`
   query NotFoundPageQuery {
-    site: sanitySiteSettings(_id: {regex: "/(drafts.|)siteSettings/"}) {
+    site: sanitySiteSettings(_id: { regex: "/(drafts.|)siteSettings/" }) {
       title
       description
       keywords
@@ -37,7 +37,7 @@ export const query = graphql`
   }
 `
 const NotFoundPage = (props) => {
-  const {data, errors} = props
+  const { data, errors } = props
 
   if (errors) {
     return (
@@ -47,7 +47,7 @@ const NotFoundPage = (props) => {
     )
   }
 
-  const site = (data || {}).site
+  const { site } = data || {}
 
   if (!site) {
     throw new Error(
@@ -57,7 +57,7 @@ const NotFoundPage = (props) => {
 
   const socials = {
     facebookUrl: site.facebookUrl,
-    instagramUrl: site.instagramUrl
+    instagramUrl: site.instagramUrl,
   }
 
   return (

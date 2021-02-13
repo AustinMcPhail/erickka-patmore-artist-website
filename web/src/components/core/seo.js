@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Helmet from 'react-helmet'
-import {StaticQuery, graphql} from 'gatsby'
-import {imageUrlFor} from '../../lib/image-url'
-import {buildImageObj} from '../../lib/helpers'
+import { StaticQuery, graphql } from 'gatsby'
+import { imageUrlFor } from '../../lib/image-url'
+import { buildImageObj } from '../../lib/helpers'
 
-function SEO ({description, lang, meta, keywords, title, image}) {
+function SEO({ description, lang, meta, keywords, title, image }) {
   return (
     <StaticQuery
       query={detailsQuery}
@@ -18,37 +18,37 @@ function SEO ({description, lang, meta, keywords, title, image}) {
 
         return (
           <Helmet
-            htmlAttributes={{lang}}
+            htmlAttributes={{ lang }}
             title={title}
             titleTemplate={title === siteTitle ? '%s' : `%s | ${siteTitle}`}
             meta={[
               {
                 name: 'description',
-                content: metaDescription
+                content: metaDescription,
               },
               {
                 property: 'og:title',
-                content: title
+                content: title,
               },
               {
                 property: 'og:description',
-                content: metaDescription
+                content: metaDescription,
               },
               {
                 property: 'og:type',
-                content: 'website'
+                content: 'website',
               },
               {
                 property: 'og:image',
-                content: metaImage
-              }
+                content: metaImage,
+              },
             ]
               .concat(
                 keywords && keywords.length > 0
                   ? {
-                    name: 'keywords',
-                    content: keywords.join(', ')
-                  }
+                      name: 'keywords',
+                      content: keywords.join(', '),
+                    }
                   : []
               )
               .concat(meta)}
@@ -58,10 +58,10 @@ function SEO ({description, lang, meta, keywords, title, image}) {
               url('https://fonts.googleapis.com/css2?family=Inconsolata&family=Montserrat&display=swap');
               @import "~react-image-gallery/styles/css/image-gallery.css"
             </style>
-            <link rel='apple-touch-icon' sizes='180x180' href='/apple-touch-icon.png' />
-            <link rel='icon' type='image/png' sizes='32x32' href='/favicon-32x32.png' />
-            <link rel='icon' type='image/png' sizes='16x16' href='/favicon-16x16.png' />
-            <link rel='manifest' href='/site.webmanifest' />
+            <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+            <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+            <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+            <link rel="manifest" href="/site.webmanifest" />
           </Helmet>
         )
       }}
@@ -72,7 +72,7 @@ function SEO ({description, lang, meta, keywords, title, image}) {
 SEO.defaultProps = {
   lang: 'en',
   meta: [],
-  keywords: []
+  keywords: [],
 }
 
 SEO.propTypes = {
@@ -80,14 +80,14 @@ SEO.propTypes = {
   lang: PropTypes.string,
   meta: PropTypes.array,
   keywords: PropTypes.arrayOf(PropTypes.string),
-  title: PropTypes.string.isRequired
+  title: PropTypes.string.isRequired,
 }
 
 export default SEO
 
 const detailsQuery = graphql`
   query DefaultSEOQuery {
-    site: sanitySiteSettings(_id: {eq: "siteSettings"}) {
+    site: sanitySiteSettings(_id: { eq: "siteSettings" }) {
       title
       description
       keywords

@@ -3,10 +3,10 @@ import Figure from './Figure'
 
 const serializers = {
   types: {
-    authorReference: ({node}) => <span>{node.author.name}</span>,
+    authorReference: ({ node }) => <span>{node.author.name}</span>,
     mainImage: Figure,
-    portfolioImage: Figure
-  }
+    portfolioImage: Figure,
+  },
 }
 
 export default serializers

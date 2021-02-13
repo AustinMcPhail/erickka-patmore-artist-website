@@ -5,18 +5,16 @@ const { isFuture } = require('date-fns')
  * See: https://www.gatsbyjs.org/docs/node-apis/
  */
 
-async function postPages ({ graphql, actions }) {
+async function postPages({ graphql, actions }) {
   console.log('\nCreating Post Pages\n')
 
   const {
     data: {
-      allSanityPortfolioEntry: { edges: posts }
-    }
+      allSanityPortfolioEntry: { edges: posts },
+    },
   } = await graphql(`
     query {
-      allSanityPortfolioEntry(
-        filter: {slug: {current: {ne: null}}}
-      ) {
+      allSanityPortfolioEntry(filter: { slug: { current: { ne: null } } }) {
         edges {
           node {
             _id
@@ -32,31 +30,29 @@ async function postPages ({ graphql, actions }) {
   posts.forEach((edge, index) => {
     const {
       _id,
-      slug: { current }
+      slug: { current },
     } = edge.node
-    console.log(
-      `Creating Post page at 'portfolio/${current}'`
-    )
+    console.log(`Creating Post page at 'portfolio/${current}'`)
     const path = `portfolio/${current}`
     actions.createPage({
       path,
       component: require.resolve('./src/templates/portfolio/entry.js'),
-      context: { _id }
+      context: { _id },
     })
   })
   console.log('\nFinished creating Post Pages\n\n')
 }
 
-async function categoryPages ({ graphql, actions }) {
+async function categoryPages({ graphql, actions }) {
   console.log('\nCreating Category Pages\n')
 
   const {
     data: {
-      allSanityCategory: { edges: categories }
-    }
+      allSanityCategory: { edges: categories },
+    },
   } = await graphql(`
     query {
-      allSanityCategory(filter: {slug: {current: {ne: null}}, enabled: {ne: false}}) {
+      allSanityCategory(filter: { slug: { current: { ne: null } }, enabled: { ne: false } }) {
         edges {
           node {
             title
@@ -71,33 +67,29 @@ async function categoryPages ({ graphql, actions }) {
   if (!categories) return
   categories.forEach((edge, index) => {
     const {
-      slug: { current }
+      slug: { current },
     } = edge.node
-    console.log(
-      `Creating Category page at 'gallery/${current}'`
-    )
+    console.log(`Creating Category page at 'gallery/${current}'`)
     const path = `gallery/${current}`
     actions.createPage({
       path,
       component: require.resolve('./src/templates/portfolio/category.js'),
-      context: { slug: current }
+      context: { slug: current },
     })
   })
   console.log('\nFinished creating Category Pages\n\n')
 }
 
-async function journalPages ({ graphql, actions }) {
+async function journalPages({ graphql, actions }) {
   console.log('\nCreating Journal Pages\n')
 
   const {
     data: {
-      allSanityPost: { edges: allPosts }
-    }
+      allSanityPost: { edges: allPosts },
+    },
   } = await graphql(`
     query {
-      allSanityPost(
-        sort: {fields: [publishedAt], order: ASC}
-      ) {
+      allSanityPost(sort: { fields: [publishedAt], order: ASC }) {
         edges {
           node {
             _id
@@ -111,15 +103,13 @@ async function journalPages ({ graphql, actions }) {
     }
   `)
   if (!allPosts) return
-  const posts = allPosts.filter(e => !isFuture(e.node.publishedAt))
+  const posts = allPosts.filter((e) => !isFuture(e.node.publishedAt))
   posts.forEach((edge, i) => {
     const {
       _id,
-      slug: { current }
+      slug: { current },
     } = edge.node
-    console.log(
-      `Creating Journal page at 'journal/${current}'`
-    )
+    console.log(`Creating Journal page at 'journal/${current}'`)
     const path = `journal/${current}`
     actions.createPage({
       path,
@@ -127,8 +117,8 @@ async function journalPages ({ graphql, actions }) {
       context: {
         prev_id: i === 0 ? null : posts[i - 1].node._id,
         curr_id: _id,
-        next_id: i === (posts.length - 1) ? null : posts[i + 1].node._id
-      }
+        next_id: i === posts.length - 1 ? null : posts[i + 1].node._id,
+      },
     })
   })
   console.log('\nFinished creating Journal Pages\n\n')

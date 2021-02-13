@@ -1,10 +1,11 @@
 import React from 'react'
-import Header from './header'
 import styled from 'styled-components'
+import { graphql, useStaticQuery } from 'gatsby'
+import Header from './header'
 import SEO from './seo'
-import {graphql, useStaticQuery} from 'gatsby'
 
 const LayoutWrapper = styled.div`
+  min-height: 100vh;
   display: grid;
   gap: var(--content-spacing);
   margin-inline: 1rem;
@@ -26,16 +27,17 @@ const LayoutWrapper = styled.div`
   @media (min-width: 1500px) {
     margin-inline: clamp(1rem, 25%, 15rem);
   }
-  
-  header, footer {
+
+  header,
+  footer {
     padding-inline: var(--content-spacing);
   }
 `
 
-const Layout = ({children}) => {
-  const {site} = useStaticQuery(graphql`
+const Layout = ({ children }) => {
+  const { site } = useStaticQuery(graphql`
     query {
-      site: sanitySiteSettings(_id: {regex: "/(drafts.|)siteSettings/"}) {
+      site: sanitySiteSettings(_id: { regex: "/(drafts.|)siteSettings/" }) {
         title
         description
         keywords
@@ -71,11 +73,9 @@ const Layout = ({children}) => {
       <SEO title={site.title} description={site.description} keywords={site.keywords} />
       <Header
         title={site.title}
-        socials={{instagramUrl: site.instagramUrl, facebookUrl: site.facebookUrl}}
+        socials={{ instagramUrl: site.instagramUrl, facebookUrl: site.facebookUrl }}
       />
-      <main>
-        {children}
-      </main>
+      <main>{children}</main>
       {/* <footer>
         <h3>Footer</h3>
       </footer> */}

@@ -1,20 +1,16 @@
+import { differenceInDays, distanceInWords, format, isFuture } from 'date-fns'
+import { graphql, Link } from 'gatsby'
 import React from 'react'
-import {graphql, Link} from 'gatsby'
 import styled from 'styled-components'
-import GraphQLErrorList from '../components/graphql-error-list'
 import Layout from '../components/core/layout'
-
-import {imageUrlFor} from '../lib/image-url'
-import {buildImageObj} from '../lib/helpers'
+import GraphQLErrorList from '../components/graphql-error-list'
 import PortableText from '../components/portableText'
-import {differenceInDays, distanceInWords, format, isFuture} from 'date-fns'
+import { buildImageObj } from '../lib/helpers'
+import { imageUrlFor } from '../lib/image-url'
 
 export const query = graphql`
   query JournalPageQuery {
-    posts: allSanityPost(
-      limit: 10,
-      sort: {fields: [publishedAt], order: DESC}
-    ) {
+    posts: allSanityPost(limit: 10, sort: { fields: [publishedAt], order: DESC }) {
       edges {
         node {
           _id
@@ -31,7 +27,7 @@ export const query = graphql`
 `
 
 const JournalPage = (props) => {
-  const {data, errors} = props
+  const { data, errors } = props
 
   if (errors) {
     return (
@@ -41,9 +37,9 @@ const JournalPage = (props) => {
     )
   }
 
-  const site = (data || {}).site
+  const { site } = data || {}
   let posts = data.posts.edges.map((e) => e.node) || []
-  posts = posts.filter(p => !isFuture(p.publishedAt))
+  posts = posts.filter((p) => !isFuture(p.publishedAt))
   const categories = data.categories.edges.map((e) => e.node) || []
 
   if (!site) {
@@ -54,7 +50,7 @@ const JournalPage = (props) => {
 
   const socials = {
     facebookUrl: site.facebookUrl,
-    instagramUrl: site.instagramUrl
+    instagramUrl: site.instagramUrl,
   }
 
   const JournalListing = styled.div`
@@ -68,7 +64,7 @@ const JournalPage = (props) => {
     .divider {
       border: solid 1px ${(props) => props.theme.fontColor};
       width: 100%;
-      opacity: .1;
+      opacity: 0.1;
       margin-block-start: 2rem;
       margin-block-end: 2rem;
     }
@@ -118,12 +114,13 @@ const JournalPage = (props) => {
           h2 {
             margin-block-end: 0;
           }
-          margin-block-end: .5rem;
+          margin-block-end: 0.5rem;
 
           align-self: flex-start;
 
           transition: all 100ms ease-in-out;
-          &:hover, &:focus {
+          &:hover,
+          &:focus {
             text-decoration: underline;
             outline: none;
           }
@@ -131,7 +128,7 @@ const JournalPage = (props) => {
 
         .date {
           opacity: 0.5;
-          margin-block-end: .5rem;
+          margin-block-end: 0.5rem;
         }
 
         .read-more {
@@ -142,12 +139,13 @@ const JournalPage = (props) => {
           box-sizing: border-box;
 
           border: solid 1px ${(props) => props.theme.fontColor};
-          padding: .25rem 1rem;
+          padding: 0.25rem 1rem;
           margin-block-start: 1rem;
 
           border-radius: 25px;
 
-          &:hover, &:focus {
+          &:hover,
+          &:focus {
             text-decoration: underline;
             outline: none;
 
@@ -180,15 +178,15 @@ const JournalPage = (props) => {
 
     #posts {
       h1 {
-          margin-block-end: 1rem;
-          text-decoration: underline;
+        margin-block-end: 1rem;
+        text-decoration: underline;
       }
     }
 
     #other {
       h1 {
-          margin-block-end: 1rem;
-          text-decoration: underline;
+        margin-block-end: 1rem;
+        text-decoration: underline;
       }
 
       text-align: right;
@@ -205,7 +203,8 @@ const JournalPage = (props) => {
         }
 
         .posting {
-          &:hover, :focus {
+          &:hover,
+          :focus {
             font-weight: bold;
           }
         }
@@ -213,34 +212,48 @@ const JournalPage = (props) => {
     }
   `
 
-  const formatDate = (date) => {
-    return differenceInDays(new Date(date), new Date()) > 3
+  const formatDate = (date) =>
+    differenceInDays(new Date(date), new Date()) > 3
       ? distanceInWords(new Date(date), new Date())
       : format(new Date(date), 'MMMM Do, YYYY')
-  }
 
-  const postElements = posts.map((post) => {
-    return (
-      <div className='post' key={post._id}>
-        {post.mainImage && (
-          <img
-            className='post-image'
-            src={imageUrlFor(buildImageObj(post.mainImage)).auto('format').url()}
-            alt={post.mainImage.alt}
-          />
-        )}
-        <div className='post-content'>
-          <Link className='title' to={'/journal/' + post.slug.current}><h2>{post.title}</h2></Link>
-          <span className='date'>{formatDate(post.publishedAt)}</span>
-          <PortableText blocks={post._rawExcerpt} />
-          <Link className='read-more' to={'/journal/' + post.slug.current}>Read<svg fill='none' stroke='currentColor' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><path strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' d='M17 8l4 4m0 0l-4 4m4-4H3' /></svg></Link>
-        </div>
+  const postElements = posts.map((post) => (
+    <div className="post" key={post._id}>
+      {post.mainImage && (
+        <img
+          className="post-image"
+          src={imageUrlFor(buildImageObj(post.mainImage)).auto('format').url()}
+          alt={post.mainImage.alt}
+        />
+      )}
+      <div className="post-content">
+        <Link className="title" to={`/journal/${post.slug.current}`}>
+          <h2>{post.title}</h2>
+        </Link>
+        <span className="date">{formatDate(post.publishedAt)}</span>
+        <PortableText blocks={post._rawExcerpt} />
+        <Link className="read-more" to={`/journal/${post.slug.current}`}>
+          Read
+          <svg
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M17 8l4 4m0 0l-4 4m4-4H3"
+            />
+          </svg>
+        </Link>
       </div>
-    )
-  })
+    </div>
+  ))
 
   const monthYear = {}
-  posts.forEach(p => {
+  posts.forEach((p) => {
     const m = format(p.publishedAt, 'MMMM-YYYY')
     if (monthYear[m]) {
       monthYear[m].push(p)
@@ -251,27 +264,25 @@ const JournalPage = (props) => {
 
   return (
     <JournalListing>
-      <div id='posts'>
+      <div id="posts">
         <h1>Recent</h1>
         {postElements}
       </div>
-      <div id='other'>
+      <div id="other">
         <h1>All</h1>
-        {
-          Object.keys(monthYear)
-            .map((my, i) => {
-              return (
-                <ul key={i}>
-                  <li className='heading'>{my}</li>
-                  {monthYear[my].map(post =>
-                    <li key={my + '_' + post._id}>
-                      <Link className='posting' to={'/journal/' + post.slug.current}>{post.title}</Link> - {format(post.publishedAt, 'DD')}
-                    </li>
-                  )}
-                </ul>
-              )
-            })
-        }
+        {Object.keys(monthYear).map((my, i) => (
+          <ul key={i}>
+            <li className="heading">{my}</li>
+            {monthYear[my].map((post) => (
+              <li key={`${my}_${post._id}`}>
+                <Link className="posting" to={`/journal/${post.slug.current}`}>
+                  {post.title}
+                </Link>{' '}
+                - {format(post.publishedAt, 'DD')}
+              </li>
+            ))}
+          </ul>
+        ))}
       </div>
     </JournalListing>
   )

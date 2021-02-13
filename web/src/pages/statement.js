@@ -1,15 +1,15 @@
 import React from 'react'
-import {graphql} from 'gatsby'
+import { graphql } from 'gatsby'
 import styled from 'styled-components'
 import GraphQLErrorList from '../components/graphql-error-list'
 import Layout from '../components/core/layout'
 import PortableText from '../components/portableText'
-import {imageUrlFor} from '../lib/image-url'
-import {buildImageObj} from '../lib/helpers'
+import { imageUrlFor } from '../lib/image-url'
+import { buildImageObj } from '../lib/helpers'
 
 export const query = graphql`
   query StatementPageQuery {
-    site: sanitySiteSettings(_id: {regex: "/(drafts.|)siteSettings/"}) {
+    site: sanitySiteSettings(_id: { regex: "/(drafts.|)siteSettings/" }) {
       title
       description
       keywords
@@ -37,7 +37,7 @@ export const query = graphql`
           a
         }
       }
-      _rawStatement(resolveReferences: {maxDepth: 5})
+      _rawStatement(resolveReferences: { maxDepth: 5 })
       author {
         image {
           asset {
@@ -63,28 +63,33 @@ const StatementWrapper = styled.section`
       'R'
       'L';
     @media (min-width: 1024px) {
-      grid-template-areas:
-        'L R';
+      grid-template-areas: 'L R';
     }
-    
+
     .left {
       grid-area: L;
       &.img-container {
         animation: shadowedFadeInFromLeft 1s ease-in-out forwards;
       }
       @keyframes shadowedFadeInFromLeft {
-          0% {
-            transform: translateX(-10px);
-            opacity: 0;
-            box-shadow: 0px 10px 20px 5px
-            hsl(${(props) => props.theme.backgroundHsl.h}, ${(props) => props.theme.backgroundHsl.s * 100 - props.theme.backgroundHsl.s * 100 * 0.5 + '%'}, ${(props) => props.theme.backgroundHsl.l * 100 - props.theme.backgroundHsl.l * 100 * 0.5 + '%'}, 0);
-          }
-          100% {
-            transform: translateX(0px);
-            opacity: 1;
-            box-shadow: 0px 15px 10px -10px
-            hsl(${(props) => props.theme.backgroundHsl.h}, ${(props) => props.theme.backgroundHsl.s * 100 - props.theme.backgroundHsl.s * 100 * 0.5 + '%'}, ${(props) => props.theme.backgroundHsl.l * 100 - props.theme.backgroundHsl.l * 100 * 0.5 + '%'}, 1);
-          }
+        0% {
+          transform: translateX(-10px);
+          opacity: 0;
+          box-shadow: 0px 10px 20px 5px
+            hsl(
+              ${(props) => props.theme.backgroundHsl.h},
+              ${(props) =>
+                `${props.theme.backgroundHsl.s * 100 - props.theme.backgroundHsl.s * 100 * 0.5}%`},
+              ${(props) =>
+                `${props.theme.backgroundHsl.l * 100 - props.theme.backgroundHsl.l * 100 * 0.5}%`},
+              0
+            );
+        }
+        100% {
+          transform: translateX(0px);
+          opacity: 1;
+          box-shadow: 0px 15px 10px -10px hsl(${(props) => props.theme.backgroundHsl.h}, ${(props) => `${props.theme.backgroundHsl.s * 100 - props.theme.backgroundHsl.s * 100 * 0.5}%`}, ${(props) => `${props.theme.backgroundHsl.l * 100 - props.theme.backgroundHsl.l * 100 * 0.5}%`}, 1);
+        }
       }
     }
 
@@ -122,7 +127,7 @@ const StatementWrapper = styled.section`
 `
 
 const StatementPage = (props) => {
-  const {data, errors} = props
+  const { data, errors } = props
   if (errors) {
     return (
       <Layout>
@@ -131,7 +136,7 @@ const StatementPage = (props) => {
     )
   }
 
-  const site = (data || {}).site
+  const { site } = data || {}
 
   if (!site) {
     throw new Error(
@@ -141,22 +146,20 @@ const StatementPage = (props) => {
 
   const socials = {
     facebookUrl: site.facebookUrl,
-    instagramUrl: site.instagramUrl
+    instagramUrl: site.instagramUrl,
   }
 
   return (
     <StatementWrapper>
-      <div className='statement-container'>
-        <div className='img-container left'>
+      <div className="statement-container">
+        <div className="img-container left">
           <img
-            src={imageUrlFor(buildImageObj(site.statementImage))
-              .auto('format')
-              .url()}
+            src={imageUrlFor(buildImageObj(site.statementImage)).auto('format').url()}
             alt={site.statementImage.alt}
-            className='fit-image'
+            className="fit-image"
           />
         </div>
-        <article className={'statement-body right'}>
+        <article className="statement-body right">
           {site._rawStatement && <PortableText blocks={site._rawStatement} />}
         </article>
       </div>

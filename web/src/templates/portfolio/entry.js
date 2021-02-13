@@ -1,14 +1,14 @@
 import React from 'react'
-import {graphql} from 'gatsby'
+import { graphql } from 'gatsby'
+import { ThemeProvider } from 'styled-components'
 import Layout from '../../components/core/layout'
 import GraphQLErrorList from '../../components/graphql-error-list'
-import {ThemeProvider} from 'styled-components'
-import {GlobalStyle, theme} from '../../lib/styled'
+import { GlobalStyle, theme } from '../../lib/styled'
 import Entry from '../../components/Entry'
 
 export const query = graphql`
   query EntryTemplateQuery($_id: String!) {
-    site: sanitySiteSettings(_id: {regex: "/(drafts.|)siteSettings/"}) {
+    site: sanitySiteSettings(_id: { regex: "/(drafts.|)siteSettings/" }) {
       title
       description
       keywords
@@ -37,7 +37,7 @@ export const query = graphql`
         }
       }
     }
-    categories: allSanityCategory(filter: {enabled: {ne: false}}) {
+    categories: allSanityCategory(filter: { enabled: { ne: false } }) {
       edges {
         node {
           title
@@ -47,7 +47,7 @@ export const query = graphql`
         }
       }
     }
-    post: sanityPortfolioEntry(_id: {eq: $_id}) {
+    post: sanityPortfolioEntry(_id: { eq: $_id }) {
       publishedAt
       _id
       title
@@ -68,7 +68,7 @@ export const query = graphql`
 `
 
 const EntryTemplate = (props) => {
-  const {data, errors} = props
+  const { data, errors } = props
   if (errors) {
     return (
       <Layout>
@@ -76,13 +76,13 @@ const EntryTemplate = (props) => {
       </Layout>
     )
   }
-  const site = (data || {}).site
+  const { site } = data || {}
   const categories = (data || {}).categories.edges.map((e) => e.node) || []
   const post = data.post || {}
 
   const socials = {
     facebookUrl: site.facebookUrl,
-    instagramUrl: site.instagramUrl
+    instagramUrl: site.instagramUrl,
   }
 
   return (

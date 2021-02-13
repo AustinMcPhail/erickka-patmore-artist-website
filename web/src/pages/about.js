@@ -1,5 +1,5 @@
 import React from 'react'
-import {graphql} from 'gatsby'
+import { graphql } from 'gatsby'
 import styled from 'styled-components'
 import GraphQLErrorList from '../components/graphql-error-list'
 import Layout from '../components/core/layout'
@@ -7,7 +7,7 @@ import Instagram from '../components/Instagram'
 
 export const query = graphql`
   query ReachOutPageQuery {
-    site: sanitySiteSettings(_id: {regex: "/(drafts.|)siteSettings/"}) {
+    site: sanitySiteSettings(_id: { regex: "/(drafts.|)siteSettings/" }) {
       title
       description
       keywords
@@ -36,7 +36,7 @@ export const query = graphql`
         }
       }
     }
-    categories: allSanityCategory(filter: {enabled: {ne: false}}) {
+    categories: allSanityCategory(filter: { enabled: { ne: false } }) {
       edges {
         node {
           title
@@ -59,7 +59,7 @@ const ReachOutWrapper = styled.div`
     display: grid;
     grid-template-columns: 1fr auto;
   }
-  
+
   section {
     display: flex;
     flex-direction: column;
@@ -86,15 +86,15 @@ const ReachOutWrapper = styled.div`
         hsl(
           ${(props) => props.theme.backgroundHsl.h},
           ${(props) =>
-    props.theme.backgroundHsl.s * 100 - props.theme.backgroundHsl.s * 100 * 0.5 + '%'},
+            `${props.theme.backgroundHsl.s * 100 - props.theme.backgroundHsl.s * 100 * 0.5}%`},
           ${(props) =>
-    props.theme.backgroundHsl.l * 100 - props.theme.backgroundHsl.l * 100 * 0.5 + '%'}
+            `${props.theme.backgroundHsl.l * 100 - props.theme.backgroundHsl.l * 100 * 0.5}%`}
         );
     }
     100% {
       transform: translateY(0px);
       opacity: 1;
-      box-shadow: 0px 15px 10px -10px hsl(${(props) => props.theme.backgroundHsl.h}, ${(props) => props.theme.backgroundHsl.s * 100 - props.theme.backgroundHsl.s * 100 * 0.5 + '%'}, ${(props) => props.theme.backgroundHsl.l * 100 - props.theme.backgroundHsl.l * 100 * 0.5 + '%'});
+      box-shadow: 0px 15px 10px -10px hsl(${(props) => props.theme.backgroundHsl.h}, ${(props) => `${props.theme.backgroundHsl.s * 100 - props.theme.backgroundHsl.s * 100 * 0.5}%`}, ${(props) => `${props.theme.backgroundHsl.l * 100 - props.theme.backgroundHsl.l * 100 * 0.5}%`});
     }
   }
 
@@ -117,7 +117,7 @@ const ReachOutWrapper = styled.div`
 `
 
 const ReachOutPage = (props) => {
-  const {data, errors} = props
+  const { data, errors } = props
   if (errors) {
     return (
       <Layout>
@@ -126,7 +126,7 @@ const ReachOutPage = (props) => {
     )
   }
 
-  const site = (data || {}).site
+  const { site } = data || {}
   const categories = data.categories.edges.map((e) => e.node) || []
   if (!site) {
     throw new Error(
@@ -136,33 +136,33 @@ const ReachOutPage = (props) => {
 
   const socials = {
     facebookUrl: site.facebookUrl,
-    instagramUrl: site.instagramUrl
+    instagramUrl: site.instagramUrl,
   }
   return (
     <ReachOutWrapper>
-      <section aria-labelledby='instagram-header'>
-        <div className='heading'>
+      <section aria-labelledby="instagram-header">
+        <div className="heading">
           <hr />
-          <h3 id='instagram-header'>Instagram</h3>
+          <h3 id="instagram-header">Instagram</h3>
           <hr />
         </div>
         <Instagram />
       </section>
-      <section aria-labelledby='facebook-header'>
-        <div className='heading'>
+      <section aria-labelledby="facebook-header">
+        <div className="heading">
           <hr />
-          <h3 id='facebook-header'>Facebook</h3>
+          <h3 id="facebook-header">Facebook</h3>
           <hr />
         </div>
         <iframe
-          src='https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Ferickkasart&tabs=timeline&width=340&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId'
-          width='340'
-          height='500'
-          style={{border: 'none', overflow: 'hidden'}}
-          scrolling='no'
-          frameBorder='0'
-          allowtransparency='true'
-          allow='encrypted-media'
+          src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Ferickkasart&tabs=timeline&width=340&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId"
+          width="340"
+          height="500"
+          style={{ border: 'none', overflow: 'hidden' }}
+          scrolling="no"
+          frameBorder="0"
+          allowtransparency="true"
+          allow="encrypted-media"
         />
       </section>
     </ReachOutWrapper>

@@ -1,35 +1,35 @@
 import React from 'react'
-import {graphql} from 'gatsby'
+import { graphql } from 'gatsby'
+import { ThemeProvider } from 'styled-components'
 import Layout from '../../components/core/layout'
 import GraphQLErrorList from '../../components/graphql-error-list'
-import {ThemeProvider} from 'styled-components'
-import {GlobalStyle, theme} from '../../lib/styled'
+import { GlobalStyle, theme } from '../../lib/styled'
 import EntryList from '../../components/EntryList'
 
 export const query = graphql`
-fragment SanityImage on SanityPortfolioImage {
-  crop {
-    _key
-    _type
-    top
-    bottom
-    left
-    right
+  fragment SanityImage on SanityPortfolioImage {
+    crop {
+      _key
+      _type
+      top
+      bottom
+      left
+      right
+    }
+    hotspot {
+      _key
+      _type
+      x
+      y
+      height
+      width
+    }
+    asset {
+      _id
+    }
   }
-  hotspot {
-    _key
-    _type
-    x
-    y
-    height
-    width
-  }
-  asset {
-    _id
-  }
-}
   query CategoryTemplateQuery($slug: String!) {
-    site: sanitySiteSettings(_id: {regex: "/(drafts.|)siteSettings/"}) {
+    site: sanitySiteSettings(_id: { regex: "/(drafts.|)siteSettings/" }) {
       title
       description
       keywords
@@ -58,7 +58,7 @@ fragment SanityImage on SanityPortfolioImage {
         }
       }
     }
-    categories: allSanityCategory(filter: {enabled: {ne: false}}) {
+    categories: allSanityCategory(filter: { enabled: { ne: false } }) {
       edges {
         node {
           title
@@ -69,8 +69,8 @@ fragment SanityImage on SanityPortfolioImage {
       }
     }
     posts: allSanityPortfolioEntry(
-      sort: {fields: [publishedAt], order: DESC}
-      filter: {category: {slug: {current: {eq: $slug}}}}
+      sort: { fields: [publishedAt], order: DESC }
+      filter: { category: { slug: { current: { eq: $slug } } } }
     ) {
       edges {
         node {
@@ -96,7 +96,7 @@ fragment SanityImage on SanityPortfolioImage {
 `
 
 const CategoryTemplate = (props) => {
-  const {data, errors} = props
+  const { data, errors } = props
   if (errors) {
     return (
       <Layout>
@@ -105,13 +105,13 @@ const CategoryTemplate = (props) => {
     )
   }
 
-  const site = (data || {}).site
+  const { site } = data || {}
   const categories = (data || {}).categories.edges.map((e) => e.node) || []
   const posts = data.posts.edges.map((e) => e.node) || []
 
   const socials = {
     facebookUrl: site.facebookUrl,
-    instagramUrl: site.instagramUrl
+    instagramUrl: site.instagramUrl,
   }
 
   return (

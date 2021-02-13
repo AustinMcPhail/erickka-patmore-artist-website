@@ -1,14 +1,14 @@
 import React from 'react'
-import {graphql} from 'gatsby'
-import {ThemeProvider} from 'styled-components'
-import {GlobalStyle, theme} from '../lib/styled'
+import { graphql } from 'gatsby'
+import { ThemeProvider } from 'styled-components'
+import { GlobalStyle, theme } from '../lib/styled'
 import GraphQLErrorList from '../components/graphql-error-list'
 import Layout from '../components/core/layout'
 import Home from '../components/EntryList'
 
 export const query = graphql`
   query PortfolioPageQuery {
-    site: sanitySiteSettings(_id: {regex: "/(drafts.|)siteSettings/"}) {
+    site: sanitySiteSettings(_id: { regex: "/(drafts.|)siteSettings/" }) {
       title
       description
       keywords
@@ -37,7 +37,7 @@ export const query = graphql`
         }
       }
     }
-    categories: allSanityCategory(filter: {enabled: {ne: false}}) {
+    categories: allSanityCategory(filter: { enabled: { ne: false } }) {
       edges {
         node {
           title
@@ -48,8 +48,8 @@ export const query = graphql`
       }
     }
     posts: allSanityPortfolioEntry(
-      sort: {fields: [publishedAt], order: DESC}
-      filter: {slug: {current: {ne: null}}}
+      sort: { fields: [publishedAt], order: DESC }
+      filter: { slug: { current: { ne: null } } }
     ) {
       edges {
         node {
@@ -74,7 +74,7 @@ export const query = graphql`
   }
 `
 const PortfolioPage = (props) => {
-  const {data, errors} = props
+  const { data, errors } = props
 
   if (errors) {
     return (
@@ -84,7 +84,7 @@ const PortfolioPage = (props) => {
     )
   }
 
-  const site = (data || {}).site
+  const { site } = data || {}
   const posts = data.posts.edges.map((e) => e.node) || []
   const categories = data.categories.edges.map((e) => e.node) || []
 
@@ -96,12 +96,10 @@ const PortfolioPage = (props) => {
 
   const socials = {
     facebookUrl: site.facebookUrl,
-    instagramUrl: site.instagramUrl
+    instagramUrl: site.instagramUrl,
   }
 
-  return (
-    <Home posts={posts} />
-  )
+  return <Home posts={posts} />
 }
 
 export default PortfolioPage

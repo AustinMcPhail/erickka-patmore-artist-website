@@ -1,12 +1,12 @@
 import React from 'react'
-import {graphql} from 'gatsby'
+import { graphql } from 'gatsby'
 import styled from 'styled-components'
 import GraphQLErrorList from '../components/graphql-error-list'
 import Layout from '../components/core/layout'
 
 export const query = graphql`
   query CvPageQuery {
-    site: sanitySiteSettings(_id: {regex: "/(drafts.|)siteSettings/"}) {
+    site: sanitySiteSettings(_id: { regex: "/(drafts.|)siteSettings/" }) {
       title
       description
       keywords
@@ -40,7 +40,7 @@ export const query = graphql`
         }
       }
     }
-    categories: allSanityCategory(filter: {enabled: {ne: false}}) {
+    categories: allSanityCategory(filter: { enabled: { ne: false } }) {
       edges {
         node {
           title
@@ -90,14 +90,14 @@ const CvPreview = styled.iframe`
         hsl(
           ${(props) => props.theme.backgroundHsl.h},
           ${(props) =>
-    props.theme.backgroundHsl.s * 100 - props.theme.backgroundHsl.s * 100 * 0.5 + '%'},
+            `${props.theme.backgroundHsl.s * 100 - props.theme.backgroundHsl.s * 100 * 0.5}%`},
           ${(props) =>
-    props.theme.backgroundHsl.l * 100 - props.theme.backgroundHsl.l * 100 * 0.5 + '%'}
+            `${props.theme.backgroundHsl.l * 100 - props.theme.backgroundHsl.l * 100 * 0.5}%`}
         );
     }
     100% {
       opacity: 1;
-      box-shadow: 0px 15px 10px -10px hsl(${(props) => props.theme.backgroundHsl.h}, ${(props) => props.theme.backgroundHsl.s * 100 - props.theme.backgroundHsl.s * 100 * 0.5 + '%'}, ${(props) => props.theme.backgroundHsl.l * 100 - props.theme.backgroundHsl.l * 100 * 0.5 + '%'});
+      box-shadow: 0px 15px 10px -10px hsl(${(props) => props.theme.backgroundHsl.h}, ${(props) => `${props.theme.backgroundHsl.s * 100 - props.theme.backgroundHsl.s * 100 * 0.5}%`}, ${(props) => `${props.theme.backgroundHsl.l * 100 - props.theme.backgroundHsl.l * 100 * 0.5}%`});
     }
   }
   width: 100%;
@@ -107,7 +107,7 @@ const CvPreview = styled.iframe`
 `
 
 const CvPage = (props) => {
-  const {data, errors} = props
+  const { data, errors } = props
 
   if (errors) {
     return (
@@ -117,7 +117,7 @@ const CvPage = (props) => {
     )
   }
 
-  const site = (data || {}).site
+  const { site } = data || {}
   const categories = data.categories.edges.map((e) => e.node) || []
 
   if (!site) {
@@ -128,7 +128,7 @@ const CvPage = (props) => {
 
   const socials = {
     facebookUrl: site.facebookUrl,
-    instagramUrl: site.instagramUrl
+    instagramUrl: site.instagramUrl,
   }
 
   return (

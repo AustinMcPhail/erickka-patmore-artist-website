@@ -1,9 +1,9 @@
+import { Link } from 'gatsby'
 import React from 'react'
 import styled from 'styled-components'
-import {buildImageObj} from '../lib/helpers'
+import { buildImageObj } from '../lib/helpers'
+import { imageUrlFor } from '../lib/image-url'
 import PortableText from './portableText'
-import {Link} from 'gatsby'
-import {imageUrlFor} from '../lib/image-url'
 
 const Divider = styled.hr`
   border: solid 1px ${(props) => props.theme.fontColor};
@@ -17,7 +17,7 @@ const Divider = styled.hr`
       width: 0%;
     }
     100% {
-      width: 100%
+      width: 100%;
     }
   }
 `
@@ -42,13 +42,23 @@ const NewEntryListWrapper = styled.section`
             transform: translateX(-10px);
             opacity: 0;
             box-shadow: 0px 10px 20px 5px
-            hsl(${(props) => props.theme.backgroundHsl.h}, ${(props) => props.theme.backgroundHsl.s * 100 - props.theme.backgroundHsl.s * 100 * 0.5 + '%'}, ${(props) => props.theme.backgroundHsl.l * 100 - props.theme.backgroundHsl.l * 100 * 0.5 + '%'}, 0);
+              hsl(
+                ${(props) => props.theme.backgroundHsl.h},
+                ${(props) =>
+                  `${
+                    props.theme.backgroundHsl.s * 100 - props.theme.backgroundHsl.s * 100 * 0.5
+                  }%`},
+                ${(props) =>
+                  `${
+                    props.theme.backgroundHsl.l * 100 - props.theme.backgroundHsl.l * 100 * 0.5
+                  }%`},
+                0
+              );
           }
           100% {
             transform: translateY(0px);
             opacity: 1;
-            box-shadow: 0px 15px 10px -10px
-            hsl(${(props) => props.theme.backgroundHsl.h}, ${(props) => props.theme.backgroundHsl.s * 100 - props.theme.backgroundHsl.s * 100 * 0.5 + '%'}, ${(props) => props.theme.backgroundHsl.l * 100 - props.theme.backgroundHsl.l * 100 * 0.5 + '%'}, 1);
+            box-shadow: 0px 15px 10px -10px hsl(${(props) => props.theme.backgroundHsl.h}, ${(props) => `${props.theme.backgroundHsl.s * 100 - props.theme.backgroundHsl.s * 100 * 0.5}%`}, ${(props) => `${props.theme.backgroundHsl.l * 100 - props.theme.backgroundHsl.l * 100 * 0.5}%`}, 1);
           }
         }
       }
@@ -75,13 +85,23 @@ const NewEntryListWrapper = styled.section`
             transform: translateX(10px);
             opacity: 0;
             box-shadow: 0px 10px 20px 5px
-            hsl(${(props) => props.theme.backgroundHsl.h}, ${(props) => props.theme.backgroundHsl.s * 100 - props.theme.backgroundHsl.s * 100 * 0.5 + '%'}, ${(props) => props.theme.backgroundHsl.l * 100 - props.theme.backgroundHsl.l * 100 * 0.5 + '%'}, 0);
+              hsl(
+                ${(props) => props.theme.backgroundHsl.h},
+                ${(props) =>
+                  `${
+                    props.theme.backgroundHsl.s * 100 - props.theme.backgroundHsl.s * 100 * 0.5
+                  }%`},
+                ${(props) =>
+                  `${
+                    props.theme.backgroundHsl.l * 100 - props.theme.backgroundHsl.l * 100 * 0.5
+                  }%`},
+                0
+              );
           }
           100% {
             transform: translateY(0px);
             opacity: 1;
-            box-shadow: 0px 15px 10px -10px
-            hsl(${(props) => props.theme.backgroundHsl.h}, ${(props) => props.theme.backgroundHsl.s * 100 - props.theme.backgroundHsl.s * 100 * 0.5 + '%'}, ${(props) => props.theme.backgroundHsl.l * 100 - props.theme.backgroundHsl.l * 100 * 0.5 + '%'}, 1);
+            box-shadow: 0px 15px 10px -10px hsl(${(props) => props.theme.backgroundHsl.h}, ${(props) => `${props.theme.backgroundHsl.s * 100 - props.theme.backgroundHsl.s * 100 * 0.5}%`}, ${(props) => `${props.theme.backgroundHsl.l * 100 - props.theme.backgroundHsl.l * 100 * 0.5}%`}, 1);
           }
         }
       }
@@ -100,7 +120,8 @@ const NewEntryListWrapper = styled.section`
     @media (max-width: 1024px) {
       display: flex;
       flex-direction: column;
-      .left, .right {
+      .left,
+      .right {
         text-align: center;
         margin-bottom: 1rem;
       }
@@ -119,7 +140,7 @@ const NewEntryListWrapper = styled.section`
         font-style: italic;
         margin-bottom: 1rem;
       }
-      
+
       .excerpt {
         font-size: 0.75rem;
       }
@@ -129,12 +150,13 @@ const NewEntryListWrapper = styled.section`
       display: grid;
       height: 100%;
 
-        &:hover, &:focus {
-          .fit-image {
-            transform: scale(1.01);
-            filter: blur(1px);
-          }
+      &:hover,
+      &:focus {
+        .fit-image {
+          transform: scale(1.01);
+          filter: blur(1px);
         }
+      }
 
       .fit-image {
         transition: filter 0.25s ease-in-out, transform 0.25s ease-in-out;
@@ -150,40 +172,47 @@ const getPlacement = (index, flipped) => {
   return flipped ? 'left' : 'right'
 }
 
-const EntryList = ({posts}) => {
-  return (
-    <NewEntryListWrapper>
-      {posts && posts.map((post, i) => {
-        return (post.portfolioImage && post.portfolioImage.asset && (
-          <div className='entry-container' key={post._id}>
-            <article className={'entry-info ' + getPlacement(i, false)}>
-              <h1 className='title'>{post.title}<small>{post.publishedAt && ` ${post.publishedAt.split('-')[0]}`}</small></h1>
-              <Divider />
-              <p className='info'>
-                {post.portfolioImage.dimensions ? post.portfolioImage.dimensions : ''}
-                {post.portfolioImage.dimensions && post.portfolioImage.mediums ? ' | ' : ''}
-                {post.portfolioImage.mediums && post.portfolioImage.mediums.length > 0 ? post.portfolioImage.mediums.map(m => m.name).join(', ') : ''}
-              </p>
-              {post._rawExcerpt && (
-                <div className='excerpt'>
-                  <PortableText blocks={post._rawExcerpt} />
-                </div>
-              )}
-            </article>
-            <Link to={`/portfolio/${post.slug.current}`} className={'img-container ' + getPlacement(i, true)}>
-              <img
-                src={imageUrlFor(buildImageObj(post.portfolioImage))
-                  .auto('format')
-                  .url()}
-                alt={post.portfolioImage.alt}
-                className='fit-image'
-              />
-            </Link>
-          </div>
-        ))
-      })}
-    </NewEntryListWrapper>
-  )
-}
+const EntryList = ({ posts }) => (
+  <NewEntryListWrapper>
+    {posts &&
+      posts.map(
+        (post, i) =>
+          post.portfolioImage &&
+          post.portfolioImage.asset && (
+            <div className="entry-container" key={post._id}>
+              <article className={`entry-info ${getPlacement(i, false)}`}>
+                <h1 className="title">
+                  {post.title}
+                  <small>{post.publishedAt && ` ${post.publishedAt.split('-')[0]}`}</small>
+                </h1>
+                <Divider />
+                <p className="info">
+                  {post.portfolioImage.dimensions ? post.portfolioImage.dimensions : ''}
+                  {post.portfolioImage.dimensions && post.portfolioImage.mediums ? ' | ' : ''}
+                  {post.portfolioImage.mediums && post.portfolioImage.mediums.length > 0
+                    ? post.portfolioImage.mediums.map((m) => m.name).join(', ')
+                    : ''}
+                </p>
+                {post._rawExcerpt && (
+                  <div className="excerpt">
+                    <PortableText blocks={post._rawExcerpt} />
+                  </div>
+                )}
+              </article>
+              <Link
+                to={`/portfolio/${post.slug.current}`}
+                className={`img-container ${getPlacement(i, true)}`}
+              >
+                <img
+                  src={imageUrlFor(buildImageObj(post.portfolioImage)).auto('format').url()}
+                  alt={post.portfolioImage.alt}
+                  className="fit-image"
+                />
+              </Link>
+            </div>
+          )
+      )}
+  </NewEntryListWrapper>
+)
 
 export default EntryList

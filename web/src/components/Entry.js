@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
-import {buildImageObj} from '../lib/helpers'
-import {imageUrlFor} from '../lib/image-url'
+import { buildImageObj } from '../lib/helpers'
+import { imageUrlFor } from '../lib/image-url'
 import PortableText from './portableText'
 
 const EntryWrapper = styled.section`
@@ -20,9 +20,9 @@ const EntryWrapper = styled.section`
     font-style: italic;
 
     p:not(:last-child)::after {
-      content: "|";
-      padding-inline-start: .5rem;
-      padding-inline-end: .5rem;
+      content: '|';
+      padding-inline-start: 0.5rem;
+      padding-inline-end: 0.5rem;
     }
   }
   #excerpt {
@@ -74,44 +74,38 @@ const EntryWrapper = styled.section`
   }
 `
 
-const EntryList = ({entry}) => {
-  return (
-    <EntryWrapper>
-      <h1 id='title'>{entry.title}</h1>
-      <div id='info'>
-        {entry.publishedAt && <p id='date'>{entry.publishedAt.split('-')[0]}</p>}
-        {entry.portfolioImage && entry.portfolioImage.dimensions && (
-          <p id='dimensions'>{entry.portfolioImage.dimensions}</p>
-        )}
-        {entry.portfolioImage && entry.portfolioImage.mediums && (
-          <p className='mediums'>
-            {entry.portfolioImage.mediums.map(m => m.name).join(', ')}
-          </p>
-        )}
-      </div>
-      {entry._rawExcerpt && (<div id='excerpt'>
+const EntryList = ({ entry }) => (
+  <EntryWrapper>
+    <h1 id="title">{entry.title}</h1>
+    <div id="info">
+      {entry.publishedAt && <p id="date">{entry.publishedAt.split('-')[0]}</p>}
+      {entry.portfolioImage && entry.portfolioImage.dimensions && (
+        <p id="dimensions">{entry.portfolioImage.dimensions}</p>
+      )}
+      {entry.portfolioImage && entry.portfolioImage.mediums && (
+        <p className="mediums">{entry.portfolioImage.mediums.map((m) => m.name).join(', ')}</p>
+      )}
+    </div>
+    {entry._rawExcerpt && (
+      <div id="excerpt">
         <PortableText blocks={entry._rawExcerpt} />
-      </div>)}
-      <a className='img-container' href={'#fs_' + entry.slug.current}>
-        <img
-          src={imageUrlFor(buildImageObj(entry.portfolioImage))
-            .auto('format')
-            .url()}
-          alt={entry.portfolioImage.alt}
-          className='fit-image'
-        />
-      </a>
-      <a href='#' className='overlay' id={'fs_' + entry.slug.current}>
-        <img
-          src={imageUrlFor(buildImageObj(entry.portfolioImage))
-            .auto('format')
-            .url()}
-          alt={entry.portfolioImage.alt}
-          className='fit-image'
-        />
-      </a>
-    </EntryWrapper>
-  )
-}
+      </div>
+    )}
+    <a className="img-container" href={`#fs_${entry.slug.current}`}>
+      <img
+        src={imageUrlFor(buildImageObj(entry.portfolioImage)).auto('format').url()}
+        alt={entry.portfolioImage.alt}
+        className="fit-image"
+      />
+    </a>
+    <a href="#" className="overlay" id={`fs_${entry.slug.current}`}>
+      <img
+        src={imageUrlFor(buildImageObj(entry.portfolioImage)).auto('format').url()}
+        alt={entry.portfolioImage.alt}
+        className="fit-image"
+      />
+    </a>
+  </EntryWrapper>
+)
 
 export default EntryList

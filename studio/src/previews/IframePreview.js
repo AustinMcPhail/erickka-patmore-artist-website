@@ -21,7 +21,7 @@ const assemblePostUrl = ({ displayed, options }) => {
   return `${previewURL}/blog${path}`
 }
 
-const IframePreview = props => {
+const IframePreview = (props) => {
   const { options } = props
   const { displayed } = props.document
 
@@ -46,18 +46,18 @@ const IframePreview = props => {
   return (
     <div className={styles.componentWrapper}>
       <div className={styles.iframeContainer}>
-        <iframe src={url} frameBorder={'0'} />
+        <iframe src={url} frameBorder="0" />
       </div>
     </div>
   )
 }
 
 IframePreview.propTypes = {
-  document: PropTypes.object // eslint-disable-line react/forbid-prop-types
+  document: PropTypes.object, // eslint-disable-line react/forbid-prop-types
 }
 
 IframePreview.defaultProps = {
-  document: null
+  document: null,
 }
 
 export default IframePreview

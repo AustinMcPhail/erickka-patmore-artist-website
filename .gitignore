@@ -7,6 +7,5 @@
 # lerna files
 /lerna-debug.log
 
-.vscode
 # Local Netlify folder
 .netlify
