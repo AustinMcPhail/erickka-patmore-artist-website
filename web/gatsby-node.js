@@ -33,7 +33,7 @@ async function postPages({ graphql, actions }) {
       slug: { current },
     } = edge.node
     console.log(`Creating Post page at 'portfolio/${current}'`)
-    const path = `portfolio/${current}`
+    const path = `gallery/${current}`
     actions.createPage({
       path,
       component: require.resolve('./src/templates/portfolio/entry.js'),
