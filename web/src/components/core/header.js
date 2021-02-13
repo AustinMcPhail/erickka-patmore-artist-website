@@ -1,10 +1,10 @@
 import { Link } from 'gatsby'
 import React from 'react'
 import styled from 'styled-components'
-import Nav from './nav'
+import Categories from '../Categories'
 import FacebookIcon from '../icon/FacebookIcon'
 import InstagramIcon from '../icon/InstagramIcon'
-import Categories from '../Categories'
+import Nav from './nav'
 
 const HeaderWrapper = styled.header`
   margin-top: clamp(1rem, 1vw, 2rem);
@@ -21,8 +21,8 @@ const HeaderWrapper = styled.header`
     flex-wrap: wrap;
     gap: 1rem;
   }
-  .sub {
-    margin-top: clamp(0.5rem, 2vw, 3rem);
+  .categories {
+    margin-top: clamp(0.5rem, 2vw, 2rem);
     width: 100%;
   }
 `
@@ -45,7 +45,9 @@ const Header = ({ title, socials }) => {
         </h1>
         <Nav />
       </div>
-      <div className="sub">{inGallery && <Categories />}</div>
+      <div className="categories">
+        <Categories />
+      </div>
     </HeaderWrapper>
   )
 }

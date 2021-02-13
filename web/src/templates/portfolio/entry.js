@@ -1,10 +1,10 @@
-import React from 'react'
 import { graphql } from 'gatsby'
+import React from 'react'
 import { ThemeProvider } from 'styled-components'
 import Layout from '../../components/core/layout'
+import Entry from '../../components/Entry'
 import GraphQLErrorList from '../../components/graphql-error-list'
 import { GlobalStyle, theme } from '../../lib/styled'
-import Entry from '../../components/Entry'
 
 export const query = graphql`
   query EntryTemplateQuery($_id: String!) {
@@ -55,7 +55,6 @@ export const query = graphql`
         current
       }
       portfolioImage {
-        ...SanityImage
         alt
         dimensions
         mediums {

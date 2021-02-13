@@ -1,7 +1,6 @@
 import { Link } from 'gatsby'
 import React from 'react'
 import styled from 'styled-components'
-import Categories from '../Categories'
 
 const NavStyles = styled.nav`
   width: 100%;
@@ -9,7 +8,7 @@ const NavStyles = styled.nav`
     &.main-nav {
       margin-top: 5px;
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-columns: 1fr 1fr;
       @media (min-width: 1024px) {
         display: flex;
         flex-direction: column;
@@ -19,7 +18,10 @@ const NavStyles = styled.nav`
     gap: clamp(1rem, 1vw, 1rem);
     padding-bottom: 1rem;
     li {
-      text-align: start;
+      text-align: center;
+      @media (min-width: 1024px) {
+        text-align: left;
+      }
       a {
         position: relative;
         transition: opacity 150ms ease-in-out;
@@ -62,11 +64,6 @@ const NavStyles = styled.nav`
 const Nav = () => (
   <NavStyles>
     <ul className="main-nav">
-      <li className="dropdown">
-        <Link to="/gallery" activeClassName="active" partiallyActive>
-          Gallery
-        </Link>
-      </li>
       <li>
         <Link to="/journal" activeClassName="active">
           Journal
