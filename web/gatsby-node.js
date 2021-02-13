@@ -1,16 +1,16 @@
-const {isFuture} = require('date-fns')
+const { isFuture } = require('date-fns')
 /**
  * Implement Gatsby's Node APIs in this file.
  *
  * See: https://www.gatsbyjs.org/docs/node-apis/
  */
 
-async function postPages ({graphql, actions}) {
+async function postPages ({ graphql, actions }) {
   console.log('\nCreating Post Pages\n')
 
   const {
     data: {
-      allSanityPortfolioEntry: {edges: posts}
+      allSanityPortfolioEntry: { edges: posts }
     }
   } = await graphql(`
     query {
@@ -32,7 +32,7 @@ async function postPages ({graphql, actions}) {
   posts.forEach((edge, index) => {
     const {
       _id,
-      slug: {current}
+      slug: { current }
     } = edge.node
     console.log(
       `Creating Post page at 'portfolio/${current}'`
@@ -41,18 +41,18 @@ async function postPages ({graphql, actions}) {
     actions.createPage({
       path,
       component: require.resolve('./src/templates/portfolio/entry.js'),
-      context: {_id}
+      context: { _id }
     })
   })
   console.log('\nFinished creating Post Pages\n\n')
 }
 
-async function categoryPages ({graphql, actions}) {
+async function categoryPages ({ graphql, actions }) {
   console.log('\nCreating Category Pages\n')
 
   const {
     data: {
-      allSanityCategory: {edges: categories}
+      allSanityCategory: { edges: categories }
     }
   } = await graphql(`
     query {
@@ -71,7 +71,7 @@ async function categoryPages ({graphql, actions}) {
   if (!categories) return
   categories.forEach((edge, index) => {
     const {
-      slug: {current}
+      slug: { current }
     } = edge.node
     console.log(
       `Creating Category page at 'gallery/${current}'`
@@ -80,18 +80,18 @@ async function categoryPages ({graphql, actions}) {
     actions.createPage({
       path,
       component: require.resolve('./src/templates/portfolio/category.js'),
-      context: {slug: current}
+      context: { slug: current }
     })
   })
   console.log('\nFinished creating Category Pages\n\n')
 }
 
-async function journalPages ({graphql, actions}) {
+async function journalPages ({ graphql, actions }) {
   console.log('\nCreating Journal Pages\n')
 
   const {
     data: {
-      allSanityPost: {edges: allPosts}
+      allSanityPost: { edges: allPosts }
     }
   } = await graphql(`
     query {
@@ -115,7 +115,7 @@ async function journalPages ({graphql, actions}) {
   posts.forEach((edge, i) => {
     const {
       _id,
-      slug: {current}
+      slug: { current }
     } = edge.node
     console.log(
       `Creating Journal page at 'journal/${current}'`
