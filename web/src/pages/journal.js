@@ -1,4 +1,4 @@
-import { differenceInDays, distanceInWords, format, isFuture, parseISO } from 'date-fns'
+import { differenceInDays, format, formatDistance, isFuture, parseISO } from 'date-fns'
 import { graphql, Link } from 'gatsby'
 import React from 'react'
 import styled from 'styled-components'
@@ -201,7 +201,7 @@ const JournalPage = (props) => {
 
   const formatDate = (date) =>
     differenceInDays(new Date(date), new Date()) > 3
-      ? distanceInWords(new Date(date), new Date())
+      ? formatDistance(new Date(date), new Date())
       : format(new Date(date), 'MMMM Do, yyyy')
 
   const postElements = posts.map((post) => (

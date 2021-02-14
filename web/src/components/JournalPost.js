@@ -1,4 +1,4 @@
-import { differenceInDays, distanceInWords, format } from 'date-fns'
+import { differenceInDays, format, formatDistance } from 'date-fns'
 import { Link } from 'gatsby'
 import React from 'react'
 import styled from 'styled-components'
@@ -203,7 +203,7 @@ export const JournalPost = ({ prev, post, next }) => {
       {publishedAt && (
         <div className="publishDate">
           {differenceInDays(new Date(publishedAt), new Date()) > 3
-            ? distanceInWords(new Date(publishedAt), new Date())
+            ? formatDistance(new Date(publishedAt), new Date())
             : format(new Date(publishedAt), 'MMMM Do, yyyy')}
         </div>
       )}
