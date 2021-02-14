@@ -37,21 +37,8 @@ const JournalPage = (props) => {
     )
   }
 
-  const { site } = data || {}
   let posts = data.posts.edges.map((e) => e.node) || []
   posts = posts.filter((p) => !isFuture(p.publishedAt))
-  const categories = data.categories.edges.map((e) => e.node) || []
-
-  if (!site) {
-    throw new Error(
-      'Missing "Site settings". Open the studio at http://localhost:3333 and add some content to "Site settings" and restart the development server.'
-    )
-  }
-
-  const socials = {
-    facebookUrl: site.facebookUrl,
-    instagramUrl: site.instagramUrl,
-  }
 
   const JournalListing = styled.div`
     margin-block-start: 1rem;
