@@ -1,52 +1,15 @@
-import React from 'react'
 import { graphql } from 'gatsby'
+import React from 'react'
 import styled from 'styled-components'
-import GraphQLErrorList from '../components/graphql-error-list'
 import Layout from '../components/core/layout'
+import GraphQLErrorList from '../components/graphql-error-list'
 
 export const query = graphql`
   query CvPageQuery {
     site: sanitySiteSettings(_id: { regex: "/(drafts.|)siteSettings/" }) {
-      title
-      description
-      keywords
-      facebookUrl
-      instagramUrl
-      backgroundColor {
-        rgb {
-          r
-          g
-          b
-          a
-        }
-        hsl {
-          h
-          s
-          l
-          a
-        }
-      }
-      fontColor {
-        rgb {
-          r
-          g
-          b
-          a
-        }
-      }
       cv {
         asset {
           url
-        }
-      }
-    }
-    categories: allSanityCategory(filter: { enabled: { ne: false } }) {
-      edges {
-        node {
-          title
-          slug {
-            current
-          }
         }
       }
     }
@@ -86,18 +49,11 @@ const CvPreview = styled.iframe`
   @keyframes fadeIn {
     0% {
       opacity: 0;
-      box-shadow: 0px 10px 20px 5px
-        hsl(
-          ${(props) => props.theme.backgroundHsl.h},
-          ${(props) =>
-            `${props.theme.backgroundHsl.s * 100 - props.theme.backgroundHsl.s * 100 * 0.5}%`},
-          ${(props) =>
-            `${props.theme.backgroundHsl.l * 100 - props.theme.backgroundHsl.l * 100 * 0.5}%`}
-        );
+      box-shadow: 0px 10px 20px 5px black;
     }
     100% {
       opacity: 1;
-      box-shadow: 0px 15px 10px -10px hsl(${(props) => props.theme.backgroundHsl.h}, ${(props) => `${props.theme.backgroundHsl.s * 100 - props.theme.backgroundHsl.s * 100 * 0.5}%`}, ${(props) => `${props.theme.backgroundHsl.l * 100 - props.theme.backgroundHsl.l * 100 * 0.5}%`});
+      box-shadow: 0px 15px 10px -10px black;
     }
   }
   width: 100%;
@@ -118,18 +74,6 @@ const CvPage = (props) => {
   }
 
   const { site } = data || {}
-  const categories = data.categories.edges.map((e) => e.node) || []
-
-  if (!site) {
-    throw new Error(
-      'Missing "Site settings". Open the studio at http://localhost:3333 and add some content to "Site settings" and restart the development server.'
-    )
-  }
-
-  const socials = {
-    facebookUrl: site.facebookUrl,
-    instagramUrl: site.instagramUrl,
-  }
 
   return (
     <Cv>
