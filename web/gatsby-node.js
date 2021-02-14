@@ -32,7 +32,7 @@ async function postPages({ graphql, actions }) {
       _id,
       slug: { current },
     } = edge.node
-    console.log(`Creating Post page at 'portfolio/${current}'`)
+    console.log(`Creating Post page at 'gallery/${current}'`)
     const path = `gallery/${current}`
     actions.createPage({
       path,
