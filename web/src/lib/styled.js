@@ -30,22 +30,6 @@ export const GlobalStyle = createGlobalStyle`
 
     --content-spacing: clamp(.5rem, 1vw, 1rem);
 
-
-    --slider-height-percentage: 100%;
-    --slider-transition-duration: 700ms;
-    --organic-arrow-thickness: 4px;
-    --organic-arrow-border-radius: 0px;
-    --organic-arrow-height: 40px;
-    --organic-arrow-color: #26456f;
-    --control-button-width: 10%;
-    --control-button-height: 25%;
-    --control-button-background: transparent;
-    --control-bullet-color: #2d5182;
-    --control-bullet-active-color: #26456f;
-    --loader-bar-color: #851515;
-    --loader-bar-height: 6px;
-
-
     background-color: ${(props) => props.theme.backgroundColor};
     
     font-family: 'Montserrat', sans-serif;

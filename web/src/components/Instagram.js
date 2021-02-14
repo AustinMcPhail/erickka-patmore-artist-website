@@ -75,19 +75,12 @@ const InstagramPosts = styled.div`
     0% {
       transform: translateY(-10px);
       opacity: 0;
-      box-shadow: 0px 10px 20px 5px
-        hsl(
-          ${(props) => props.theme.backgroundHsl.h},
-          ${(props) =>
-            `${props.theme.backgroundHsl.s * 100 - props.theme.backgroundHsl.s * 100 * 0.5}%`},
-          ${(props) =>
-            `${props.theme.backgroundHsl.l * 100 - props.theme.backgroundHsl.l * 100 * 0.5}%`}
-        );
+      box-shadow: 0px 10px 20px 5px black;
     }
     100% {
       transform: translateY(0px);
       opacity: 1;
-      box-shadow: 0px 15px 10px -10px hsl(${(props) => props.theme.backgroundHsl.h}, ${(props) => `${props.theme.backgroundHsl.s * 100 - props.theme.backgroundHsl.s * 100 * 0.5}%`}, ${(props) => `${props.theme.backgroundHsl.l * 100 - props.theme.backgroundHsl.l * 100 * 0.5}%`});
+      box-shadow: 0px 15px 10px -10px black;
     }
   }
 `
