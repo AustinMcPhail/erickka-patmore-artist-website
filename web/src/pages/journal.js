@@ -38,7 +38,7 @@ const JournalPage = (props) => {
   }
 
   let posts = data.posts.edges.map((e) => e.node) || []
-  posts = posts.filter((p) => !isFuture(p.publishedAt))
+  posts = posts.filter((p) => !isFuture(parseISO(p.publishedAt)))
 
   const JournalListing = styled.div`
     margin-block-start: 1rem;
@@ -202,7 +202,7 @@ const JournalPage = (props) => {
   const formatDate = (date) =>
     differenceInDays(new Date(date), new Date()) > 3
       ? distanceInWords(new Date(date), new Date())
-      : format(new Date(date), 'MMMM Do, YYYY')
+      : format(new Date(date), 'MMMM Do, yyyy')
 
   const postElements = posts.map((post) => (
     <div className="post" key={post._id}>
@@ -241,7 +241,7 @@ const JournalPage = (props) => {
 
   const monthYear = {}
   posts.forEach((p) => {
-    const m = format(parseISO(p.publishedAt), 'MMMM-YYYY')
+    const m = format(parseISO(p.publishedAt), 'MMMM-yyyy')
     if (monthYear[m]) {
       monthYear[m].push(p)
     } else {
@@ -265,7 +265,7 @@ const JournalPage = (props) => {
                 <Link className="posting" to={`/journal/${post.slug.current}`}>
                   {post.title}
                 </Link>{' '}
-                - {format(parseISO(post.publishedAt), 'DD')}
+                - {format(parseISO(post.publishedAt), 'dd')}
               </li>
             ))}
           </ul>

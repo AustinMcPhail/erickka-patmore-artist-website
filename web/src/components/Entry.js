@@ -1,8 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import { buildImageObj } from '../lib/helpers'
-import { imageUrlFor } from '../lib/image-url'
-import PortableText from './portableText'
 
 const EntryWrapper = styled.section`
   display: flex;
@@ -76,7 +73,7 @@ const EntryWrapper = styled.section`
 
 const EntryList = ({ entry }) => (
   <EntryWrapper>
-    <h1 id="title">{entry.title}</h1>
+    {/* <h1 id="title">{entry.title}</h1>
     <div id="info">
       {entry.publishedAt && <p id="date">{entry.publishedAt.split('-')[0]}</p>}
       {entry.portfolioImage && entry.portfolioImage.dimensions && (
@@ -104,7 +101,7 @@ const EntryList = ({ entry }) => (
         alt={entry.portfolioImage.alt}
         className="fit-image"
       />
-    </a>
+    </a> */}
   </EntryWrapper>
 )
 

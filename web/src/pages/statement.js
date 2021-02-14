@@ -1,47 +1,19 @@
-import React from 'react'
 import { graphql } from 'gatsby'
+import Img from 'gatsby-image'
+import React from 'react'
 import styled from 'styled-components'
-import GraphQLErrorList from '../components/graphql-error-list'
 import Layout from '../components/core/layout'
+import GraphQLErrorList from '../components/graphql-error-list'
 import PortableText from '../components/portableText'
-import { imageUrlFor } from '../lib/image-url'
-import { buildImageObj } from '../lib/helpers'
 
 export const query = graphql`
   query StatementPageQuery {
     site: sanitySiteSettings(_id: { regex: "/(drafts.|)siteSettings/" }) {
-      title
-      description
-      keywords
-      facebookUrl
-      instagramUrl
-      backgroundColor {
-        rgb {
-          r
-          g
-          b
-          a
-        }
-        hsl {
-          h
-          s
-          l
-          a
-        }
-      }
-      fontColor {
-        rgb {
-          r
-          g
-          b
-          a
-        }
-      }
       _rawStatement(resolveReferences: { maxDepth: 5 })
       author {
         image {
           asset {
-            fluid(maxWidth: 100) {
+            fluid(maxWidth: 400) {
               ...GatsbySanityImageFluid
             }
           }
@@ -75,20 +47,12 @@ const StatementWrapper = styled.section`
         0% {
           transform: translateX(-10px);
           opacity: 0;
-          box-shadow: 0px 10px 20px 5px
-            hsl(
-              ${(props) => props.theme.backgroundHsl.h},
-              ${(props) =>
-                `${props.theme.backgroundHsl.s * 100 - props.theme.backgroundHsl.s * 100 * 0.5}%`},
-              ${(props) =>
-                `${props.theme.backgroundHsl.l * 100 - props.theme.backgroundHsl.l * 100 * 0.5}%`},
-              0
-            );
+          box-shadow: 0px 10px 20px 5px black;
         }
         100% {
           transform: translateX(0px);
           opacity: 1;
-          box-shadow: 0px 15px 10px -10px hsl(${(props) => props.theme.backgroundHsl.h}, ${(props) => `${props.theme.backgroundHsl.s * 100 - props.theme.backgroundHsl.s * 100 * 0.5}%`}, ${(props) => `${props.theme.backgroundHsl.l * 100 - props.theme.backgroundHsl.l * 100 * 0.5}%`}, 1);
+          box-shadow: 0px 15px 10px -10px black;
         }
       }
     }
@@ -138,26 +102,11 @@ const StatementPage = (props) => {
 
   const { site } = data || {}
 
-  if (!site) {
-    throw new Error(
-      'Missing "Site settings". Open the studio at http://localhost:3333 and add some content to "Site settings" and restart the development server.'
-    )
-  }
-
-  const socials = {
-    facebookUrl: site.facebookUrl,
-    instagramUrl: site.instagramUrl,
-  }
-
   return (
     <StatementWrapper>
       <div className="statement-container">
         <div className="img-container left">
-          <img
-            src={imageUrlFor(buildImageObj(site.statementImage)).auto('format').url()}
-            alt={site.statementImage.alt}
-            className="fit-image"
-          />
+          <Img alt={site.author.image.asset.fluid} className="fit-image" />
         </div>
         <article className="statement-body right">
           {site._rawStatement && <PortableText blocks={site._rawStatement} />}
