@@ -1,9 +1,7 @@
-import React from 'react'
 import { graphql } from 'gatsby'
-import { ThemeProvider } from 'styled-components'
+import React from 'react'
 import Layout from '../components/core/layout'
 import GraphQLErrorList from '../components/graphql-error-list'
-import { GlobalStyle, theme } from '../lib/styled'
 import { JournalPost } from '../components/JournalPost'
 
 export const query = graphql`
@@ -101,14 +99,7 @@ const JournalPostTemplate = (props) => {
     instagramUrl: site.instagramUrl,
   }
 
-  return (
-    <ThemeProvider theme={theme(site)}>
-      <GlobalStyle />
-      <Layout site={site} categories={categories} socials={socials}>
-        {curr && <JournalPost prev={prev} post={curr} next={next} />}
-      </Layout>
-    </ThemeProvider>
-  )
+  return <JournalPost prev={prev} post={curr} next={next} />
 }
 
 export default JournalPostTemplate

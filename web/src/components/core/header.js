@@ -28,7 +28,6 @@ const HeaderWrapper = styled.header`
 `
 
 const Header = ({ title, socials }) => {
-  const inGallery = typeof window !== 'undefined' ? window.location.href.includes('gallery') : ''
   return (
     <HeaderWrapper>
       <div className="main">

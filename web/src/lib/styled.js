@@ -30,18 +30,19 @@ export const GlobalStyle = createGlobalStyle`
 
     --content-spacing: clamp(.5rem, 1vw, 1rem);
 
-    background-color: ${(props) => props.theme.backgroundColor};
+    background-color: #FEFBFF;
     
-    font-family: 'Montserrat', sans-serif;
     font-weight: 400;
     line-height: 1.75;
-    color: ${(props) => props.theme.fontColor};
+    color: #2F2B3B;
     font-size: 16px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
   }
 
   h1, h2, h3, h4, h5 {
-    margin: 0;
     font-family: 'Montserrat', sans-serif;
+    margin: 0;
     font-weight: 400;
     line-height: 1.3;
   }

@@ -1,6 +1,6 @@
+import { graphql, useStaticQuery } from 'gatsby'
 import React from 'react'
 import styled from 'styled-components'
-import { graphql, useStaticQuery } from 'gatsby'
 import Header from './header'
 import SEO from './seo'
 

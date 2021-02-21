@@ -1,6 +1,6 @@
 import { graphql } from 'gatsby'
 import React from 'react'
-import ImageGallery from '../../components/ImageGallery'
+import ImageGallery from '../components/ImageGallery'
 
 export const query = graphql`
   query($slug: String!) {

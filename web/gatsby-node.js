@@ -36,7 +36,7 @@ async function postPages({ graphql, actions }) {
     const path = `gallery/${current}`
     actions.createPage({
       path,
-      component: require.resolve('./src/templates/portfolio/entry.js'),
+      component: require.resolve('./src/templates/entry.js'),
       context: { _id },
     })
   })
@@ -73,7 +73,7 @@ async function categoryPages({ graphql, actions }) {
     const path = `gallery/${current}`
     actions.createPage({
       path,
-      component: require.resolve('./src/templates/portfolio/category.js'),
+      component: require.resolve('./src/templates/category.js'),
       context: { slug: current },
     })
   })
