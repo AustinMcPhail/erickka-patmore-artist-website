@@ -6,7 +6,7 @@ import styled from 'styled-components'
 
 const ImageGallery = ({ posts, title, setSubtitle }) => {
   useEffect(() => {
-    if (title) setSubtitle(title)
+    setSubtitle(title)
   }, [title, setSubtitle])
 
   return (

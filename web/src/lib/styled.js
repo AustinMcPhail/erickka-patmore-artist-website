@@ -23,7 +23,7 @@ export const GlobalStyle = createGlobalStyle`
     --min-font-size-scaler: .5;
 
     --h1-size: clamp(calc(4.209rem * var(--min-font-size-scaler)), 5vw, calc(4.209rem * var(--max-font-size-scaler)));
-    --h2-size:  clamp(calc(3.157rem * var(--min-font-size-scaler)), 5vw, calc(3.157rem * var(--max-font-size-scaler)));
+    --h2-size:  clamp(calc(2.5rem * var(--min-font-size-scaler)), 5vw, calc(2.5rem * var(--max-font-size-scaler)));
     --h3-size:  clamp(calc(2.369rem * var(--min-font-size-scaler)), 5vw, calc(2.369rem * var(--max-font-size-scaler)));
     --h4-size:  clamp(calc(1.777rem * var(--min-font-size-scaler)), 5vw, calc(1.777rem * var(--max-font-size-scaler)));
     --h5-size:  clamp(calc(1.333rem * var(--min-font-size-scaler)), 5vw, calc(1.333rem * var(--max-font-size-scaler)));
