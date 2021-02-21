@@ -3,7 +3,7 @@ import React from 'react'
 const ShareIcon = () => {
   return (
     <svg
-      style={{ width: '10px', height: '10px' }}
+      style={{ width: '24px', height: '24px' }}
       fill="none"
       stroke="currentColor"
       viewBox="0 0 24 24"

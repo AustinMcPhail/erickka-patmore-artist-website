@@ -61,6 +61,15 @@ export const GlobalStyle = createGlobalStyle`
   h5 {font-size: var(--h5-size);}
 
   small, .text_small {font-size: 0.75rem;}
+
+  button {
+    font-weight: 400;
+    line-height: 1.75;
+    color: #2F2B3B;
+    font-size: 16px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+  }
 `
 
 export const theme = (site) => ({
