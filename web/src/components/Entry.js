@@ -1,5 +1,5 @@
 import Img from 'gatsby-image'
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import PortableText from './portableText'
 import Share from './Share'
@@ -31,7 +31,9 @@ const EntryStyles = styled.div`
 `
 
 const Entry = ({ entry, setSubtitle }) => {
-  setSubtitle(entry.title)
+  useEffect(() => {
+    setSubtitle(entry.title)
+  }, [entry.title, setSubtitle])
   return (
     <EntryStyles>
       <Img
