@@ -1,5 +1,5 @@
 import { graphql, useStaticQuery } from 'gatsby'
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import Header from './header'
 import SEO from './seo'
@@ -68,14 +68,24 @@ const Layout = ({ children }) => {
       }
     }
   `)
+
+  const [subtitle, setSubtitle] = useState(null)
+
   return (
     <LayoutWrapper>
-      <SEO title={site.title} description={site.description} keywords={site.keywords} />
+      <SEO
+        title={site.title}
+        subtitle={subtitle}
+        description={site.description}
+        keywords={site.keywords}
+      />
       <Header
         title={site.title}
         socials={{ instagramUrl: site.instagramUrl, facebookUrl: site.facebookUrl }}
       />
-      <main>{children}</main>
+      <main>
+        {React.Children.map(children, (child) => React.cloneElement(child, { setSubtitle }))}
+      </main>
       {/* <footer>
         <h3>Footer</h3>
       </footer> */}

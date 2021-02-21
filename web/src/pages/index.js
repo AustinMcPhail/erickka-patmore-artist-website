@@ -39,7 +39,6 @@ const IndexPage = ({
   data: {
     allSanityPortfolioEntry: { edges: posts },
   },
-  errors,
 }) => (
   <IndexStyles>
     <ImageGallery posts={posts} />

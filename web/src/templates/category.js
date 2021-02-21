@@ -4,6 +4,9 @@ import ImageGallery from '../components/ImageGallery'
 
 export const query = graphql`
   query($slug: String!) {
+    sanityCategory(slug: { current: { eq: $slug } }) {
+      title
+    }
     allSanityPortfolioEntry(
       sort: { fields: [publishedAt], order: DESC }
       filter: { slug: { current: { ne: null } }, category: { slug: { current: { eq: $slug } } } }
@@ -38,8 +41,9 @@ export const query = graphql`
 const CategoryTemplate = ({
   data: {
     allSanityPortfolioEntry: { edges: posts },
+    sanityCategory: { title },
   },
-  errors,
-}) => <ImageGallery posts={posts} />
+  setSubtitle,
+}) => <ImageGallery posts={posts} title={title} setSubtitle={setSubtitle} />
 
 export default CategoryTemplate

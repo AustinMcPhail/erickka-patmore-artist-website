@@ -30,7 +30,8 @@ const EntryStyles = styled.div`
   }
 `
 
-const EntryList = ({ entry }) => {
+const Entry = ({ entry, setSubtitle }) => {
+  setSubtitle(entry.title)
   return (
     <EntryStyles>
       <Img
@@ -56,4 +57,4 @@ const EntryList = ({ entry }) => {
   )
 }
 
-export default EntryList
+export default Entry

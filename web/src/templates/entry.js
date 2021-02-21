@@ -28,8 +28,8 @@ export const query = graphql`
   }
 `
 
-const EntryTemplate = ({ data: { sanityPortfolioEntry: post } }) => {
-  return <Entry entry={post} />
+const EntryTemplate = ({ data: { sanityPortfolioEntry: post }, ...props }) => {
+  return <Entry entry={post} {...props} />
 }
 
 export default EntryTemplate

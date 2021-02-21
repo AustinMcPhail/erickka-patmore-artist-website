@@ -1,30 +1,36 @@
 import { isFuture, parseISO } from 'date-fns'
 import { Link } from 'gatsby'
 import Img from 'gatsby-image'
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 
-const ImageGallery = ({ posts }) => (
-  <GalleryStyles>
-    {posts
-      .filter(({ node: p }) => !isFuture(parseISO(p.publishedAt)))
-      .map(({ node: p }) => (
-        <figure key={p.slug.current}>
-          <Link
-            key={p.slug.current}
-            style={{ maxHeight: '100%' }}
-            to={`/gallery/${p.slug.current}`}
-          >
-            <Img
-              style={{ maxHeight: '75vh' }}
-              imgStyle={{ objectFit: 'contain' }}
-              fluid={p.portfolioImage.asset.fluid}
-            />
-          </Link>
-        </figure>
-      ))}
-  </GalleryStyles>
-)
+const ImageGallery = ({ posts, title, setSubtitle }) => {
+  useEffect(() => {
+    if (title) setSubtitle(title)
+  }, [title, setSubtitle])
+
+  return (
+    <GalleryStyles>
+      {posts
+        .filter(({ node: p }) => !isFuture(parseISO(p.publishedAt)))
+        .map(({ node: p }) => (
+          <figure key={p.slug.current}>
+            <Link
+              key={p.slug.current}
+              style={{ maxHeight: '100%' }}
+              to={`/gallery/${p.slug.current}`}
+            >
+              <Img
+                style={{ maxHeight: '75vh' }}
+                imgStyle={{ objectFit: 'contain' }}
+                fluid={p.portfolioImage.asset.fluid}
+              />
+            </Link>
+          </figure>
+        ))}
+    </GalleryStyles>
+  )
+}
 
 const GalleryStyles = styled.div`
   ::-webkit-scrollbar {
