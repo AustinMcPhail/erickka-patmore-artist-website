@@ -32,7 +32,6 @@ export const GlobalStyle = createGlobalStyle`
 
     background-color: #FEFBFF;
     
-    font-weight: 400;
     line-height: 1.75;
     color: #2F2B3B;
     font-size: 16px;
@@ -63,7 +62,7 @@ export const GlobalStyle = createGlobalStyle`
   small, .text_small {font-size: 0.75rem;}
 
   button {
-    font-weight: 400;
+    font-weight: 300;
     line-height: 1.75;
     color: #2F2B3B;
     font-size: 16px;
