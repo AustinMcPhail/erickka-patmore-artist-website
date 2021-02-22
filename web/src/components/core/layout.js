@@ -7,7 +7,7 @@ import SEO from './seo'
 const LayoutWrapper = styled.div`
   min-height: 100vh;
   display: grid;
-  gap: var(--content-spacing);
+  column-gap: var(--content-spacing);
   margin-inline: 1rem;
 
   @media (min-width: 1024px) {
@@ -18,8 +18,8 @@ const LayoutWrapper = styled.div`
     grid-template-columns: auto 1fr;
 
     main {
-      padding: var(--content-spacing);
-      height: 100%;
+      padding-inline: var(--content-spacing);
+      /* height: 100%; */
       overflow-y: auto;
     }
   }

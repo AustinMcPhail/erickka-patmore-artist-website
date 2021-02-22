@@ -38,7 +38,7 @@ const GalleryStyles = styled.div`
   }
 
   column-count: var(--masonry-cols, 1);
-  column-gap: 1rem;
+  column-gap: var(--content-spacing);
 
   figure {
     margin: 0;

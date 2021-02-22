@@ -5,6 +5,8 @@ const { isFuture, parseISO } = require('date-fns')
  * See: https://www.gatsbyjs.org/docs/node-apis/
  */
 
+const JOURNAL_PAGE_SIZE = 4
+
 async function postPages({ graphql, actions }) {
   console.log('\nCreating Post Pages\n')
 
@@ -85,11 +87,12 @@ async function journalPages({ graphql, actions }) {
 
   const {
     data: {
-      allSanityPost: { edges: allPosts },
+      allSanityPost: { totalCount, edges: allPosts },
     },
   } = await graphql(`
     query {
       allSanityPost(sort: { fields: [publishedAt], order: ASC }) {
+        totalCount
         edges {
           node {
             _id
@@ -102,13 +105,25 @@ async function journalPages({ graphql, actions }) {
       }
     }
   `)
+  const numberOfPages = Math.ceil(totalCount / JOURNAL_PAGE_SIZE)
   if (!allPosts) return
+
+  Array.from({ length: numberOfPages }).forEach((_, i) => {
+    actions.createPage({
+      path: i === 0 ? '/journal' : `/journal/${i + 1}`,
+      component: require.resolve('./src/templates/journalPage.js'),
+      context: {
+        skip: i * JOURNAL_PAGE_SIZE,
+        currentPage: i + 1,
+        pageSize: JOURNAL_PAGE_SIZE,
+      },
+    })
+  })
+
   const posts = allPosts.filter((e) => !isFuture(parseISO(e.node.publishedAt)))
   posts.forEach((edge, i) => {
-    const {
-      _id,
-      slug: { current },
-    } = edge.node
+    const { current } = edge.node.slug
+    const { _id } = edge.node
     console.log(`Creating Journal page at 'journal/${current}'`)
     const path = `journal/${current}`
     actions.createPage({

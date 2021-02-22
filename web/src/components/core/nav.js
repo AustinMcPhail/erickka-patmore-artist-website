@@ -15,7 +15,7 @@ const NavStyles = styled.nav`
       }
     }
 
-    gap: clamp(1rem, 1vw, 1rem);
+    gap: var(--content-spacing);
     padding-bottom: 1rem;
     li {
       text-align: center;
