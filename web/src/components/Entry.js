@@ -5,11 +5,7 @@ import PortableText from './portableText'
 import Share from './Share'
 
 const EntryStyles = styled.div`
-  margin-top: 0;
   margin-bottom: 4rem;
-  @media (min-width: 481px) {
-    margin-top: 6rem;
-  }
 
   section {
     .title {

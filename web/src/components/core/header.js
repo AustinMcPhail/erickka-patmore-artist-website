@@ -8,6 +8,7 @@ import Nav from './nav'
 
 const HeaderWrapper = styled.header`
   margin-top: clamp(1rem, 1vw, 2rem);
+  margin-bottom: clamp(1rem, 1vw, 2rem);
   .main {
     display: flex;
     @media (min-width: 1024px) {

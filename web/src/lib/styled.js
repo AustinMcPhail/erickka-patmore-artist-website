@@ -69,6 +69,84 @@ export const GlobalStyle = createGlobalStyle`
     font-family: 'Roboto', sans-serif;
     font-weight: 300;
   }
+
+  main {
+    a {
+      font-style: italic;
+    }
+  }
+
+  div.read {
+        a {
+          position: relative;
+          display: inline-flex;
+          align-items: center;
+          svg {
+            position: relative;
+            transition: all 100ms linear;
+            width: .5rem;
+          }
+          &:hover {
+            svg {
+              width: 1rem;
+            }
+          }
+          &.active {
+          }
+          &:after {
+          }
+          &:not(.active) {
+            &:hover,
+            &:focus {
+              &:after {
+                opacity: 0.75;
+                width: 50%;
+              }
+            }
+            &:active {
+              &:after {
+                width: 100%;
+              }
+            }
+          }
+        }
+      }
+
+  .btn {
+        position: relative;
+        transition: opacity 150ms ease-in-out;
+        padding-bottom: 0.5rem;
+        &.active {
+          border-bottom: solid 2px black;
+        }
+        &:after {
+          transition: width 150ms ease-in-out;
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 100%;
+          border-bottom: solid 2px black;
+          width: 0%;
+        }
+        &:not(.active) {
+          &:hover,
+          &:focus {
+            opacity: 0.75;
+            /* border-bottom: solid 1px black; */
+            &:after {
+              opacity: 0.75;
+              width: 50%;
+            }
+          }
+          &:active {
+            /* border-bottom: solid 1px black; */
+            &:after {
+              width: 100%;
+            }
+          }
+        }
+  }
 `
 
 export const theme = (site) => ({

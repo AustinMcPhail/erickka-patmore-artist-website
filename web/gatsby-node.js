@@ -110,11 +110,11 @@ async function journalPages({ graphql, actions }) {
 
   Array.from({ length: numberOfPages }).forEach((_, i) => {
     actions.createPage({
-      path: i === 0 ? '/journal' : `/journal/${i + 1}`,
+      path: i === 0 ? '/journal' : `/journal/${i}`,
       component: require.resolve('./src/templates/journalPage.js'),
       context: {
         skip: i * JOURNAL_PAGE_SIZE,
-        currentPage: i + 1,
+        currentPage: i,
         pageSize: JOURNAL_PAGE_SIZE,
       },
     })

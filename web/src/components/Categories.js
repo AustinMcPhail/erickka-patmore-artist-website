@@ -14,39 +14,6 @@ const CategoriesStyles = styled.div`
     padding-bottom: 1rem;
     li {
       text-align: start;
-      a {
-        position: relative;
-        transition: opacity 150ms ease-in-out;
-        padding-bottom: 0.5rem;
-        &.active {
-          border-bottom: solid 2px black;
-        }
-        &:after {
-          transition: width 150ms ease-in-out;
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          height: 100%;
-          border-bottom: solid 2px black;
-          width: 0%;
-        }
-        &:not(.active) {
-          &:hover,
-          &:focus {
-            opacity: 0.75;
-            &:after {
-              opacity: 0.75;
-              width: 50%;
-            }
-          }
-          &:active {
-            &:after {
-              width: 100%;
-            }
-          }
-        }
-      }
     }
   }
 `
@@ -75,7 +42,7 @@ const Categories = () => {
         {categories &&
           categories.map(({ node: c }) => (
             <li key={c.slug.current}>
-              <Link to={`/gallery/${c.slug.current}`} activeClassName="active">
+              <Link className="btn" to={`/gallery/${c.slug.current}`} activeClassName="active">
                 {c.title}
               </Link>
             </li>

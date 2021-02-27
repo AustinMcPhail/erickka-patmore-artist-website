@@ -5,7 +5,6 @@ import Header from './header'
 import SEO from './seo'
 
 const LayoutWrapper = styled.div`
-  min-height: 100vh;
   display: grid;
   column-gap: var(--content-spacing);
   margin-inline: 1rem;

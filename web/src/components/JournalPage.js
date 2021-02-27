@@ -3,16 +3,16 @@ import { Link } from 'gatsby'
 import Img from 'gatsby-image'
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
+import Pagination from './Pagination'
 import PortableText from './portableText'
 
 const JournalStyles = styled.div`
-  margin-top: 0;
+  margin-top: var(--content-spacing);
   display: grid;
   grid-template-columns: 1fr;
   gap: 4rem;
-  margin-bottom: 4rem;
+  margin-bottom: var(--content-spacing);
   @media (min-width: 481px) {
-    margin-top: 6rem;
     grid-template-columns: 1fr 1fr;
   }
 
@@ -43,46 +43,15 @@ const JournalStyles = styled.div`
       p {
         font-size: clamp(0.75rem, 2.5vw, 1rem);
       }
-      div.read {
-        text-align: right;
-        a {
-          position: relative;
-          display: inline-flex;
-          align-items: cemter;
-          svg {
-            transition: all 150ms ease-in-out;
-            width: 0rem;
-          }
-          &:hover {
-            svg {
-              width: 1rem;
-            }
-          }
-          &.active {
-          }
-          &:after {
-          }
-          &:not(.active) {
-            &:hover,
-            &:focus {
-              &:after {
-                opacity: 0.75;
-                width: 50%;
-              }
-            }
-            &:active {
-              &:after {
-                width: 100%;
-              }
-            }
-          }
-        }
-      }
     }
+  }
+
+  div.read {
+    text-align: right;
   }
 `
 
-const JournalPage = ({ posts, setSubtitle, totalCount }) => {
+const JournalPage = ({ posts, setSubtitle, totalCount, pageContext }) => {
   useEffect(() => {
     setSubtitle('Journal')
   }, [setSubtitle])
@@ -135,42 +104,46 @@ const JournalPage = ({ posts, setSubtitle, totalCount }) => {
   //     monthYear[m] = [p]
   //   }
   // })
+
   return (
-    <JournalStyles>
-      {posts &&
-        posts.map((p) => (
-          <div className="post">
-            <Link to={`/journal/${p.slug.current}`}>
-              <Img fluid={p.mainImage.asset.fluid} />
-            </Link>
-            <section>
-              <div className="title">
-                <h2>{p.title}</h2>
-                <small>{format(parseISO(p.publishedAt), 'dd·MM·yyyy')}</small>
-              </div>
-              {p._rawExcerpt && <PortableText blocks={p._rawExcerpt} />}
-              <div className="read">
-                <Link to={`/journal/${p.slug.current}`}>
-                  <span>Read</span>
-                  <svg
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M17 8l4 4m0 0l-4 4m4-4H3"
-                    />
-                  </svg>
-                </Link>
-              </div>
-            </section>
-          </div>
-        ))}
-    </JournalStyles>
+    <>
+      <Pagination totalCount={totalCount} {...pageContext} baseUrl="/journal" />
+      <JournalStyles>
+        {posts &&
+          posts.map((p) => (
+            <div className="post">
+              <Link to={`/journal/${p.slug.current}`}>
+                <Img fluid={p.mainImage.asset.fluid} />
+              </Link>
+              <section>
+                <div className="title">
+                  <h2>{p.title}</h2>
+                  <small>{format(parseISO(p.publishedAt), 'dd·MM·yyyy')}</small>
+                </div>
+                {p._rawExcerpt && <PortableText blocks={p._rawExcerpt} />}
+                <div className="read">
+                  <Link to={`/journal/${p.slug.current}`}>
+                    <span>Read</span>
+                    <svg
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M17 8l4 4m0 0l-4 4m4-4H3"
+                      />
+                    </svg>
+                  </Link>
+                </div>
+              </section>
+            </div>
+          ))}
+      </JournalStyles>
+    </>
     // <JournalListing>
     //   <div id="posts">
     //     <h1>Recent</h1>
