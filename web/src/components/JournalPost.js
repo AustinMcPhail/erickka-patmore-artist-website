@@ -19,7 +19,14 @@ const PostStyles = styled.article`
 export const JournalPost = ({ prev, post, next }) => {
   return (
     <PostStyles>
-      {post?.mainImage?.asset && <Img fluid={post.mainImage.asset.fluid} />}
+      {post?.mainImage?.asset && (
+        <Img alt={post.mainImage.alt} fluid={post.mainImage.asset.fluid} />
+      )}
+      {post?.mainImage?.caption && (
+        <p className="caption">
+          <small>{post?.mainImage?.caption}</small>
+        </p>
+      )}
       <div className="title">
         <h2 className="title">{post.title}</h2>
         <small>{format(parseISO(post.publishedAt), 'dd·MM·yyyy')}</small>

@@ -25,6 +25,7 @@ export const query = graphql`
             ...GatsbySanityImageFluid
           }
         }
+        alt
       }
       authors {
         author {

@@ -61,11 +61,13 @@ const JournalPage = ({ posts, setSubtitle, totalCount, pageContext }) => {
       <Pagination totalCount={totalCount} {...pageContext} baseUrl="/journal" />
       <JournalStyles>
         {posts &&
-          posts.map((p) => (
-            <div className="post">
-              <Link to={`/journal/${p.slug.current}`}>
-                <Img fluid={p.mainImage.asset.fluid} />
-              </Link>
+          posts.map((p, i) => (
+            <div className="post" key={`post_${i}`}>
+              {p.mainImage && (
+                <Link to={`/journal/${p.slug.current}`}>
+                  <Img alt={p.mainImage.alt} fluid={p.mainImage.asset.fluid} />
+                </Link>
+              )}
               <section>
                 <div className="title">
                   <h2>{p.title}</h2>
@@ -82,28 +84,6 @@ const JournalPage = ({ posts, setSubtitle, totalCount, pageContext }) => {
           ))}
       </JournalStyles>
     </>
-    // <JournalListing>
-    //   <div id="posts">
-    //     <h1>Recent</h1>
-    //     {postElements}
-    //   </div>
-    //   <div id="other">
-    //     <h1>All</h1>
-    //     {Object.keys(monthYear).map((my, i) => (
-    //       <ul key={i}>
-    //         <li className="heading">{my}</li>
-    //         {monthYear[my].map((post) => (
-    //           <li key={`${my}_${post._id}`}>
-    //             <Link className="posting" to={`/journal/${post.slug.current}`}>
-    //               {post.title}
-    //             </Link>{' '}
-    //             - {format(parseISO(post.publishedAt), 'dd')}
-    //           </li>
-    //         ))}
-    //       </ul>
-    //     ))}
-    //   </div>
-    // </JournalListing>
   )
 }
 

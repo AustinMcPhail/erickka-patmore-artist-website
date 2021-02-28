@@ -71,6 +71,7 @@ const Pagination = ({
           !Number.isNaN(currentPage) &&
           Array.from({ length: totalPages }).map((_, i) => (
             <Link
+              key={i}
               className={currentPage === 0 && i === 0 ? 'btn current' : 'btn'}
               to={`${baseUrl}/${i || ''}`}
             >
