@@ -30,7 +30,7 @@ const Nav = () => (
   <NavStyles>
     <ul className="main-nav">
       <li>
-        <Link className="btn" to="/journal" activeClassName="active">
+        <Link className="btn" to="/journal" partiallyActive activeClassName="active">
           Journal
         </Link>
       </li>

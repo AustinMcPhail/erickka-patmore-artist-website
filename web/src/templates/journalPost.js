@@ -1,76 +1,38 @@
 import { graphql } from 'gatsby'
 import React from 'react'
-import Layout from '../components/core/layout'
-import GraphQLErrorList from '../components/graphql-error-list'
 import { JournalPost } from '../components/JournalPost'
 
 export const query = graphql`
   query JournalPostTemplateQuery($prev_id: String, $curr_id: String!, $next_id: String) {
-    site: sanitySiteSettings(_id: { regex: "/(drafts.|)siteSettings/" }) {
-      title
-      description
-      keywords
-      facebookUrl
-      instagramUrl
-      backgroundColor {
-        rgb {
-          r
-          g
-          b
-          a
-        }
-        hsl {
-          h
-          s
-          l
-          a
-        }
-      }
-      fontColor {
-        rgb {
-          r
-          g
-          b
-          a
-        }
-      }
-    }
-    categories: allSanityCategory(filter: { enabled: { ne: false } }) {
-      edges {
-        node {
-          title
-          slug {
-            current
-          }
-        }
-      }
-    }
     prev: sanityPost(_id: { eq: $prev_id }) {
-      _id
-      publishedAt
       title
       slug {
         current
       }
     }
     curr: sanityPost(_id: { eq: $curr_id }) {
-      _id
+      id
       publishedAt
       title
+      slug {
+        current
+      }
       _rawExcerpt
       _rawBody
+      mainImage {
+        asset {
+          fluid(maxWidth: 1000, maxHeight: 750) {
+            ...GatsbySanityImageFluid
+          }
+        }
+      }
       authors {
         author {
           name
         }
       }
-      slug {
-        current
-      }
     }
     next: sanityPost(_id: { eq: $next_id }) {
-      _id
-      publishedAt
       title
       slug {
         current
@@ -79,27 +41,8 @@ export const query = graphql`
   }
 `
 
-const JournalPostTemplate = (props) => {
-  const { data, errors } = props
-  if (errors) {
-    return (
-      <Layout>
-        <GraphQLErrorList errors={errors} />
-      </Layout>
-    )
-  }
-  const { site } = data || {}
-  const categories = (data || {}).categories.edges.map((e) => e.node) || []
-  const prev = data.prev || null
-  const curr = data.curr || {}
-  const next = data.next || null
-
-  const socials = {
-    facebookUrl: site.facebookUrl,
-    instagramUrl: site.instagramUrl,
-  }
-
-  return <JournalPost prev={prev} post={curr} next={next} />
-}
+const JournalPostTemplate = ({ data: { prev, curr, next } }) => (
+  <JournalPost prev={prev} post={curr} next={next} />
+)
 
 export default JournalPostTemplate

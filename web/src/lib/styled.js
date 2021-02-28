@@ -76,42 +76,6 @@ export const GlobalStyle = createGlobalStyle`
     }
   }
 
-  div.read {
-        a {
-          position: relative;
-          display: inline-flex;
-          align-items: center;
-          svg {
-            position: relative;
-            transition: all 100ms linear;
-            width: .5rem;
-          }
-          &:hover {
-            svg {
-              width: 1rem;
-            }
-          }
-          &.active {
-          }
-          &:after {
-          }
-          &:not(.active) {
-            &:hover,
-            &:focus {
-              &:after {
-                opacity: 0.75;
-                width: 50%;
-              }
-            }
-            &:active {
-              &:after {
-                width: 100%;
-              }
-            }
-          }
-        }
-      }
-
   .btn {
         position: relative;
         transition: opacity 150ms ease-in-out;

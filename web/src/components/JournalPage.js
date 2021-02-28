@@ -41,7 +41,7 @@ const JournalStyles = styled.div`
         }
       }
       p {
-        font-size: clamp(0.75rem, 2.5vw, 1rem);
+        font-size: clamp(14px, 2.5vw, 1rem);
       }
     }
   }
@@ -55,55 +55,6 @@ const JournalPage = ({ posts, setSubtitle, totalCount, pageContext }) => {
   useEffect(() => {
     setSubtitle('Journal')
   }, [setSubtitle])
-  // const formatDate = (date) =>
-  //   differenceInDays(new Date(date), new Date()) > 3
-  //     ? formatDistance(new Date(date), new Date())
-  //     : format(new Date(date), 'MMMM Do, yyyy')
-
-  // const postElements = posts.map((post) => (
-  //   <div className="post" key={post._id}>
-  //     {post.mainImage && (
-  //       <img
-  //         className="post-image"
-  //         src={imageUrlFor(buildImageObj(post.mainImage)).auto('format').url()}
-  //         alt={post.mainImage.alt}
-  //       />
-  //     )}
-  //     <div className="post-content">
-  //       <Link className="title" to={`/journal/${post.slug.current}`}>
-  //         <h2>{post.title}</h2>
-  //       </Link>
-  //       <span className="date">{formatDate(parseISO(post.publishedAt))}</span>
-  //       <PortableText blocks={post._rawExcerpt} />
-  //       <Link className="read-more" to={`/journal/${post.slug.current}`}>
-  //         Read
-  //         <svg
-  //           fill="none"
-  //           stroke="currentColor"
-  //           viewBox="0 0 24 24"
-  //           xmlns="http://www.w3.org/2000/svg"
-  //         >
-  //           <path
-  //             strokeLinecap="round"
-  //             strokeLinejoin="round"
-  //             strokeWidth="2"
-  //             d="M17 8l4 4m0 0l-4 4m4-4H3"
-  //           />
-  //         </svg>
-  //       </Link>
-  //     </div>
-  //   </div>
-  // ))
-
-  // const monthYear = {}
-  // posts.forEach((p) => {
-  //   const m = format(parseISO(p.publishedAt), 'MMMM-yyyy')
-  //   if (monthYear[m]) {
-  //     monthYear[m].push(p)
-  //   } else {
-  //     monthYear[m] = [p]
-  //   }
-  // })
 
   return (
     <>
@@ -122,21 +73,8 @@ const JournalPage = ({ posts, setSubtitle, totalCount, pageContext }) => {
                 </div>
                 {p._rawExcerpt && <PortableText blocks={p._rawExcerpt} />}
                 <div className="read">
-                  <Link to={`/journal/${p.slug.current}`}>
+                  <Link className="btn" to={`/journal/${p.slug.current}`}>
                     <span>Read</span>
-                    <svg
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M17 8l4 4m0 0l-4 4m4-4H3"
-                      />
-                    </svg>
                   </Link>
                 </div>
               </section>
