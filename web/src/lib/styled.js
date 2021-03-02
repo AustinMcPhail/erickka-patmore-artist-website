@@ -11,6 +11,7 @@ export const GlobalStyle = createGlobalStyle`
   fieldset{border-width:0; padding:0; margin:0;}
 
   html, body {
+    position: relative;
     margin: 0;
     padding: 0;
     box-sizing: border-box;

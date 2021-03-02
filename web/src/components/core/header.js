@@ -43,10 +43,9 @@ const Header = ({ title, socials }) => {
             </li>
           </ul>
         </h1>
-        <Nav />
-      </div>
-      <div className="categories">
-        <Categories />
+        <Nav>
+          <Categories />
+        </Nav>
       </div>
     </HeaderWrapper>
   )
