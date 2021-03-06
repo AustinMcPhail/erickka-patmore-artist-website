@@ -13,6 +13,9 @@ const PostStyles = styled.article`
   margin-bottom: 1rem;
   p {
     font-size: clamp(14px, 2.5vw, 1rem);
+    a {
+      word-break: break-all;
+    }
   }
 `
 
