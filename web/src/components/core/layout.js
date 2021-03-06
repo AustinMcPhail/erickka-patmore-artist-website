@@ -9,6 +9,13 @@ const LayoutWrapper = styled.div`
   column-gap: var(--content-spacing);
   margin-inline: 1rem;
 
+  &.disabled {
+    main {
+      pointer-events: none;
+      filter: grayscale(75%);
+    }
+  }
+
   @media (min-width: 1024px) {
     margin-inline: clamp(1rem, 25%, 5rem);
     max-height: 100vh;
@@ -70,8 +77,10 @@ const Layout = ({ children }) => {
 
   const [subtitle, setSubtitle] = useState(null)
 
+  const [blurBackground, setBlurBackground] = useState(false)
+
   return (
-    <LayoutWrapper>
+    <LayoutWrapper className={blurBackground ? 'disabled' : ''}>
       <SEO
         title={site.title}
         subtitle={subtitle}
@@ -81,8 +90,9 @@ const Layout = ({ children }) => {
       <Header
         title={site.title}
         socials={{ instagramUrl: site.instagramUrl, facebookUrl: site.facebookUrl }}
+        blurBackground={setBlurBackground}
       />
-      <main>
+      <main className={blurBackground ? 'disabled' : ''}>
         {React.Children.map(children, (child) => React.cloneElement(child, { setSubtitle }))}
       </main>
       {/* <footer>

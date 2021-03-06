@@ -1,5 +1,5 @@
 import { Link } from 'gatsby'
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 
 const NavStyles = styled.nav`
@@ -42,12 +42,12 @@ const NavStyles = styled.nav`
     &.opening {
       display: block;
       pointer-events: none;
-      --anim: slideRight 150ms ease-in-out reverse;
+      --anim: slideRight 250ms ease-in-out reverse;
     }
     &.closing {
       display: block;
       pointer-events: none;
-      --anim: slideRight 150ms ease-in-out forwards;
+      --anim: slideRight 250ms ease-in-out forwards;
     }
     &.closed {
       display: none;
@@ -98,8 +98,10 @@ const NavStyles = styled.nav`
   }
 `
 
-const Nav = ({ children }) => {
+const Nav = ({ children, blurBackground }) => {
   const [menuState, setMenuState] = useState('closed')
+
+  const navBox = useRef()
 
   function toggleMenu() {
     switch (menuState) {
@@ -107,18 +109,45 @@ const Nav = ({ children }) => {
         setMenuState('closing')
         setTimeout(() => {
           setMenuState('closed')
-        }, 150)
+          blurBackground(false)
+        }, 250)
         break
       case 'closed':
         setMenuState('opening')
         setTimeout(() => {
           setMenuState('open')
-        }, 150)
+          blurBackground(true)
+        }, 250)
         break
       default:
         setMenuState('open')
+        blurBackground(true)
     }
   }
+
+  useEffect(() => {
+    function handleClick(event) {
+      if (
+        menuState === 'open' &&
+        navBox &&
+        navBox.current &&
+        !navBox.current.contains(event.target)
+      ) {
+        event.preventDefault()
+        event.stopPropagation()
+        setMenuState('closing')
+        setTimeout(() => {
+          setMenuState('closed')
+          blurBackground(false)
+        }, 250)
+      }
+    }
+
+    window.addEventListener('click', handleClick)
+    return () => {
+      window.removeEventListener('click', handleClick)
+    }
+  }, [menuState, blurBackground])
 
   return (
     <NavStyles>
@@ -132,7 +161,7 @@ const Nav = ({ children }) => {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 8h16M4 16h16" />
         </svg>
       </button>
-      <div className={`mobile ${menuState}`}>
+      <div className={`mobile ${menuState}`} ref={navBox}>
         <button type="button" onClick={() => toggleMenu()}>
           {menuState === 'closed' ? 'Open' : 'Close'}
         </button>
