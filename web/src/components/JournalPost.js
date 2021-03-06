@@ -17,6 +17,9 @@ const PostStyles = styled.article`
       word-break: break-all;
     }
   }
+  .gatsby-image-wrapper {
+    max-height: clamp(400px, 40vh, 100%);
+  }
 `
 
 export const JournalPost = ({ prev, post, next }) => {
