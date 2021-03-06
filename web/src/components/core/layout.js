@@ -71,6 +71,11 @@ const Layout = ({ children }) => {
             a
           }
         }
+        cv {
+          asset {
+            url
+          }
+        }
       }
     }
   `)
@@ -91,6 +96,7 @@ const Layout = ({ children }) => {
         title={site.title}
         socials={{ instagramUrl: site.instagramUrl, facebookUrl: site.facebookUrl }}
         blurBackground={setBlurBackground}
+        cvUrl={site.cv.asset.url}
       />
       <main className={blurBackground ? 'disabled' : ''}>
         {React.Children.map(children, (child) => React.cloneElement(child, { setSubtitle }))}

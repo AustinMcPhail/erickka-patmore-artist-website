@@ -98,7 +98,7 @@ const NavStyles = styled.nav`
   }
 `
 
-const Nav = ({ children, blurBackground }) => {
+const Nav = ({ children, cvUrl, blurBackground }) => {
   const [menuState, setMenuState] = useState('closed')
 
   const navBox = useRef()
@@ -148,7 +148,6 @@ const Nav = ({ children, blurBackground }) => {
       window.removeEventListener('click', handleClick)
     }
   }, [menuState, blurBackground])
-
   return (
     <NavStyles>
       <button className="menu-toggle" type="button" onClick={() => toggleMenu()}>
@@ -176,6 +175,13 @@ const Nav = ({ children, blurBackground }) => {
               About
             </Link>
           </li>
+          {cvUrl && (
+            <li>
+              <a className="btn" href={`${cvUrl}?dl=`}>
+                CV
+              </a>
+            </li>
+          )}
           {children}
         </ul>
       </div>
@@ -190,6 +196,13 @@ const Nav = ({ children, blurBackground }) => {
             About
           </Link>
         </li>
+        {cvUrl && (
+          <li>
+            <a className="btn" href={`${cvUrl}?dl=`}>
+              CV
+            </a>
+          </li>
+        )}
         {children}
       </ul>
     </NavStyles>

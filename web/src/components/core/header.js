@@ -28,7 +28,7 @@ const HeaderWrapper = styled.header`
   }
 `
 
-const Header = ({ title, socials, blurBackground }) => {
+const Header = ({ title, socials, cvUrl, blurBackground }) => {
   return (
     <HeaderWrapper>
       <div className="main">
@@ -43,7 +43,7 @@ const Header = ({ title, socials, blurBackground }) => {
             </li>
           </ul>
         </h1>
-        <Nav blurBackground={blurBackground}>
+        <Nav blurBackground={blurBackground} cvUrl={cvUrl}>
           <Categories />
         </Nav>
       </div>
