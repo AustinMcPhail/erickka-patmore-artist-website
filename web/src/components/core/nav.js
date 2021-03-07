@@ -35,7 +35,16 @@ const NavStyles = styled.nav`
         transform: translateX(100vw);
       }
     }
-    background: pink;
+
+    -webkit-box-shadow: 0px 0px 0px 4px #eaeaeb, 0px 0px 0px 8px #828089, 0px 0px 0px 12px #595562,
+      5px 5px 15px 5px rgba(0, 0, 0, 0);
+    box-shadow: 0px 0px 0px 4px #eaeaeb, 0px 0px 0px 8px #828089, 0px 0px 0px 12px #595562,
+      5px 5px 15px 5px rgba(0, 0, 0, 0);
+
+    background: #fefbff;
+
+    padding: var(--content-spacing);
+
     &.open {
       display: block;
     }
@@ -79,7 +88,7 @@ const NavStyles = styled.nav`
     }
 
     li {
-      text-align: center;
+      text-align: right;
       @media (min-width: 1024px) {
         text-align: left;
       }
@@ -162,7 +171,20 @@ const Nav = ({ children, cvUrl, blurBackground }) => {
       </button>
       <div className={`mobile ${menuState}`} ref={navBox}>
         <button type="button" onClick={() => toggleMenu()}>
-          {menuState === 'closed' ? 'Open' : 'Close'}
+          <svg
+            className="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
         </button>
         <ul className="nav">
           <li>
