@@ -1,102 +1,109 @@
-import React, {useEffect} from 'react'
+import { graphql, useStaticQuery } from 'gatsby'
+import React, { useState } from 'react'
+import styled from 'styled-components'
 import Header from './header'
-import styled, {keyframes} from 'styled-components'
 import SEO from './seo'
 
 const LayoutWrapper = styled.div`
-  margin-left: 1rem;
-  margin-right: 1rem;
-  margin-block-end: 4rem;
+  display: grid;
+  column-gap: var(--content-spacing);
+  margin-inline: 1rem;
 
-  @media (min-width: 768px) {
-    margin-left: 10rem;
-    margin-right: 10rem;
-  }
-`
-
-const fadeIn = keyframes`
-  from {
-    opacity: 0.0;
-    transform: scale(0);
-  }
-
-  to {
-    opacity: 0.5;
-    transform: scale(1);
-  }
-`
-
-const fadeOut = keyframes`
-  from {
-    opacity: 0.5;
-    transform: scale(1);
-  }
-
-  to {
-    opacity: 0.0;
-    transform: scale(0);
-  }
-`
-
-const ToTopButton = styled.button`
-  cursor: pointer;
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  opacity: 0;
-  transform: scale(0);
-  &.hideToTop {
-    animation: ${fadeOut} 0.5s ease-in-out forwards;
-  }
-  &.showToTop {
-    animation: ${fadeIn} 0.5s ease-in-out forwards;
-  }
-
-  margin-right: 0rem;
-  margin-bottom: 1rem;
-
-  font-weight: thin;
-  @media (min-width: 768px) {
-    margin-right: 5rem;
-  }
-`
-
-const Layout = ({children, site, categories, socials}) => {
-  const scrollToTop = () => {
-    window.scrollTo({top: 0, behavior: 'smooth'})
-  }
-  const handleScrolling = () => {
-    const toTopButton = document.getElementById('toTop')
-    if (window.scrollY > 50) {
-      toTopButton.classList.remove('hideToTop')
-      toTopButton.classList.add('showToTop')
-    } else if (toTopButton.classList.contains('showToTop') && window.scrollY <= 50) {
-      toTopButton.classList.remove('showToTop')
-      toTopButton.classList.add('hideToTop')
+  &.disabled {
+    main {
+      pointer-events: none;
+      filter: grayscale(75%);
     }
   }
-  useEffect(() => {
-    if (typeof window === 'undefined') return
-    window.addEventListener('scroll', handleScrolling)
-  })
+
+  @media (min-width: 1024px) {
+    margin-inline: clamp(1rem, 25%, 5rem);
+    max-height: 100vh;
+    overflow-y: hidden;
+    grid-template-rows: 1fr auto;
+    grid-template-columns: auto 1fr;
+
+    main {
+      padding-inline: var(--content-spacing);
+      /* height: 100%; */
+      overflow-y: auto;
+    }
+  }
+
+  @media (min-width: 1500px) {
+    margin-inline: clamp(1rem, 25%, 15rem);
+  }
+
+  header,
+  footer {
+    padding-inline: var(--content-spacing);
+  }
+`
+
+const Layout = ({ children }) => {
+  const { site } = useStaticQuery(graphql`
+    query {
+      site: sanitySiteSettings(_id: { regex: "/(drafts.|)siteSettings/" }) {
+        title
+        description
+        keywords
+        facebookUrl
+        instagramUrl
+        backgroundColor {
+          rgb {
+            r
+            g
+            b
+            a
+          }
+          hsl {
+            h
+            s
+            l
+            a
+          }
+        }
+        fontColor {
+          rgb {
+            r
+            g
+            b
+            a
+          }
+        }
+        cv {
+          asset {
+            url
+          }
+        }
+      }
+    }
+  `)
+
+  const [subtitle, setSubtitle] = useState(null)
+
+  const [blurBackground, setBlurBackground] = useState(false)
 
   return (
-    <LayoutWrapper>
-      <SEO title={site.title} description={site.description} keywords={site.keywords} />
-      <Header
-        siteTitle={site.title}
-        categories={categories}
-        socials={socials}
-        fontColor={site.fontColor}
+    <LayoutWrapper className={blurBackground ? 'disabled' : ''}>
+      <SEO
+        title={site.title}
+        subtitle={subtitle}
+        description={site.description}
+        keywords={site.keywords}
       />
-      <main>{children}</main>
-      <footer style={{display: 'flex', justifyContent: 'flex-end', opacity: '0.5', paddingTop: '2rem'}}>
-        Site by <a style={{marginLeft: '2px', marginRight: '2px'}} target='_blank' rel='noopener noreferrer' href='https://contact.mcphail.dev/'>McPhail.dev</a>&#169; {new Date().getFullYear()}
-      </footer>
-      <ToTopButton onClick={() => scrollToTop()} id='toTop'>
-        Back to Top
-        {/* <ToTopIcon /> */}
-      </ToTopButton>
+      <Header
+        title={site.title}
+        socials={{ instagramUrl: site.instagramUrl, facebookUrl: site.facebookUrl }}
+        blurBackground={setBlurBackground}
+        cvUrl={site.cv.asset.url}
+      />
+      <main className={blurBackground ? 'disabled' : ''}>
+        {React.Children.map(children, (child) => React.cloneElement(child, { setSubtitle }))}
+      </main>
+      {/* <footer>
+        <h3>Footer</h3>
+      </footer> */}
     </LayoutWrapper>
   )
 }

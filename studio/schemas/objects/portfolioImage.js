@@ -3,7 +3,7 @@ export default {
   type: 'image',
   title: 'Portfolio Image',
   options: {
-    hotspot: true
+    hotspot: true,
   },
   fields: [
     {
@@ -12,39 +12,39 @@ export default {
       of: [
         {
           type: 'reference',
-          to: [{type: 'medium'}]
-        }
+          to: [{ type: 'medium' }],
+        },
       ],
       title: 'Mediums',
-      validation: Rule =>
+      validation: (Rule) =>
         Rule.error('You have to choose a medium. Add a medium if none are available.').required(),
       options: {
         layout: 'tags',
-        isHighlighted: true
-      }
+        isHighlighted: true,
+      },
     },
     {
       name: 'dimensions',
       type: 'string',
       title: 'Dimensions',
       options: {
-        isHighlighted: true
-      }
+        isHighlighted: true,
+      },
     },
     {
       name: 'alt',
       type: 'string',
       title: 'Alternative text',
       description: 'Important for Google Search-ability and accessiblity (e.g. screen reader)',
-      validation: Rule => Rule.error('You have to fill out the alternative text.').required(),
+      validation: (Rule) => Rule.error('You have to fill out the alternative text.').required(),
       options: {
-        isHighlighted: true
-      }
-    }
+        isHighlighted: true,
+      },
+    },
   ],
   preview: {
     select: {
-      imageUrl: 'asset.url'
-    }
-  }
+      imageUrl: 'asset.url',
+    },
+  },
 }

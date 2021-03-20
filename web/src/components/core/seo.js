@@ -1,99 +1,57 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import Helmet from 'react-helmet'
-import {StaticQuery, graphql} from 'gatsby'
-import {imageUrlFor} from '../../lib/image-url'
-import {buildImageObj} from '../../lib/helpers'
+import { buildImageObj } from '../../lib/helpers'
+import { imageUrlFor } from '../../lib/image-url'
 
-function SEO ({description, lang, meta, keywords, title, image}) {
+const SEO = ({ title, subtitle, description, meta, keywords, image }) => {
+  const metaImage = image && image.asset ? imageUrlFor(buildImageObj(image)).width(1200).url() : ''
   return (
-    <StaticQuery
-      query={detailsQuery}
-      render={(data) => {
-        const metaDescription = description || (data.site && data.site.description) || ''
-        const siteTitle = (data.site && data.site.title) || ''
-        const siteAuthor = (data.site && data.site.author && data.site.author.name) || ''
-        const metaImage =
-          image && image.asset ? imageUrlFor(buildImageObj(image)).width(1200).url() : ''
-
-        return (
-          <Helmet
-            htmlAttributes={{lang}}
-            title={title}
-            titleTemplate={title === siteTitle ? '%s' : `%s | ${siteTitle}`}
-            meta={[
-              {
-                name: 'description',
-                content: metaDescription
-              },
-              {
-                property: 'og:title',
-                content: title
-              },
-              {
-                property: 'og:description',
-                content: metaDescription
-              },
-              {
-                property: 'og:type',
-                content: 'website'
-              },
-              {
-                property: 'og:image',
-                content: metaImage
+    <Helmet
+      htmlAttributes={{ lang: 'en' }}
+      title={title}
+      titleTemplate={subtitle ? `%s | ${subtitle}` : '%s'}
+      meta={[
+        {
+          name: 'description',
+          content: description || '',
+        },
+        {
+          property: 'og:title',
+          content: subtitle ? `${title} | ${subtitle}` : title,
+        },
+        {
+          property: 'og:description',
+          content: description || '',
+        },
+        {
+          property: 'og:type',
+          content: 'website',
+        },
+        {
+          property: 'og:image',
+          content: metaImage,
+        },
+      ]
+        .concat(
+          keywords && keywords.length > 0
+            ? {
+                name: 'keywords',
+                content: keywords.join(', '),
               }
-            ]
-              .concat(
-                keywords && keywords.length > 0
-                  ? {
-                    name: 'keywords',
-                    content: keywords.join(', ')
-                  }
-                  : []
-              )
-              .concat(meta)}
-          >
-            <style>
-              @import
-              url('https://fonts.googleapis.com/css2?family=Inconsolata&family=Montserrat&display=swap');
-              @import "~react-image-gallery/styles/css/image-gallery.css"
-            </style>
-            <link rel='apple-touch-icon' sizes='180x180' href='/apple-touch-icon.png' />
-            <link rel='icon' type='image/png' sizes='32x32' href='/favicon-32x32.png' />
-            <link rel='icon' type='image/png' sizes='16x16' href='/favicon-16x16.png' />
-            <link rel='manifest' href='/site.webmanifest' />
-          </Helmet>
+            : []
         )
-      }}
-    />
+        .concat(meta || [])}
+    >
+      <style>
+        @import
+        url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Roboto:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap');
+      </style>
+      <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+      <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+      <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+      <link rel="manifest" href="/site.webmanifest" />
+    </Helmet>
   )
 }
 
-SEO.defaultProps = {
-  lang: 'en',
-  meta: [],
-  keywords: []
-}
-
-SEO.propTypes = {
-  description: PropTypes.string,
-  lang: PropTypes.string,
-  meta: PropTypes.array,
-  keywords: PropTypes.arrayOf(PropTypes.string),
-  title: PropTypes.string.isRequired
-}
-
 export default SEO
-
-const detailsQuery = graphql`
-  query DefaultSEOQuery {
-    site: sanitySiteSettings(_id: {eq: "siteSettings"}) {
-      title
-      description
-      keywords
-      author {
-        name
-      }
-    }
-  }
-`

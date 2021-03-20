@@ -1,13 +1,15 @@
 import { graphql } from 'gatsby'
 import React from 'react'
-import styled from 'styled-components'
 import ImageGallery from '../components/ImageGallery'
 
 export const query = graphql`
-  query {
+  query($slug: String!) {
+    sanityCategory(slug: { current: { eq: $slug } }) {
+      title
+    }
     allSanityPortfolioEntry(
       sort: { fields: [publishedAt], order: DESC }
-      filter: { slug: { current: { ne: null } } }
+      filter: { slug: { current: { ne: null } }, category: { slug: { current: { eq: $slug } } } }
     ) {
       edges {
         node {
@@ -35,17 +37,13 @@ export const query = graphql`
     }
   }
 `
-const IndexPage = ({
+
+const CategoryTemplate = ({
   data: {
     allSanityPortfolioEntry: { edges: posts },
+    sanityCategory: { title },
   },
   setSubtitle,
-}) => (
-  <IndexStyles>
-    <ImageGallery posts={posts} setSubtitle={setSubtitle} />
-  </IndexStyles>
-)
+}) => <ImageGallery posts={posts} title={title} setSubtitle={setSubtitle} />
 
-const IndexStyles = styled.div``
-
-export default IndexPage
+export default CategoryTemplate

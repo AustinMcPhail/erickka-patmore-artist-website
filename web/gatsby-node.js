@@ -1,72 +1,25 @@
-const {isFuture} = require('date-fns')
+const { isFuture, parseISO } = require('date-fns')
 /**
  * Implement Gatsby's Node APIs in this file.
  *
  * See: https://www.gatsbyjs.org/docs/node-apis/
  */
 
-// const {format} = require('date-fns')
-async function createPages (graphql, actions) {
-  const {createPage} = actions
-  const result = await graphql(`
-  fragment MainImage on SanityMainImage {
-    crop {
-      _key
-      _type
-      top
-      bottom
-      left
-      right
-    }
-    hotspot {
-      _key
-      _type
-      x
-      y
-      height
-      width
-    }
-    asset {
-      _id
-    }
-  }
-    {
-      categories: allSanityCategory(filter: {slug: {current: {ne: null}}, enabled: {ne: false}}) {
-        edges {
-          node {
-            title
-            slug {
-              current
-            }
-          }
-        }
-      }
-      posts: allSanityPortfolioEntry(
-        sort: {fields: [publishedAt], order: DESC}
-        filter: {slug: {current: {ne: null}}}
-      ) {
+const JOURNAL_PAGE_SIZE = 4
+
+async function postPages({ graphql, actions }) {
+  console.log('\nCreating Post Pages\n')
+
+  const {
+    data: {
+      allSanityPortfolioEntry: { edges: posts },
+    },
+  } = await graphql(`
+    query {
+      allSanityPortfolioEntry(filter: { slug: { current: { ne: null } } }) {
         edges {
           node {
             _id
-            slug {
-              current
-            }
-          }
-        }
-      }
-      journalPosts: allSanityPost(
-        sort: {fields: [publishedAt], order: ASC}
-      ) {
-        edges {
-          node {
-            _id
-            publishedAt
-            mainImage {
-              ...MainImage
-              alt
-            }
-            title
-            _rawExcerpt
             slug {
               current
             }
@@ -75,55 +28,121 @@ async function createPages (graphql, actions) {
       }
     }
   `)
-  if (result.errors) throw result.errors
-
-  const categoryEdges = (result.data.categories || {}).edges || []
-  categoryEdges.forEach((edge, index) => {
+  if (!posts) return
+  posts.forEach((edge, index) => {
     const {
-      slug: {current}
+      _id,
+      slug: { current },
     } = edge.node
-    const path = `portfolio/${current}`
-    createPage({
+    console.log(`Creating Post page at 'gallery/${current}'`)
+    const path = `gallery/${current}`
+    actions.createPage({
       path,
-      component: require.resolve('./src/templates/portfolio/category.js'),
-      context: {slug: current}
+      component: require.resolve('./src/templates/entry.js'),
+      context: { _id },
+    })
+  })
+  console.log('\nFinished creating Post Pages\n\n')
+}
+
+async function categoryPages({ graphql, actions }) {
+  console.log('\nCreating Category Pages\n')
+
+  const {
+    data: {
+      allSanityCategory: { edges: categories },
+    },
+  } = await graphql(`
+    query {
+      allSanityCategory(filter: { slug: { current: { ne: null } }, enabled: { ne: false } }) {
+        edges {
+          node {
+            title
+            slug {
+              current
+            }
+          }
+        }
+      }
+    }
+  `)
+  if (!categories) return
+  categories.forEach((edge, index) => {
+    const {
+      slug: { current },
+    } = edge.node
+    console.log(`Creating Category page at 'gallery/${current}'`)
+    const path = `gallery/${current}`
+    actions.createPage({
+      path,
+      component: require.resolve('./src/templates/category.js'),
+      context: { slug: current },
+    })
+  })
+  console.log('\nFinished creating Category Pages\n\n')
+}
+
+async function journalPages({ graphql, actions }) {
+  console.log('\nCreating Journal Pages\n')
+
+  const {
+    data: {
+      allSanityPost: { edges: allPosts },
+    },
+  } = await graphql(`
+    query {
+      allSanityPost(sort: { fields: [publishedAt], order: ASC }) {
+        edges {
+          node {
+            _id
+            publishedAt
+            slug {
+              current
+            }
+          }
+        }
+      }
+    }
+  `)
+  const posts = allPosts.filter((e) => !isFuture(parseISO(e.node.publishedAt)))
+  const totalCount = posts.length
+  const numberOfPages = Math.ceil(totalCount / JOURNAL_PAGE_SIZE)
+  if (!allPosts) return
+
+  Array.from({ length: numberOfPages }).forEach((_, i) => {
+    actions.createPage({
+      path: i === 0 ? '/journal' : `/journal/${i}`,
+      component: require.resolve('./src/templates/journalPage.js'),
+      context: {
+        skip: i * JOURNAL_PAGE_SIZE,
+        currentPage: i,
+        pageSize: JOURNAL_PAGE_SIZE,
+      },
     })
   })
 
-  const postEdges = (result.data.posts || {}).edges || []
-  postEdges.forEach((edge, index) => {
-    const {
-      _id,
-      slug: {current}
-    } = edge.node
-    const path = `portfolio/${current}`
-    createPage({
-      path,
-      component: require.resolve('./src/templates/portfolio/entry.js'),
-      context: {_id}
-    })
-  })
-
-  let journalEdges = (result.data.journalPosts || {}).edges || []
-  journalEdges = journalEdges.filter(e => !isFuture(e.node.publishedAt))
-  journalEdges.forEach((edge, i) => {
-    const {
-      _id,
-      slug: {current}
-    } = edge.node
+  posts.forEach((edge, i) => {
+    const { current } = edge.node.slug
+    const { _id } = edge.node
+    console.log(`Creating Journal page at 'journal/${current}'`)
     const path = `journal/${current}`
-    createPage({
+    actions.createPage({
       path,
       component: require.resolve('./src/templates/journalPost.js'),
       context: {
-        prev_id: i === 0 ? null : journalEdges[i - 1].node._id,
+        prev_id: i === 0 ? null : posts[i - 1].node._id,
         curr_id: _id,
-        next_id: i === (journalEdges.length - 1) ? null : journalEdges[i + 1].node._id
-      }
+        next_id: i === posts.length - 1 ? null : posts[i + 1].node._id,
+      },
     })
   })
+  console.log('\nFinished creating Journal Pages\n\n')
 }
 
-exports.createPages = async ({graphql, actions}) => {
-  await createPages(graphql, actions)
+exports.createPages = async (gqa) => {
+  // 1. Create pages for Posts
+  // 2. Create pages for Categories
+  // 2. Create pages for Journal Entries
+  await Promise.all([postPages(gqa), categoryPages(gqa), journalPages(gqa)])
+  // await createPages(graphql, actions)
 }

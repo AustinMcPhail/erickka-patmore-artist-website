@@ -1,13 +1,11 @@
 import React from 'react'
-import {graphql} from 'gatsby'
-import {ThemeProvider} from 'styled-components'
-import {GlobalStyle, theme} from '../lib/styled'
+import { graphql } from 'gatsby'
 import GraphQLErrorList from '../components/graphql-error-list'
 import Layout from '../components/core/layout'
 
 export const query = graphql`
   query NotFoundPageQuery {
-    site: sanitySiteSettings(_id: {regex: "/(drafts.|)siteSettings/"}) {
+    site: sanitySiteSettings(_id: { regex: "/(drafts.|)siteSettings/" }) {
       title
       description
       keywords
@@ -39,7 +37,7 @@ export const query = graphql`
   }
 `
 const NotFoundPage = (props) => {
-  const {data, errors} = props
+  const { data, errors } = props
 
   if (errors) {
     return (
@@ -49,7 +47,7 @@ const NotFoundPage = (props) => {
     )
   }
 
-  const site = (data || {}).site
+  const { site } = data || {}
 
   if (!site) {
     throw new Error(
@@ -59,17 +57,14 @@ const NotFoundPage = (props) => {
 
   const socials = {
     facebookUrl: site.facebookUrl,
-    instagramUrl: site.instagramUrl
+    instagramUrl: site.instagramUrl,
   }
 
   return (
-    <ThemeProvider theme={theme(site)}>
-      <GlobalStyle />
-      <Layout categories={[]} socials={socials} site={site}>
-        <h1>NOT FOUND</h1>
-        <p>You just hit a route that doesn&#39;t exist... the sadness.</p>
-      </Layout>
-    </ThemeProvider>
+    <>
+      <h1>NOT FOUND</h1>
+      <p>You just hit a route that doesn&#39;t exist... the sadness.</p>
+    </>
   )
 }
 

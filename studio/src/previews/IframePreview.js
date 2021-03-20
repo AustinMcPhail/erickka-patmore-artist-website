@@ -1,7 +1,7 @@
 /* eslint-disable react/no-multi-comp, react/no-did-mount-set-state */
-import React from 'react'
-import PropTypes from 'prop-types'
 import { format } from 'date-fns'
+import PropTypes from 'prop-types'
+import React from 'react'
 import styles from './IframePreview.module.css'
 
 /**
@@ -16,12 +16,12 @@ const assemblePostUrl = ({ displayed, options }) => {
     console.warn('Missing slug or previewURL', { slug, previewURL })
     return ''
   }
-  const dateSegment = format(publishedAt, 'YYYY/MM')
+  const dateSegment = format(parseISO(publishedAt), 'YYYY/MM')
   const path = `/${dateSegment}/${slug.current}/`
   return `${previewURL}/blog${path}`
 }
 
-const IframePreview = props => {
+const IframePreview = (props) => {
   const { options } = props
   const { displayed } = props.document
 
@@ -46,18 +46,18 @@ const IframePreview = props => {
   return (
     <div className={styles.componentWrapper}>
       <div className={styles.iframeContainer}>
-        <iframe src={url} frameBorder={'0'} />
+        <iframe src={url} frameBorder="0" />
       </div>
     </div>
   )
 }
 
 IframePreview.propTypes = {
-  document: PropTypes.object // eslint-disable-line react/forbid-prop-types
+  document: PropTypes.object, // eslint-disable-line react/forbid-prop-types
 }
 
 IframePreview.defaultProps = {
-  document: null
+  document: null,
 }
 
 export default IframePreview

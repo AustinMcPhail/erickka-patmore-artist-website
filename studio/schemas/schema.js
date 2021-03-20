@@ -40,9 +40,9 @@ export default createSchema({
     excerptPortableText,
     portfolioEntry,
     portfolioImage,
-    medium
+    medium,
 
     // When added to this list, object types can be used as
     // { type: 'typename' } in other document schemas
-  ])
+  ]),
 })
