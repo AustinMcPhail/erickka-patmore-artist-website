@@ -58,7 +58,6 @@ const JournalPage = ({ posts, setSubtitle, totalCount, pageContext }) => {
 
   return (
     <>
-      <Pagination totalCount={totalCount} {...pageContext} baseUrl="/journal" />
       <JournalStyles>
         {posts &&
           posts.map((p, i) => (
@@ -83,6 +82,7 @@ const JournalPage = ({ posts, setSubtitle, totalCount, pageContext }) => {
             </div>
           ))}
       </JournalStyles>
+      <Pagination totalCount={totalCount} {...pageContext} baseUrl="/journal" />
     </>
   )
 }
