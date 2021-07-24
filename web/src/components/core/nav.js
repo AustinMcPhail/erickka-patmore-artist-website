@@ -197,11 +197,11 @@ const Nav = ({ children, cvUrl, blurBackground }) => {
               About
             </Link>
           </li>
-          <li>
+          {/* <li>
             <Link className="btn" to="/instagram" activeClassName="active">
               Instagram
             </Link>
-          </li>
+          </li> */}
           {cvUrl && (
             <li>
               <a
@@ -241,11 +241,11 @@ const Nav = ({ children, cvUrl, blurBackground }) => {
             About
           </Link>
         </li>
-        <li>
-          <Link className="btn" to="/instagram" activeClassName="active">
+        {/* <li>
+          <Link className="btn" to="/instagram" activeClassName="active">ß
             Instagram
           </Link>
-        </li>
+        </li> */}
         {cvUrl && (
           <li>
             <a
