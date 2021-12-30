@@ -11,28 +11,6 @@ export const query = graphql`
       keywords
       facebookUrl
       instagramUrl
-      backgroundColor {
-        rgb {
-          r
-          g
-          b
-          a
-        }
-        hsl {
-          h
-          s
-          l
-          a
-        }
-      }
-      fontColor {
-        rgb {
-          r
-          g
-          b
-          a
-        }
-      }
     }
   }
 `
@@ -55,10 +33,10 @@ const NotFoundPage = (props) => {
     )
   }
 
-  const socials = {
-    facebookUrl: site.facebookUrl,
-    instagramUrl: site.instagramUrl,
-  }
+  // const socials = {
+  //   facebookUrl: site.facebookUrl,
+  //   instagramUrl: site.instagramUrl,
+  // }
 
   return (
     <>

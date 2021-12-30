@@ -18,6 +18,7 @@ export const query = graphql`
         }
         name
       }
+      storeUrl
       cv {
         asset {
           url

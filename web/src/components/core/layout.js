@@ -49,28 +49,7 @@ const Layout = ({ children }) => {
         keywords
         facebookUrl
         instagramUrl
-        backgroundColor {
-          rgb {
-            r
-            g
-            b
-            a
-          }
-          hsl {
-            h
-            s
-            l
-            a
-          }
-        }
-        fontColor {
-          rgb {
-            r
-            g
-            b
-            a
-          }
-        }
+        storeUrl
         cv {
           asset {
             url
@@ -97,6 +76,7 @@ const Layout = ({ children }) => {
         socials={{ instagramUrl: site.instagramUrl, facebookUrl: site.facebookUrl }}
         blurBackground={setBlurBackground}
         cvUrl={site.cv.asset.url}
+        storeUrl={site.storeUrl}
       />
       <main className={blurBackground ? 'disabled' : ''}>
         {React.Children.map(children, (child) => React.cloneElement(child, { setSubtitle }))}
