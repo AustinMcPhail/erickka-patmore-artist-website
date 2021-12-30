@@ -26,18 +26,6 @@ export default {
       },
     },
     {
-      name: 'backgroundColor',
-      type: 'color',
-      title: 'Choose a Background Color',
-      description: 'The background color of your site.',
-    },
-    {
-      name: 'fontColor',
-      type: 'color',
-      title: 'Choose a Font Color',
-      description: 'The main font color of your site.',
-    },
-    {
       name: 'facebookUrl',
       type: 'string',
       title: 'Facebook Url',
@@ -48,6 +36,12 @@ export default {
       type: 'string',
       title: 'Instagram Url',
       description: 'The link to your Instagram feed.',
+    },
+    {
+      name: 'storeUrl',
+      type: 'string',
+      title: 'Store Url',
+      description: 'The link to your Store.',
     },
     {
       name: 'cv',

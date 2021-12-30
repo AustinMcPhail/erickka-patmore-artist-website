@@ -116,15 +116,7 @@ export const GlobalStyle = createGlobalStyle`
 
 export const theme = (site) => ({
   secondaryFont: 'Inconsolata',
-  fontColor: site.fontColor
-    ? `rgba(${site.fontColor.rgb.r}, ${site.fontColor.rgb.g}, ${site.fontColor.rgb.b}, ${site.fontColor.rgb.a})`
-    : '#2f2f2f',
-  backgroundColor: site.backgroundColor
-    ? `hsla(${site.backgroundColor.hsl.h}, ${site.backgroundColor.hsl.s * 100}%, ${
-        site.backgroundColor.hsl.l * 100
-      }%, ${site.backgroundColor.hsl.a})`
-    : 'hsla(210, 21%, 95%, 1)',
-  backgroundHsl: site.backgroundColor
-    ? site.backgroundColor.hsl
-    : { h: 210, s: 0.21, l: 0.95, a: 1 },
+  fontColor: '#2f2f2f',
+  backgroundColor: 'hsla(210, 21%, 95%, 1)',
+  backgroundHsl: { h: 210, s: 0.21, l: 0.95, a: 1 },
 })

@@ -23,7 +23,7 @@ const ImageGallery = ({ posts, title, setSubtitle }) => {
               <Img
                 style={{ maxHeight: '75vh' }}
                 imgStyle={{ objectFit: 'contain' }}
-                fluid={p.portfolioImage.asset.fluid}
+                fluid={p.portfolioImage.asset?.fluid}
               />
             </Link>
           </figure>

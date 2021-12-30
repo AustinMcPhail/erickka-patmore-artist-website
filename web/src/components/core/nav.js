@@ -107,7 +107,7 @@ const NavStyles = styled.nav`
   }
 `
 
-const Nav = ({ children, cvUrl, blurBackground }) => {
+const Nav = ({ children, cvUrl, storeUrl, blurBackground }) => {
   const [menuState, setMenuState] = useState('closed')
 
   const navBox = useRef()
@@ -197,6 +197,11 @@ const Nav = ({ children, cvUrl, blurBackground }) => {
               About
             </Link>
           </li>
+          <li>
+            <Link className="btn" to={storeUrl} target="_blank">
+              Store
+            </Link>
+          </li>
           {/* <li>
             <Link className="btn" to="/instagram" activeClassName="active">
               Instagram
@@ -239,6 +244,11 @@ const Nav = ({ children, cvUrl, blurBackground }) => {
         <li>
           <Link className="btn" to="/about" activeClassName="active">
             About
+          </Link>
+        </li>
+        <li>
+          <Link className="btn" target="_blank" to={storeUrl}>
+            Store
           </Link>
         </li>
         {/* <li>
