@@ -26,7 +26,7 @@ export const JournalPost = ({ prev, post, next }) => {
   return (
     <PostStyles>
       {post?.mainImage?.asset && (
-        <Img alt={post.mainImage.alt} fluid={post.mainImage.asset.fluid} />
+        <Img alt={post.mainImage.alt} fluid={post.mainImage.asset?.fluid} />
       )}
       {post?.mainImage?.caption && (
         <p className="caption">
