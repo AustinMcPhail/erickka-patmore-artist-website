@@ -36,7 +36,7 @@ const Entry = ({ entry, setSubtitle }) => {
       <Img
         style={{ maxHeight: '75vh' }}
         imgStyle={{ objectFit: 'contain' }}
-        fluid={entry.portfolioImage.asset.fluid}
+        fluid={entry.portfolioImage.asset?.fluid}
         alt={entry.portfolioImage.alt}
       />
       <section>

@@ -64,7 +64,7 @@ const JournalPage = ({ posts, setSubtitle, totalCount, pageContext }) => {
             <div className="post" key={`post_${i}`}>
               {p.mainImage && (
                 <Link to={`/journal/${p.slug.current}`}>
-                  <Img alt={p.mainImage.alt} fluid={p.mainImage.asset.fluid} />
+                  <Img alt={p.mainImage.alt} fluid={p.mainImage.asset?.fluid} />
                 </Link>
               )}
               <section>

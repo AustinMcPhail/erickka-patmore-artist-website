@@ -61,7 +61,7 @@ const ReachOutPage = ({ data: { site } }) => {
   return (
     <AboutStyles>
       <div className="statement">
-        <Img alt={site.author.image.alt} fluid={site.author.image.asset.fluid} />
+        <Img alt={site.author.image.alt} fluid={site.author.image.asset?.fluid} />
         <div className="text">
           {site._rawStatement && <PortableText blocks={site._rawStatement} />}
         </div>
