@@ -7,7 +7,7 @@ export const query = graphql`
   query {
     allSanityPortfolioEntry(
       sort: { fields: [publishedAt], order: DESC }
-      filter: { slug: { current: { ne: null } } }
+      filter: { slug: { current: { ne: null } },  showOnHome: { eq: true } }
     ) {
       edges {
         node {
