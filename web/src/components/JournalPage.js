@@ -17,7 +17,7 @@ const JournalStyles = styled.div`
   }
 
   .post {
-    .gatsby-image-wrapper {
+    .image-wrapper {
       max-height: clamp(100px, 165px, 400px);
     }
 

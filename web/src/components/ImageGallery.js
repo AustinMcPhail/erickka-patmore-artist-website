@@ -8,7 +8,6 @@ const NewImageGallery = ({ posts, title, setSubtitle }) => {
   useEffect(() => {
     setSubtitle(title)
   }, [title, setSubtitle])
-  console.log({posts})
   return (
     <GalleryStyles>
       {posts

@@ -1,5 +1,5 @@
 import { graphql } from "gatsby";
-import SanityImage from "gatsby-plugin-sanity-image"
+import SanityImage from "gatsby-plugin-sanity-image";
 import React from "react";
 import styled from "styled-components";
 import PortableText from "../components/portableText";
@@ -26,10 +26,14 @@ export const query = graphql`
 
 const AboutStyles = styled.div`
   .statement {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-rows: 1fr auto;
+    grid-template-columns: 1fr;
 
-    align-items: center;
+    @media (min-width: 481px) {
+      grid-template-columns: 1fr 4fr;
+      grid-template-rows: unset;
+    }
 
     gap: calc(2 * var(--content-spacing));
 
@@ -39,12 +43,8 @@ const AboutStyles = styled.div`
       }
     }
 
-    @media (min-width: 1024px) {
-      flex-direction: row;
-    }
-
-    .gatsby-image-wrapper {
-      width: 100%;
+    .image-wrapper {
+      height: 100%;
 
       @media (min-width: 1024px) {
         height: 100vh;
@@ -57,15 +57,16 @@ const ReachOutPage = ({ data: { site } }) => {
   return (
     <AboutStyles>
       <div className="statement">
-        <SanityImage
-          {...site.author.image}
-          width={400}
-          style={{
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-          }}
-        />
+        <div className="image-wrapper">
+          <SanityImage
+            {...site.author.image}
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+            }}
+          />
+        </div>
         <div className="text">
           {site._rawStatement && <PortableText blocks={site._rawStatement} />}
         </div>
