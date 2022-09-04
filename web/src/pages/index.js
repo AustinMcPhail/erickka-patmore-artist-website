@@ -18,16 +18,11 @@ export const query = graphql`
             current
           }
           portfolioImage {
-            alt
             dimensions
             mediums {
               name
             }
-            asset {
-              fluid(maxWidth: 400) {
-                ...GatsbySanityImageFluid
-              }
-            }
+            ...ImageWithPreview
           }
           _rawExcerpt
         }

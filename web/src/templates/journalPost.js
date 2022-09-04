@@ -20,12 +20,7 @@ export const query = graphql`
       _rawExcerpt
       _rawBody
       mainImage {
-        asset {
-          fluid(maxWidth: 1000, maxHeight: 750) {
-            ...GatsbySanityImageFluid
-          }
-        }
-        alt
+        ...ImageWithPreview
       }
       authors {
         author {

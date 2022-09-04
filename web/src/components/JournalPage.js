@@ -1,10 +1,10 @@
-import { format, parseISO } from 'date-fns'
-import { Link } from 'gatsby'
-import Img from 'gatsby-image'
-import React, { useEffect } from 'react'
-import styled from 'styled-components'
-import Pagination from './Pagination'
-import PortableText from './portableText'
+import { format, parseISO } from "date-fns";
+import { Link } from "gatsby";
+import SanityImage from "gatsby-plugin-sanity-image"
+import React, { useEffect } from "react";
+import styled from "styled-components";
+import Pagination from "./Pagination";
+import PortableText from "./portableText";
 
 const JournalStyles = styled.div`
   margin-top: var(--content-spacing);
@@ -49,12 +49,12 @@ const JournalStyles = styled.div`
   div.read {
     text-align: right;
   }
-`
+`;
 
 const JournalPage = ({ posts, setSubtitle, totalCount, pageContext }) => {
   useEffect(() => {
-    setSubtitle('Journal')
-  }, [setSubtitle])
+    setSubtitle("Journal");
+  }, [setSubtitle]);
 
   return (
     <>
@@ -64,13 +64,21 @@ const JournalPage = ({ posts, setSubtitle, totalCount, pageContext }) => {
             <div className="post" key={`post_${i}`}>
               {p.mainImage && (
                 <Link to={`/journal/${p.slug.current}`}>
-                  <Img alt={p.mainImage.alt} fluid={p.mainImage.asset?.fluid} />
+                  <SanityImage
+                    {...p.mainImage}
+                    width={400}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                    }}
+                  />
                 </Link>
               )}
               <section>
                 <div className="title">
                   <h2>{p.title}</h2>
-                  <small>{format(parseISO(p.publishedAt), 'dd·MM·yyyy')}</small>
+                  <small>{format(parseISO(p.publishedAt), "dd·MM·yyyy")}</small>
                 </div>
                 {p._rawExcerpt && <PortableText blocks={p._rawExcerpt} />}
                 <div className="read">
@@ -84,7 +92,7 @@ const JournalPage = ({ posts, setSubtitle, totalCount, pageContext }) => {
       </JournalStyles>
       <Pagination totalCount={totalCount} {...pageContext} baseUrl="/journal" />
     </>
-  )
-}
+  );
+};
 
-export default JournalPage
+export default JournalPage;

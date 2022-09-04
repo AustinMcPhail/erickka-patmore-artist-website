@@ -1,8 +1,8 @@
-import { graphql } from 'gatsby'
-import Img from 'gatsby-image'
-import React from 'react'
-import styled from 'styled-components'
-import PortableText from '../components/portableText'
+import { graphql } from "gatsby";
+import SanityImage from "gatsby-plugin-sanity-image"
+import React from "react";
+import styled from "styled-components";
+import PortableText from "../components/portableText";
 
 export const query = graphql`
   query AboutPageQuery {
@@ -10,11 +10,7 @@ export const query = graphql`
       _rawStatement
       author {
         image {
-          asset {
-            fluid(maxWidth: 750, maxHeight: 750) {
-              ...GatsbySanityImageFluid
-            }
-          }
+          ...ImageWithPreview
         }
         name
       }
@@ -26,7 +22,7 @@ export const query = graphql`
       }
     }
   }
-`
+`;
 
 const AboutStyles = styled.div`
   .statement {
@@ -55,19 +51,27 @@ const AboutStyles = styled.div`
       }
     }
   }
-`
+`;
 
 const ReachOutPage = ({ data: { site } }) => {
   return (
     <AboutStyles>
       <div className="statement">
-        <Img alt={site.author.image.alt} fluid={site.author.image.asset?.fluid} />
+        <SanityImage
+          {...site.author.image}
+          width={400}
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+          }}
+        />
         <div className="text">
           {site._rawStatement && <PortableText blocks={site._rawStatement} />}
         </div>
       </div>
     </AboutStyles>
-  )
-}
+  );
+};
 
-export default ReachOutPage
+export default ReachOutPage;

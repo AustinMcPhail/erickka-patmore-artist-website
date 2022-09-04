@@ -2,7 +2,7 @@ import { graphql, useStaticQuery } from 'gatsby'
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import Header from './header'
-import SEO from './seo'
+import Seo from './seo'
 
 const LayoutWrapper = styled.div`
   display: grid;
@@ -65,7 +65,7 @@ const Layout = ({ children }) => {
 
   return (
     <LayoutWrapper className={blurBackground ? 'disabled' : ''}>
-      <SEO
+      <Seo
         title={site.title}
         subtitle={subtitle}
         description={site.description}
