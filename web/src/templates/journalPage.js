@@ -23,12 +23,7 @@ export const query = graphql`
             current
           }
           mainImage {
-            asset {
-              fluid(maxWidth: 400) {
-                ...GatsbySanityImageFluid
-              }
-            }
-            alt
+            ...ImageWithPreview
           }
         }
       }

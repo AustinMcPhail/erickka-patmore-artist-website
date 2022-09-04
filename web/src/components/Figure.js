@@ -1,16 +1,23 @@
-import React from 'react'
-import Img from 'gatsby-image'
-import { getFluidGatsbyImage } from 'gatsby-source-sanity'
-import clientConfig from '../../client-config'
+import React from "react";
+import SanityImage from "gatsby-plugin-sanity-image"
 
-export default ({ node }) => {
-  if (!node || !node.asset || !node.asset._id) {
-    return null
+const Fig = ({ node }) => {
+  if (!node || !node.asset) {
+    return null;
   }
-  const fluidProps = getFluidGatsbyImage(node.asset._id, { maxWidth: 675 }, clientConfig.sanity)
+
   return (
     <figure>
-      <Img fluid={fluidProps} alt={node.alt} />
+      <SanityImage
+        {...node}
+        width={500}
+        style={{
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+        }}
+      />
     </figure>
-  )
-}
+  );
+};
+export default Fig;

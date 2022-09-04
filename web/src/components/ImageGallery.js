@@ -1,14 +1,13 @@
 import { isFuture, parseISO } from 'date-fns'
 import { Link } from 'gatsby'
-import Img from 'gatsby-image'
+import SanityImage from 'gatsby-plugin-sanity-image'
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
 
-const ImageGallery = ({ posts, title, setSubtitle }) => {
+const NewImageGallery = ({ posts, title, setSubtitle }) => {
   useEffect(() => {
     setSubtitle(title)
   }, [title, setSubtitle])
-
   return (
     <GalleryStyles>
       {posts
@@ -20,10 +19,15 @@ const ImageGallery = ({ posts, title, setSubtitle }) => {
               style={{ maxHeight: '100%' }}
               to={`/gallery/${p.slug.current}`}
             >
-              <Img
-                style={{ maxHeight: '75vh' }}
-                imgStyle={{ objectFit: 'contain' }}
-                fluid={p.portfolioImage.asset?.fluid}
+              <SanityImage
+                {...p.portfolioImage}
+                width={400}
+                options={{}}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                }}
               />
             </Link>
           </figure>
@@ -62,4 +66,4 @@ const GalleryStyles = styled.div`
   }
 `
 
-export default ImageGallery
+export default NewImageGallery

@@ -1,10 +1,10 @@
-import { format, parseISO } from 'date-fns'
-import Img from 'gatsby-image'
-import React from 'react'
-import styled from 'styled-components'
-import Pagination from './Pagination'
-import PortableText from './portableText'
-import Share from './Share'
+import { format, parseISO } from "date-fns";
+import SanityImage from "gatsby-plugin-sanity-image"
+import React from "react";
+import styled from "styled-components";
+import Pagination from "./Pagination";
+import PortableText from "./portableText";
+import Share from "./Share";
 
 const PostStyles = styled.article`
   display: flex;
@@ -17,16 +17,24 @@ const PostStyles = styled.article`
       word-break: break-all;
     }
   }
-  .gatsby-image-wrapper {
+  .image-wrapper {
     max-height: clamp(400px, 40vh, 100%);
   }
-`
+`;
 
 export const JournalPost = ({ prev, post, next }) => {
   return (
     <PostStyles>
       {post?.mainImage?.asset && (
-        <Img alt={post.mainImage.alt} fluid={post.mainImage.asset?.fluid} />
+        <SanityImage
+          {...post.mainImage}
+          width={400}
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+          }}
+        />
       )}
       {post?.mainImage?.caption && (
         <p className="caption">
@@ -35,7 +43,7 @@ export const JournalPost = ({ prev, post, next }) => {
       )}
       <div className="title">
         <h2 className="title">{post.title}</h2>
-        <small>{format(parseISO(post.publishedAt), 'dd·MM·yyyy')}</small>
+        <small>{format(parseISO(post.publishedAt), "dd·MM·yyyy")}</small>
       </div>
       {post._rawBody && <PortableText blocks={post._rawBody} />}
       <Share />
@@ -47,5 +55,5 @@ export const JournalPost = ({ prev, post, next }) => {
         prevUrl={next?.slug.current}
       />
     </PostStyles>
-  )
-}
+  );
+};
