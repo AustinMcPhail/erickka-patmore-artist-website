@@ -198,6 +198,11 @@ const Nav = ({ children, cvUrl, storeUrl, blurBackground }) => {
             </Link>
           </li>
           <li>
+            <Link className="btn" to="/contact" activeClassName="active">
+              Contact
+            </Link>
+          </li>
+          <li>
             <Link className="btn" to={storeUrl} target="_blank">
               Store
             </Link>
@@ -244,6 +249,11 @@ const Nav = ({ children, cvUrl, storeUrl, blurBackground }) => {
         <li>
           <Link className="btn" to="/about" activeClassName="active">
             About
+          </Link>
+        </li>
+        <li>
+          <Link className="btn" to="/contact" activeClassName="active">
+            Contact
           </Link>
         </li>
         <li>
