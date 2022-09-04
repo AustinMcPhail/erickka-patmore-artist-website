@@ -70,6 +70,7 @@ const JournalPage = ({ posts, setSubtitle, totalCount, pageContext }) => {
                     style={{
                       width: "100%",
                       height: "100%",
+                      maxHeight: "clamp(100px, 165px, 400px)",
                       objectFit: "cover",
                     }}
                   />
