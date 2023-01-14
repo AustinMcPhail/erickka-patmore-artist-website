@@ -89,21 +89,19 @@ async function journalPages({ graphql, actions }) {
     data: {
       allSanityPost: { edges: allPosts },
     },
-  } = await graphql(`
-    query {
-      allSanityPost(sort: { fields: [publishedAt], order: ASC }) {
-        edges {
-          node {
-            _id
-            publishedAt
-            slug {
-              current
-            }
-          }
+  } = await graphql(`{
+  allSanityPost(sort: {publishedAt: ASC}) {
+    edges {
+      node {
+        _id
+        publishedAt
+        slug {
+          current
         }
       }
     }
-  `)
+  }
+}`)
   const posts = allPosts.filter((e) => !isFuture(parseISO(e.node.publishedAt)))
   const totalCount = posts.length
   const numberOfPages = Math.ceil(totalCount / JOURNAL_PAGE_SIZE)
