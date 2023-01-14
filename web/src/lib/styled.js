@@ -31,6 +31,8 @@ export const GlobalStyle = createGlobalStyle`
 
     --content-spacing: clamp(.5rem, 1vw, 1rem);
 
+    --color-primary: #2F2B3B;
+
     background-color: #FEFBFF;
     
     line-height: 1.75;

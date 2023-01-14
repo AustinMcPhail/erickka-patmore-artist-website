@@ -35,7 +35,6 @@ module.exports = {
         cookieDomain: 'erickka.art',
       },
     },
-    'gatsby-plugin-instagram-embed',
     'gatsby-plugin-postcss',
     'gatsby-plugin-react-helmet',
     `gatsby-plugin-image`,

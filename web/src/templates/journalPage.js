@@ -9,27 +9,25 @@ const TemplateStyles = styled.div`
     margin-top: 6rem;
   }
 `
-export const query = graphql`
-  query($skip: Int = 0, $pageSize: Int = 5) {
-    allSanityPost(limit: $pageSize, skip: $skip, sort: { fields: [publishedAt], order: DESC }) {
-      totalCount
-      edges {
-        node {
-          id
-          publishedAt
-          title
-          _rawExcerpt
-          slug {
-            current
-          }
-          mainImage {
-            ...ImageWithPreview
-          }
+export const query = graphql`query ($skip: Int = 0, $pageSize: Int = 5) {
+  allSanityPost(limit: $pageSize, skip: $skip, sort: {publishedAt: DESC}) {
+    totalCount
+    edges {
+      node {
+        id
+        publishedAt
+        title
+        _rawExcerpt
+        slug {
+          current
+        }
+        mainImage {
+          ...ImageWithPreview
         }
       }
     }
   }
-`
+}`
 
 const JournalPageTemplate = ({
   data: {
