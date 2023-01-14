@@ -24,7 +24,8 @@ export default {
       name: 'category',
       title: 'Category',
       type: 'reference',
-      description: 'This determines which page of your portfolio this piece will appear under.',
+      description:
+        'This determines which page of your portfolio this piece will appear under.',
       to: [
         {
           type: 'category',
@@ -42,7 +43,8 @@ export default {
       name: 'portfolioImage',
       type: 'portfolioImage',
       title: 'Entry Image',
-      description: 'The entry / image of the entry to be added to your portfolio.',
+      description:
+        'The entry / image of the entry to be added to your portfolio.',
     },
     {
       name: 'excerpt',
@@ -61,7 +63,8 @@ export default {
       name: 'publishedAt',
       type: 'date',
       title: 'Date',
-      description: 'When was this piece made? (Only the year is displayed on your site)',
+      description:
+        'When was this piece made? (Only the year is displayed on your site)',
       options: {
         dateFormat: 'MMMM D, YYYY',
       },

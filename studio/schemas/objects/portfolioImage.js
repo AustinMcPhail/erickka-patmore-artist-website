@@ -17,7 +17,9 @@ export default {
       ],
       title: 'Mediums',
       validation: (Rule) =>
-        Rule.error('You have to choose a medium. Add a medium if none are available.').required(),
+        Rule.error(
+          'You have to choose a medium. Add a medium if none are available.'
+        ).required(),
       options: {
         layout: 'tags',
         isHighlighted: true,
@@ -35,8 +37,10 @@ export default {
       name: 'alt',
       type: 'string',
       title: 'Alternative text',
-      description: 'Important for Google Search-ability and accessiblity (e.g. screen reader)',
-      validation: (Rule) => Rule.error('You have to fill out the alternative text.').required(),
+      description:
+        'Important for Google Search-ability and accessiblity (e.g. screen reader)',
+      validation: (Rule) =>
+        Rule.error('You have to fill out the alternative text.').required(),
       options: {
         isHighlighted: true,
       },

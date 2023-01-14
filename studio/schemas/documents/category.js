@@ -24,7 +24,8 @@ export default {
       name: 'enabled',
       type: 'boolean',
       title: 'Show Category',
-      description: 'This category will be available for viewing if this is enabled.',
+      description:
+        'This category will be available for viewing if this is enabled.',
     },
   ],
   initialValue: {

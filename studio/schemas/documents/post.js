@@ -94,7 +94,7 @@ export default {
       media: 'mainImage',
     },
     prepare({ title = 'No title', publishedAt, slug = {}, media }) {
-      const dateSegment = format(parseISO(publishedAt), 'YYYY/MM')
+      const dateSegment = format(parseISO(publishedAt), 'yyyy/MM')
       const path = `/${dateSegment}/${slug.current}/`
       return {
         title,

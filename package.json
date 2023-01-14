@@ -16,11 +16,10 @@
   },
   "devDependencies": {
     "@sanity/cli": "^2.31.1",
-    "lerna": "^5.5.0",
     "babel-eslint": "^10.1.0",
     "eslint": "^8.23.0",
     "eslint-config-airbnb": "^19.0.4",
-    "eslint-config-prettier": "^8.5.0",
+    "eslint-config-prettier": "^8.6.0",
     "eslint-config-wesbos": "^3.0.2",
     "eslint-plugin-html": "^6.2.0",
     "eslint-plugin-import": "^2.26.0",
@@ -28,10 +27,10 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.31.5",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "lerna": "^5.5.0",
     "prettier": "^2.7.1",
     "stylelint-config-standard": "^28.0.0"
   },
-  "dependencies": {},
   "eslintConfig": {
     "extends": [
       "wesbos"
@@ -44,7 +43,7 @@
       ],
       "arrow-body-style": 0,
       "quotes": [
-        "error",
+        2,
         "single"
       ],
       "react/jsx-props-no-spreading": [

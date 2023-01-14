@@ -2,7 +2,6 @@ export default {
   name: 'siteSettings',
   type: 'document',
   title: 'Site Settings',
-  __experimental_actions: ['update', /* 'create', 'delete', */ 'publish'],
   fields: [
     {
       name: 'title',
@@ -47,7 +46,8 @@ export default {
       name: 'cv',
       type: 'file',
       title: 'CV / Resume',
-      description: 'A copy of your resume / cv that users can download from the CV page.',
+      description:
+        'A copy of your resume / cv that users can download from the CV page.',
     },
     {
       name: 'bio',
@@ -60,7 +60,8 @@ export default {
       type: 'bodyPortableText',
       title: 'Statement',
       description:
-        "The statement that appears on the Statement page of the site. Tell 'em what you're about.",
+        // eslint-disable-next-line prettier/prettier
+        'The statement that appears on the Statement page of the site. Tell \'em what you\'re about.',
     },
     {
       name: 'statementImage',

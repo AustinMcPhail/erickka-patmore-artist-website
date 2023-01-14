@@ -1,5 +1,5 @@
 /* eslint-disable react/no-multi-comp, react/no-did-mount-set-state */
-import { format } from 'date-fns'
+import { format, parseISO } from 'date-fns'
 import PropTypes from 'prop-types'
 import React from 'react'
 import styles from './IframePreview.module.css'
@@ -21,9 +21,8 @@ const assemblePostUrl = ({ displayed, options }) => {
   return `${previewURL}/blog${path}`
 }
 
-const IframePreview = (props) => {
-  const { options } = props
-  const { displayed } = props.document
+const IframePreview = ({ options, document }) => {
+  const { displayed } = document
 
   if (!displayed) {
     return (
@@ -46,7 +45,7 @@ const IframePreview = (props) => {
   return (
     <div className={styles.componentWrapper}>
       <div className={styles.iframeContainer}>
-        <iframe src={url} frameBorder="0" />
+        <iframe src={url} title={url} />
       </div>
     </div>
   )
